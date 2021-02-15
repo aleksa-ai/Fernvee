@@ -15,6 +15,10 @@ import About from "./components/Partials/_Footer/About";
 import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
 
+//Temmporary paths
+import Timeslots from "./components/Timeslot/index"
+import Component from "./components/Timeslot/Form"
+
 import "./App.css";
 
 <link
@@ -30,6 +34,10 @@ const theme = createMuiTheme({
     secondary: {
       main: "#2A9D8F",
     },
+    // Not working?
+    // tertiary: {
+    //   main: "#F4A261",
+    // }
   },
 });
 
@@ -75,6 +83,12 @@ function App() {
             </Route>
             <Route path="/contact">
               <Contact />
+            </Route>
+            <Route path="/timeslots">
+              <Timeslots />
+            </Route>
+            <Route path="/Component">
+              <Component />
             </Route>
           </Switch>
           <Footer />
