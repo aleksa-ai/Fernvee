@@ -6,13 +6,23 @@ import {
   Link,
 } from "react-router-dom";
 
-import { AppBar, Toolbar, Tab } from "@material-ui/core";
+import { AppBar, Toolbar, Tab, Avatar } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
+
+const useStyles = makeStyles({
+  stickToTop: {
+    width: '100%',
+    minHeight: '80px',
+  },
+});
 
 export default function Nav(props) {
+  const classes = useStyles();
   return (
-    <AppBar position="static" >
-      <Toolbar>
+    <AppBar position="static">
+      <Toolbar className={classes.stickToTop}>
+        <a href="/"><img src="images/logo.png" alt="logo" width="70" /></a>
         <Tab label="Explore" component={NavLink} to="/" />
         <Tab label="Trips" component={NavLink} to="/trips" />
         <Tab label="Create" component={NavLink} to="/create" />
