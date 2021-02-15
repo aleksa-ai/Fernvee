@@ -3,36 +3,24 @@ import {
   NavLink,
   Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 
+import { AppBar, Toolbar, Tab } from "@material-ui/core";
+
+
 export default function Nav(props) {
-  return ( 
-  <nav>
-  <ul>
-    <li>
-      {/*This is our Home page! */}
-      <NavLink to="/">Explore</NavLink>
-    </li>
-    <li>
-      <NavLink to="/trips">My Trips</NavLink>
-    </li>
-    <li>
-      <NavLink to="/create">Create</NavLink>
-    </li>
-    <li>
-      <NavLink to="/myprofile">My Profile</NavLink>
-    </li>
-    <li>
-      <NavLink to="/login">Login</NavLink>
-    </li>
-    <li>
-      <NavLink to="/logout">Logout</NavLink>
-    </li>
-    <li>
-      <NavLink to="/signup">Signup</NavLink>
-    </li>
-  </ul>
-  </nav>
+  return (
+    <AppBar position="static" >
+      <Toolbar>
+        <Tab label="Explore" component={NavLink} to="/" />
+        <Tab label="Trips" component={NavLink} to="/trips" />
+        <Tab label="Create" component={NavLink} to="/create" />
+        <Tab label="My Profile" component={NavLink} to="/MyProfile" />
+        <Tab label="Login" component={NavLink} to="/login" />
+        <Tab label="Logout" component={NavLink} to="/logout" />
+        <Tab label="Signup" component={NavLink} to="/signup" />
+      </Toolbar>
+    </AppBar>
   );
 }
