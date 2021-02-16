@@ -1,4 +1,5 @@
 import React from "react";
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -14,6 +15,7 @@ import Footer from "./components/Partials/_Footer/_index";
 import About from "./components/Partials/_Footer/About";
 import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
+import Explore from "./components/Explore";
 
 //Temmporary paths
 import Timeslots from "./components/Timeslot/index"
@@ -37,6 +39,7 @@ import "./App.css";
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
 />;
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -53,6 +56,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -61,6 +65,7 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <h1>Home Page</h1>
+              <Explore />
             </Route>
             <Route path="/trips">
               <MyTrips />
@@ -123,8 +128,12 @@ function App() {
           <Footer />
         </div>
       </Router>
+
+      
+      
     </ThemeProvider>
   );
+
 }
 
 export default App;
