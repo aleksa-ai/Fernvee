@@ -1,75 +1,83 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 
-
 const catsOfThings = [
   {
-    value: 'EAT',
-    label: 'Eat',
+    value: "Eat",
+    label: "Eat",
   },
   {
-    value: 'DRINK',
-    label: 'Drink',
+    value: "Drink",
+    label: "Drink",
   },
   {
-    value: 'SHOP',
-    label: 'Shop',
+    value: "Shop",
+    label: "Shop",
   },
   {
-    value: 'SIGHTSEE',
-    label: 'Sightsee',
+    value: "Sightsee",
+    label: "Sightsee",
   },
 ];
 
 const thingsToDo = [
   {
-    value: 'Rest1',
-    label: 'Rest1',
+    eat: {
+      value: "Rest1",
+      label: "Rest1",
+    },
   },
   {
-    value: 'Rest2',
-    label: 'Rest2',
+    drink: {
+      value: "Bar1",
+      label: "Bar1",
+    },
   },
   {
-    value: 'Rest3',
-    label: 'Rest3',
+    shop: {
+      value: "Shop1",
+      label: "Shop1",
+    },
   },
   {
-    value: 'Rest4',
-    label: 'Rest4',
+    sightsee: {
+      value: "Museum1",
+      label: "Museum1",
+    },
   },
 ];
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
+    "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: "25ch",
     },
   },
 }));
 
-
 export default function Form(props) {
-
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = React.useState('Rest1');
-  const [thingToDo, setThingsToDo] = React.useState('EUR');
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2021-02-15'));
+  const [catOfThings, setCatOfThings] = React.useState("Eat");
+  const [thingToDo, setThingsToDo] = React.useState("Rest1");
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("2021-02-16")
+  );
+
 
   const handleChange = (categoryEvent, activityEvent) => {
-    setCatOfThings(categoryEvent.target.value)
+    setCatOfThings(categoryEvent.target.value);
     setThingsToDo(activityEvent.target.value);
   };
 
@@ -77,71 +85,95 @@ export default function Form(props) {
     setSelectedDate(date);
   };
 
+  const [error, setError] = useState("");
+  const reset = () => {
+    props.onCancel();
+    setCatOfThings("Eat");
+    thingToDo("Rest1");
+  };
+
+  function validate() {
+    //!!! UPDATE catsOfThings !!!
+    if (catsOfThings === "") {
+      setError("catsOfThings cannot be blank");
+      return;
+    }
+
+    //!!! UPDATE thingsToDo !!!
+    if (thingsToDo === null) {
+      setError("thingsToDo must be selected");
+      return;
+    }
+
+    setError("");
+    props.onSave(catsOfThings, thingsToDo);
+  }
+
   return (
     <main className="timeslot__card timeslot__card--create">
       <section className="timeslot__card-left">
-      <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField
-          id="standard-select-thingToDo"
-          select
-          label="Select"
-          value={catOfThings}
-          onChange={handleChange}
-          helperText="Please select your catOfThings"
-        >
-          {catsOfThings.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        </div>
-      <div>
-        <TextField
-          id="standard-select-thingToDo"
-          select
-          label="Select"
-          value={thingToDo}
-          onChange={handleChange}
-          helperText="Please select your thingToDo"
-        >
-          {thingsToDo.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        </div>
+        <form className={classes.root} noValidate autoComplete="off">
+          <div>
+            <TextField
+              id="standard-select-thingToDo"
+              select
+              label="Select"
+              value={catOfThings}
+              onChange={handleChange}
+              helperText="Please select your catOfThings"
+            >
+              {catsOfThings.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="standard-select-thingToDo"
+              select
+              label="Select"
+              value={thingToDo}
+              onChange={handleChange}
+              helperText="Please select your thingToDo"
+            >
+              {thingsToDo.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
         </form>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        </Grid>
-    </MuiPickersUtilsProvider>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+            <KeyboardDatePicker
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
         {/* <section className="timeslot__validation">ERROR</section>
         <InterviewerList
           interviewers={props.interviewers}
@@ -158,13 +190,13 @@ export default function Form(props) {
             Save
           </Button> */}
           <div className={classes.root}>
-      <IconButton aria-label="edit">
-        <SaveIcon />
-      </IconButton>
-      <IconButton aria-label="close">
-        <CloseIcon />
-      </IconButton>
-    </div>
+            <IconButton aria-label="save" danger onClick={reset}>
+              <SaveIcon />
+            </IconButton>
+            <IconButton aria-label="close" confirm onClick={() => validate()}>
+              <CloseIcon />
+            </IconButton>
+          </div>
         </section>
       </section>
     </main>

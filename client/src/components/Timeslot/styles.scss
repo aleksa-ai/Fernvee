@@ -45,6 +45,11 @@ $timeslot-height: 11rem;
       align-items: flex-end;
     }
 
+    &--create {
+      //background-color: $dark-background;
+      display: flex;
+    }
+
     &--show {
       background: linear-gradient;
     }
