@@ -1,4 +1,5 @@
 import React from 'react';
+import Timeslot from './Timeslot/index'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -25,7 +26,7 @@ export default function CenteredGrid() {
       justify="center"
       >
         <Grid item xs={12} >
-          <Paper className={classes.paper}>Activity 1</Paper>
+          <Timeslot />
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>Activity 2</Paper>
