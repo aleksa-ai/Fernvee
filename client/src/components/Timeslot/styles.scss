@@ -31,6 +31,24 @@ $timeslot-height: 11rem;
     flex-flow: row wrap;
     // color: $white;
 
+    &-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 50%;
+    }
+
+    &-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    &--show {
+      background: linear-gradient;
+    }
+
     &--status {
       // background-color: $dark-background;
       display: flex;
