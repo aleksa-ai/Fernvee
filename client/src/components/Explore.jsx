@@ -1,4 +1,5 @@
 import React from "react";
+import scriptLoader from "react-async-script-loader";
 
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -31,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Explore() {
-
+function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
   const classes = useStyles();
 
   const [city, setCity] = React.useState("");
@@ -48,51 +48,64 @@ export default function Explore() {
     setCoordinates(latLng);
   };
 
-  return (
-    <div>
-      <PlacesAutocomplete
-        value={city}
-        onChange={setCity}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <p>Latitude: {coordinates.lat}</p>
-            <p>Longitude: {coordinates.lng}</p>
-            <Paper component="form" className={classes.root}>
-              <InputBase
-                className={classes.input}
-                {...getInputProps({ placeholder: "Explore Destinations" })}
-              />
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-                aria-label="search"
-              >
-                <SearchIcon />
-              </IconButton>
-            </Paper>
+  if (isScriptLoaded && isScriptLoadSucceed) {
+    return (
+      <div>
+        <PlacesAutocomplete
+          value={city}
+          onChange={setCity}
+          onSelect={handleSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading,
+          }) => (
             <div>
-              {loading ? <div>...loading</div> : null}
+              <p>Latitude: {coordinates.lat}</p>
+              <p>Longitude: {coordinates.lng}</p>
+              <Paper component="form" className={classes.root}>
+                <InputBase
+                  className={classes.input}
+                  {...getInputProps({ placeholder: "Explore Destinations" })}
+                />
+                <IconButton
+                  type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+              <div>
+                {loading ? <div>...loading</div> : null}
 
-              {suggestions.map((suggestion, index) => {
-                const style = {
-                  backgroundColor: suggestion.active ? "#2A9D8F" : "#fff",
-                };
+                {suggestions.map((suggestion, index) => {
+                  const style = {
+                    backgroundColor: suggestion.active ? "#2A9D8F" : "#fff",
+                  };
 
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, { style })}
-                    key={index}
-                  >
-                    {suggestion.description}
-                  </div>
-                );
-              })}
+                  return (
+                    <div
+                      {...getSuggestionItemProps(suggestion, { style })}
+                      key={index}
+                    >
+                      {suggestion.description}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
-    </div>
-  );
-}
+          )}
+        </PlacesAutocomplete>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
+};
+
+export default scriptLoader([
+  `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`,
+])(Explore);
