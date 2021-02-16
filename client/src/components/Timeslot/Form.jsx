@@ -14,24 +14,6 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import "./styles.scss";
 
-const activityCategories = [
-  {
-    name: "eat",
-    label: "Eat",
-    activities: ["Resto1", "Resto2", "Resto3"],
-  },
-  {
-    name: "drink",
-    label: "Drink",
-    activities: ["Bar1", "Bar2", "Bar3"],
-  },
-  {
-    name: "shop",
-    label: "Shop",
-    activities: ["Shop1", "Shop2", "Shop3"],
-  },
-];
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -44,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Form(props) {
   const classes = useStyles();
   const [catOfThings, setCatOfThings] = useState(
-    activityCategories[0].name
+    props.activityCategories[0].name
   );
 
   const [thingToDo, setThingToDo] = useState(
-    activityCategories[0].activities[0]
+    props.activityCategories[0].activities[0]
   );
 
   const [selectedStartDate, setSelectedStartDate] = useState(
@@ -60,7 +42,7 @@ export default function Form(props) {
 
   const handleCategoryChange = (categoryEvent) => {
     const newCategory = categoryEvent.target.value;
-    const firstActivity = activityCategories.find(
+    const firstActivity = props.activityCategories.find(
       (category) => category.name === newCategory
     ).activities[0];
     setCatOfThings(newCategory);
@@ -83,7 +65,7 @@ export default function Form(props) {
   const [error, setError] = useState("");
   const reset = () => {
     //props.onCancel();
-    setCatOfThings(activityCategories[0].name);
+    setCatOfThings(props.activityCategories[0].name);
     //setThingToDo(null);
   };
 
@@ -114,7 +96,7 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {activityCategories.map((category) => (
+              {props.activityCategories.map((category) => (
                 <MenuItem key={category.name} value={category.name}>
                   {category.label}
                 </MenuItem>
@@ -130,7 +112,7 @@ export default function Form(props) {
               onChange={handleActivityChange}
               helperText="Please select an activity"
             >
-              {activityCategories
+              {props.activityCategories
                 .find((category) => category.name === catOfThings)
                 .activities.map((option) => (
                   <MenuItem key={option} value={option}>

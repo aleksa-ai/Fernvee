@@ -22,7 +22,7 @@ export default function Empty(props) {
     <main className="timeslot__add">
       <div className={classes.root}>
         <Fab color="secondary" aria-label="add">
-          <AddIcon />
+          <AddIcon onClick={props.onAdd}/>
         </Fab>
       </div>
     </main>
