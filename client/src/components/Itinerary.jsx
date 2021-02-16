@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
+import { Redirect } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-
 
 import DayList from "./DayList";
 import TripForm from "./TripForm";
@@ -56,10 +58,6 @@ export default function Itinerary(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -90,8 +88,7 @@ export default function Itinerary(props) {
       <div>
         {activeStep === steps.length ? (
           <div>
-            All steps completed
-            <Button onClick={handleReset}>Reset</Button>
+            <Redirect to="/trips" />
           </div>
         ) : (
           <div>
@@ -104,7 +101,11 @@ export default function Itinerary(props) {
               >
                 Back
               </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleNext}
+              >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
             </div>
