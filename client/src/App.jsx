@@ -14,6 +14,7 @@ import Footer from "./components/Partials/_Footer/_index";
 import About from "./components/Partials/_Footer/About";
 import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
+import Explore from "./components/Explore";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ import "./App.css";
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
 />;
+
 
 const theme = createMuiTheme({
   palette: {
@@ -34,6 +36,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -80,6 +83,9 @@ function App() {
           <Footer />
         </div>
       </Router>
+
+      <Explore />
+      
     </ThemeProvider>
   );
 }
