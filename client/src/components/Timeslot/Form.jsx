@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,51 +12,13 @@ import {
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 
-const catsOfThings = [
-  {
-    value: "Eat",
-    label: "Eat",
-  },
-  {
-    value: "Drink",
-    label: "Drink",
-  },
-  {
-    value: "Shop",
-    label: "Shop",
-  },
-  {
-    value: "Sightsee",
-    label: "Sightsee",
-  },
-];
 
-const thingsToDo = [
-  {
-    eat: {
-      value: "Rest1",
-      label: "Rest1",
-    },
-  },
-  {
-    drink: {
-      value: "Bar1",
-      label: "Bar1",
-    },
-  },
-  {
-    shop: {
-      value: "Shop1",
-      label: "Shop1",
-    },
-  },
-  {
-    sightsee: {
-      value: "Museum1",
-      label: "Museum1",
-    },
-  },
-];
+
+const thingsToDo = {
+  eat: ["Resto1", "Resto2", "Resto3"],
+  drink: ["Bar1", "Bar2", "Bar3"],
+  shop: ["Shop1", "Shop2"],
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,15 +32,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Form(props) {
   const classes = useStyles();
   const [catOfThings, setCatOfThings] = React.useState("Eat");
-  const [thingToDo, setThingsToDo] = React.useState("Rest1");
+  const [thingToDo, setThingsToDo] = React.useState(null);
   const [selectedDate, setSelectedDate] = React.useState(
     new Date("2021-02-16")
   );
 
-
-  const handleChange = (categoryEvent, activityEvent) => {
-    setCatOfThings(categoryEvent.target.value);
-    setThingsToDo(activityEvent.target.value);
+  const handleChange = (categoryEvent) => {
+    setCatOfThings(categoryEvent.target.value)
+    .then()
+    //.setThingsToDo(activityEvent.target.value);
   };
 
   const handleDateChange = (date) => {
@@ -89,7 +51,7 @@ export default function Form(props) {
   const reset = () => {
     props.onCancel();
     setCatOfThings("Eat");
-    thingToDo("Rest1");
+    thingToDo(null);
   };
 
   function validate() {
