@@ -30,25 +30,26 @@ function getSteps() {
   return ['Where are you going?', 'What do you want to do?', 'Review'];
 }
 
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return (<TripForm/>);
-    case 1:
-      return (<DayList />);
-    case 2:
-      return 'REVIEW';
-    default:
-      return 'Unknown stepIndex';
-  }
-}
+
 
 export default function Itinerary(props) {
   const classes = useStyles();
 
+  const [startDate, setStartDate] = useState(0);
+  const [endDate, setEndDate] = useState(0);
+  
   // Stepper code lines 48 - 98
   const [activeStep, setActiveStep] = useState(0);
+
   const steps = getSteps();
+
+  const startDateChanged = (date) => {
+    setStartDate(date);
+  }
+
+  const endDateChanged = (date) => {
+    setEndDate(date);
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -62,8 +63,21 @@ export default function Itinerary(props) {
     setActiveStep(0);
   };
 
+  function getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return (<TripForm onStartDateChanged={startDateChanged} onEndDateChanged={endDateChanged}/>);
+      case 1:
+        return (<DayList startDate={startDate} endDate={endDate} />);
+      case 2:
+        return 'REVIEW';
+      default:
+        return 'Unknown stepIndex';
+    }
+  }
+
   return (
-    <>
+    
      <div className={classes.root}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
@@ -75,12 +89,12 @@ export default function Itinerary(props) {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
+            All steps completed
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            {getStepContent(activeStep)}
             <div>
               <Button
                 disabled={activeStep === 0}
@@ -97,9 +111,6 @@ export default function Itinerary(props) {
         )}
       </div>
     </div>
-
   
-      {/* <DayList /> */}
-    </>
   );
 }

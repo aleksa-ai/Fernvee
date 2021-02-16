@@ -19,75 +19,75 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TripForm() {
+export default function TripForm(props) {
   const classes = useStyles();
 
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
 
+
   const handleStartDateChange = (date) => {
-    setSelectedStartDate(date);
+    setSelectedStartDate (date);
+    props.onStartDateChanged(date);
   };
 
   const handleEndDateChange = (date) => {
     setSelectedEndDate(date);
+    props.onEndDateChanged(date);
   };
 
   return (
-    <>
-      <form className={classes.root} noValidate autoComplete="off">
-        <Grid
-          container
-          justify="center"
-          direction="column"
-          alignItems="center"
-          spacing
-        >
-          <TextField
-            required
-            id="standard-required"
-            label="Trip Name"
-            defaultValue=""
-          />
-          <TextField
-            required
-            id="standard-required"
-            label="City"
-            defaultValue=""
-          />
+    <form className={classes.root} noValidate autoComplete="off">
+      <Grid
+        container
+        justify="center"
+        direction="column"
+        alignItems="center"
+      >
+        <TextField
+          required
+          id="standard-required"
+          label="Trip Name"
+          defaultValue=""
+        />
+        <TextField
+          required
+          id="standard-required"
+          label="City"
+          defaultValue=""
+        />
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              placeholder="MM/DD/YYYY"
-              margin="normal"
-              id="date-picker-inline"
-              label="Start Date"
-              value={selectedStartDate}
-              onChange={handleStartDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              placeholder="MM/DD/YYYY"
-              margin="normal"
-              id="date-picker-inline"
-              label="End Date"
-              value={selectedEndDate}
-              onChange={handleEndDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </Grid>
-      </form>
-    </>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            placeholder="MM/DD/YYYY"
+            margin="normal"
+            id="date-picker-inline"
+            label="Start Date"
+            value={selectedStartDate}
+            onChange={handleStartDateChange}
+            KeyboardButtonProps={{
+              "aria-label": "change date",
+            }}
+          />
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            placeholder="MM/DD/YYYY"
+            margin="normal"
+            id="date-picker-inline"
+            label="End Date"
+            value={selectedEndDate}
+            onChange={handleEndDateChange}
+            KeyboardButtonProps={{
+              "aria-label": "change date",
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      </Grid>
+    </form>
   );
 }

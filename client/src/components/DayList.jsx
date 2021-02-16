@@ -1,5 +1,5 @@
 import React from "react";
-
+import { differenceInCalendarDays, addDays, format } from "date-fns";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VerticalTabs() {
+export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -64,8 +64,29 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
+
+  let daysInTrip = differenceInCalendarDays(
+    props.endDate,
+    props.startDate
+  )
+
+  let startAt = props.startDate;
+  const daysArray = [];
+
+  while (startAt <= props.endDate){
+    daysArray.push(startAt);
+    startAt = addDays(startAt,1)
+
+  };
+
+  console.log(daysArray)
+
+
+
+
   return (
     <div className={classes.root}>
+ 
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -74,14 +95,17 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Day 1" {...a11yProps(0)} />
-        <Tab label="Day 2" {...a11yProps(1)} />
-        <Tab label="Day 3" {...a11yProps(2)} />
+        {daysArray.map ((day) => {
+         return  <Tab label={format(day, "PPPP")}{...a11yProps(0)} />
+       
+
+        })}
+        
       </Tabs>
       <div className={classes.tabpanel}>
-        <TabPanel>
+      
           <DayListItem />
-        </TabPanel>
+    
       </div>
     </div>
   );

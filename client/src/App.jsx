@@ -4,7 +4,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import MyTrips from "./components/MyTrips/index";
-import MyProfile from "./components/Profile";
+import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import CuratedTripsList from "./components/CuratedTripsList";
@@ -50,7 +50,7 @@ function App() {
               <Itinerary />
             </Route>
             <Route path="/myProfile">
-              <MyProfile />
+              <Profile />
             </Route>
             <Route path="/login">
               <Login />
