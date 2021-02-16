@@ -43,7 +43,7 @@ const activityCategories = [
 export default function Timeslot (props) {
 
   const { mode, transition, back } = useVisualMode(
-    props ? SHOW : EMPTY
+    props.new ? SHOW : EMPTY
   );
 
   const save = (/*name, interviewer*/) => {
@@ -107,11 +107,11 @@ export default function Timeslot (props) {
         />
       )}
       {mode === ERROR_SAVE && (
-        <Error message={"Could not save appointment."} onClose={() => back()} />
+        <Error message={"Could not save activity timeslot."} onClose={() => back()} />
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message={"Could not delete appointment."}
+          message={"Could not delete activity timeslot."}
           onClose={() => back()}
         />
       )}
