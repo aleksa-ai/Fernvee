@@ -46,6 +46,7 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <h1>Home Page</h1>
+              <Explore />
             </Route>
             <Route path="/trips">
               <MyTrips />
@@ -85,7 +86,7 @@ function App() {
         </div>
       </Router>
 
-      <Explore />
+      
       
     </ThemeProvider>
   );

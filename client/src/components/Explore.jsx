@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: 600,
+   justify: 'center',
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -63,8 +64,8 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
             loading,
           }) => (
             <div>
-              <p>Latitude: {coordinates.lat}</p>
-              <p>Longitude: {coordinates.lng}</p>
+              {/* <p>Latitude: {coordinates.lat}</p>
+              <p>Longitude: {coordinates.lng}</p> */}
               <Paper component="form" className={classes.root}>
                 <InputBase
                   className={classes.input}
