@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,13 +12,25 @@ import {
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 
+import "./styles.scss";
 
-
-const thingsToDo = {
-  eat: ["Resto1", "Resto2", "Resto3"],
-  drink: ["Bar1", "Bar2", "Bar3"],
-  shop: ["Shop1", "Shop2"],
-};
+const activityCategories = [
+  {
+    name: "eat",
+    label: "Eat",
+    activities: ["Resto1", "Resto2", "Resto3"],
+  },
+  {
+    name: "drink",
+    label: "Drink",
+    activities: ["Bar1", "Bar2", "Bar3"],
+  },
+  {
+    name: "shop",
+    label: "Shop",
+    activities: ["Shop1", "Shop2", "Shop3"],
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,44 +43,62 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Form(props) {
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = React.useState("Eat");
-  const [thingToDo, setThingsToDo] = React.useState(null);
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2021-02-16")
+  const [catOfThings, setCatOfThings] = useState(
+    activityCategories[0].name
   );
 
-  const handleChange = (categoryEvent) => {
-    setCatOfThings(categoryEvent.target.value)
-    .then()
-    //.setThingsToDo(activityEvent.target.value);
+  const [thingToDo, setThingToDo] = useState(
+    activityCategories[0].activities[0]
+  );
+
+  const [selectedStartDate, setSelectedStartDate] = useState(
+    new Date("2021-02-16")
+  );
+  const [selectedEndDate, setSelectedEndDate] = useState(
+    new Date("2021-02-17")
+  );
+
+  const handleCategoryChange = (categoryEvent) => {
+    const newCategory = categoryEvent.target.value;
+    const firstActivity = activityCategories.find(
+      (category) => category.name === newCategory
+    ).activities[0];
+    setCatOfThings(newCategory);
+    setThingToDo(firstActivity);
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleActivityChange = (event) => {
+    const newActivity = event.target.value;
+    setThingToDo(newActivity);
+  };
+
+  const handleStartDateChange = (date) => {
+    setSelectedStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setSelectedEndDate(date);
   };
 
   const [error, setError] = useState("");
   const reset = () => {
-    props.onCancel();
-    setCatOfThings("Eat");
-    thingToDo(null);
+    //props.onCancel();
+    setCatOfThings(activityCategories[0].name);
+    //setThingToDo(null);
   };
 
   function validate() {
-    //!!! UPDATE catsOfThings !!!
-    if (catsOfThings === "") {
-      setError("catsOfThings cannot be blank");
+    if (catOfThings === "") {
+      setError("An activity category must be selected");
       return;
     }
 
-    //!!! UPDATE thingsToDo !!!
-    if (thingsToDo === null) {
-      setError("thingsToDo must be selected");
+    if (thingToDo === null) {
+      setError("An activity must be selected");
       return;
     }
-
     setError("");
-    props.onSave(catsOfThings, thingsToDo);
+    //props.onSave(catOfThings, thingToDo);
   }
 
   return (
@@ -81,12 +111,12 @@ export default function Form(props) {
               select
               label="Select"
               value={catOfThings}
-              onChange={handleChange}
-              helperText="Please select your catOfThings"
+              onChange={handleCategoryChange}
+              helperText="Please select an activity category"
             >
-              {catsOfThings.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {activityCategories.map((category) => (
+                <MenuItem key={category.name} value={category.name}>
+                  {category.label}
                 </MenuItem>
               ))}
             </TextField>
@@ -97,14 +127,16 @@ export default function Form(props) {
               select
               label="Select"
               value={thingToDo}
-              onChange={handleChange}
-              helperText="Please select your thingToDo"
+              onChange={handleActivityChange}
+              helperText="Please select an activity"
             >
-              {thingsToDo.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
+              {activityCategories
+                .find((category) => category.name === catOfThings)
+                .activities.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
             </TextField>
           </div>
         </form>
@@ -115,21 +147,23 @@ export default function Form(props) {
               variant="inline"
               format="MM/dd/yyyy"
               margin="normal"
-              id="date-picker-inline"
-              label="Date picker inline"
-              value={selectedDate}
-              onChange={handleDateChange}
+              id="start-date-picker-inline"
+              label="Check in"
+              value={selectedStartDate}
+              onChange={handleStartDateChange}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
             />
             <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Date picker dialog"
+              disableToolbar
+              variant="inline"
               format="MM/dd/yyyy"
-              value={selectedDate}
-              onChange={handleDateChange}
+              margin="normal"
+              id="end-date-picker-inline"
+              label="Check in"
+              value={selectedEndDate}
+              onChange={handleEndDateChange}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
@@ -145,17 +179,15 @@ export default function Form(props) {
       </section>
       <section className="timeslot__card-right">
         <section className="timeslot__actions">
-          {/* <Button danger onClick={reset}>
-            Cancel
-          </Button>
-          <Button confirm onClick>
-            Save
-          </Button> */}
           <div className={classes.root}>
-            <IconButton aria-label="save" danger onClick={reset}>
+            <IconButton
+              aria-label="save"
+              confirm="true"
+              onClick={() => validate()}
+            >
               <SaveIcon />
             </IconButton>
-            <IconButton aria-label="close" confirm onClick={() => validate()}>
+            <IconButton aria-label="close" danger="true" onClick={reset}>
               <CloseIcon />
             </IconButton>
           </div>
