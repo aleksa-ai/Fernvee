@@ -161,7 +161,7 @@ export default function Form(props) {
       <IconButton aria-label="edit">
         <SaveIcon />
       </IconButton>
-      <IconButton aria-label="delete">
+      <IconButton aria-label="close">
         <CloseIcon />
       </IconButton>
     </div>

@@ -1,4 +1,8 @@
 import React from "react";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+import "./styles.scss";
 
 export default function Error(props) {
   return (
@@ -7,12 +11,13 @@ export default function Error(props) {
         <h1 className="text--semi-bold">Error</h1>
         <h3 className="text--light">{props.message}</h3>
       </section>
-      <img
+      <IconButton
+        aria-label="close"
         className="timeslot__error-close"
-        src="images/close.png"
-        alt="Close"
         onClick={props.onClose}
-      />
+      >
+        <CloseIcon />
+      </IconButton>
     </main>
   );
 }

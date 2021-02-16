@@ -17,7 +17,18 @@ import Contact from "./components/Partials/_Footer/Contact";
 
 //Temmporary paths
 import Timeslots from "./components/Timeslot/index"
-import Component from "./components/Timeslot/Form"
+import Confirm from "./components/Timeslot/Confirm"
+import Empty from "./components/Timeslot/Empty"
+import Error from "./components/Timeslot/Error"
+import Form from "./components/Timeslot/Form"
+import Header from "./components/Timeslot/Header"
+import Show from "./components/Timeslot/Show"
+import Status from "./components/Timeslot/Status"
+
+
+
+
+
 
 import "./App.css";
 
@@ -87,8 +98,26 @@ function App() {
             <Route path="/timeslots">
               <Timeslots />
             </Route>
-            <Route path="/Component">
-              <Component />
+            <Route path="/Confirm">
+              <Confirm />
+            </Route>
+            <Route path="/Empty">
+              <Empty />
+            </Route>
+            <Route path="/Error">
+              <Error />
+            </Route>
+            <Route path="/Form">
+              <Form />
+            </Route>
+            <Route path="/Header">
+              <Header />
+            </Route>
+            <Route path="/Show">
+              <Show />
+            </Route>
+            <Route path="/Status">
+              <Status />
             </Route>
           </Switch>
           <Footer />
