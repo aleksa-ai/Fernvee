@@ -43,7 +43,7 @@ const activityCategories = [
 export default function Timeslot (props) {
 
   const { mode, transition, back } = useVisualMode(
-    props.name ? SHOW : EMPTY
+    props.acivity ? SHOW : EMPTY
   );
 
   const save = (/*name, interviewer*/) => {
@@ -85,7 +85,7 @@ export default function Timeslot (props) {
       )}
       {mode === SHOW && (
         <Show
-          activityCategories={activityCategories}
+          activity = {props.activity}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />

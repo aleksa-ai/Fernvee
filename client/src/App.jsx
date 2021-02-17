@@ -17,6 +17,14 @@ import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
 import Explore from "./components/Explore";
 
+import useApplicationData from "./hooks/useApplicationData";
+
+import {
+  //getTimeslotsForDay,
+  getActivity,
+  //getInterviewersForDay,
+} from "../src/helpers/selectors";
+
 //Temmporary paths
 import Timeslots from "./components/Timeslot/index"
 import Confirm from "./components/Timeslot/Confirm"
@@ -26,10 +34,6 @@ import Form from "./components/Timeslot/Form"
 import Header from "./components/Timeslot/Header"
 import Show from "./components/Timeslot/Show"
 import Status from "./components/Timeslot/Status"
-
-
-
-
 
 
 import "./App.css";
@@ -56,6 +60,14 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const {
+    state,
+    setActivity
+  } = useApplicationData();
+
+  console.log(state)
+
+  const activities = (state.activities).map((activity) => <Show activity={activity}/>);
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,6 +78,7 @@ function App() {
             <Route path="/" exact>
               <h1>Home Page</h1>
               <Explore />
+              {activities}
             </Route>
             <Route path="/trips">
               <MyTrips />
@@ -100,9 +113,9 @@ function App() {
             <Route path="/contact">
               <Contact />
             </Route>
-            <Route path="/timeslots">
+            {/* <Route path="/timeslots">
               <Timeslots />
-            </Route>
+            </Route> */}
             <Route path="/Confirm">
               <Confirm />
             </Route>

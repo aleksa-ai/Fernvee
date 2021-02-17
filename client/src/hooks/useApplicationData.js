@@ -6,9 +6,8 @@ export default function useApplicationData(initial) {
     //city: 'Paris',
     //itinerary: 'Foodie',
     //activity_category: 'Eat',
-    activity: 'Jules Vernes'
+    activities: []
   });
-}
 
 const setActivity = (activity) => setState({ ...state, activity });
 
@@ -26,7 +25,7 @@ const setActivity = (activity) => setState({ ...state, activity });
         //city: all[0].data,
         //itinerary: all[1].data,
         //activity_category:: all[2].data,
-        activity: 'a'
+        activities: all[0].data
       }));
     });
   }, []);
@@ -36,3 +35,5 @@ const setActivity = (activity) => setState({ ...state, activity });
 
   //  On click of the Confirm button Delete confirmation
   //  ...
+  return {state, setActivity}
+}
