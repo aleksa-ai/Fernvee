@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: 600,
-    justify: "center",
+   
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -46,6 +46,7 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
     // Based on selected suggesion save the placeID
     const placeId = results[0].place_id;
     setPlaceId(placeId);
+    setCity(value);
   };
 
   const redirect = () => {
