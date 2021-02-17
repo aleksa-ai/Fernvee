@@ -1,6 +1,8 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import scriptLoader from "react-async-script-loader";
+
+import axios from "axios";
 
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -34,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
   const classes = useStyles();
   const history = useHistory();
 
-  const [city, setCity] = React.useState("");
-  const [placeId, setPlaceId] = React.useState("");
+  const [city, setCity] = useState("");
+  const [placeId, setPlaceId] = useState("");
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);

@@ -5,6 +5,8 @@ import {
   useParams,
 } from "react-router-dom";
 
+
+
 export default function CuratedTripsList(props) {
   let { placeId } = useParams();
   console.log(placeId);
