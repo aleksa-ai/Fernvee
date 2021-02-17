@@ -5,7 +5,7 @@ module.exports = ({
   getCuratedTrips
 }) => {
   router.get('/', (req, res) => {
-    getCuratedTrips()
+    getCuratedTrips(placeId)
         .then((trips) => res.json(trips))
         .catch((err) => res.json({
             error: err.message

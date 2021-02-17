@@ -32,14 +32,13 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const getCuratedTrips = () => {
+  const getCuratedTrips = (placeId) => {
     const query = {
-      text: `
-      SELECT * FROM itineraries
-      JOIN planned_activities on planned_activities.itinerary_id = itineraries.id
-      JOIN activities ON planned_activities.activity_id = activities.id
-      JOIN cities ON activities.city_id = cities.id
-      `
+      text: (`
+      SELECT * FROM cities 
+      JOIN itineraries ON itineraries.city_id = cities.id
+      WHERE cities.placeId = $1
+    `, [placeId])
     };
 
     return db
