@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import scriptLoader from "react-async-script-loader";
 
 import PlacesAutocomplete, {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: 600,
-   justify: 'center',
+    justify: "center",
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -35,18 +36,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
   const classes = useStyles();
+  const history = useHistory();
 
   const [city, setCity] = React.useState("");
-  const [coordinates, setCoordinates] = React.useState({
-    lat: null,
-    lng: null,
-  });
+  const [placeId, setPlaceId] = React.useState("");
 
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
-    const latLng = await getLatLng(results[0]);
-    setCity(value);
-    setCoordinates(latLng);
+    // Based on selected suggesion save the placeID
+    const placeId = results[0].place_id;
+    setPlaceId(placeId);
+  };
+
+  const redirect = () => {
+    const url = "/curatedTrips/" + placeId;
+    history.push(url);
   };
 
   if (isScriptLoaded && isScriptLoadSucceed) {
@@ -64,9 +68,7 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
             loading,
           }) => (
             <div>
-              {/* <p>Latitude: {coordinates.lat}</p>
-              <p>Longitude: {coordinates.lng}</p> */}
-              <Paper component="form" className={classes.root}>
+              <Paper className={classes.root}>
                 <InputBase
                   className={classes.input}
                   {...getInputProps({ placeholder: "Explore Destinations" })}
@@ -75,10 +77,12 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
                   type="submit"
                   className={classes.iconButton}
                   aria-label="search"
+                  onClick={redirect}
                 >
                   <SearchIcon />
                 </IconButton>
               </Paper>
+              <br></br>
               <div>
                 {loading ? <div>...loading</div> : null}
 
@@ -105,7 +109,7 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
   } else {
     return <div></div>;
   }
-};
+}
 
 export default scriptLoader([
   `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`,

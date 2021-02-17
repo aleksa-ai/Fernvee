@@ -85,10 +85,10 @@ function App() {
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/curatedTrips">
+            <Route path="/curatedTrips/:placeId">
               <CuratedTripsList />
             </Route>
-            <Route path="/curatedTrips/:id">
+            <Route path="/curatedTrips/:placeId/:id">
               <Itinerary />
             </Route>
             <Route path="/aboutUs">
