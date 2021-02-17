@@ -7,8 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   stickToBottom: {
-    width: '100%',
-    position: 'fixed',
     bottom: 20,
   },
 });

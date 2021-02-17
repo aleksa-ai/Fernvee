@@ -6,6 +6,7 @@ export default function useApplicationData(initial) {
     //city: 'Paris',
     //itinerary: 'Foodie',
     //activity_category: 'Eat',
+    curatedTrips: [],
     activities: []
   });
 
@@ -18,6 +19,7 @@ const setActivity = (activity) => setState({ ...state, activity });
       // axios.get("/api/cities"),
       // axios.get("/api/itineraries"),
       // axios.get("/api/interviewers"),
+      axios.get("/api/curatedTrips"),
       axios.get("/api/activities"),
     ]).then((all) => {
       setState((prev) => ({
@@ -25,6 +27,7 @@ const setActivity = (activity) => setState({ ...state, activity });
         //city: all[0].data,
         //itinerary: all[1].data,
         //activity_category:: all[2].data,
+        curatedTrips: all[0].data,
         activities: all[0].data
       }));
     });

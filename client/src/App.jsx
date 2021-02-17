@@ -21,6 +21,8 @@ import About from "./components/Partials/_Footer/About";
 import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
 import Explore from "./components/Explore";
+import CuratedTripItem from "./components/CuratedTripItem";
+import CuratedTripList from "./components/CuratedTripsList";
 
 import useApplicationData from "./hooks/useApplicationData";
 
@@ -31,15 +33,14 @@ import {
 } from "../src/helpers/selectors";
 
 //Temmporary paths
-import Timeslots from "./components/Timeslot/index"
-import Confirm from "./components/Timeslot/Confirm"
-import Empty from "./components/Timeslot/Empty"
-import Error from "./components/Timeslot/Error"
-import Form from "./components/Timeslot/Form"
-import Header from "./components/Timeslot/Header"
-import Show from "./components/Timeslot/Show"
-import Status from "./components/Timeslot/Status"
-
+import Timeslots from "./components/Timeslot/index";
+import Confirm from "./components/Timeslot/Confirm";
+import Empty from "./components/Timeslot/Empty";
+import Error from "./components/Timeslot/Error";
+import Form from "./components/Timeslot/Form";
+import Header from "./components/Timeslot/Header";
+import Show from "./components/Timeslot/Show";
+import Status from "./components/Timeslot/Status";
 
 import "./App.css";
 
@@ -64,14 +65,14 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const {
-    state,
-    setActivity
-  } = useApplicationData();
+  const { state, setActivity } = useApplicationData();
 
-  console.log(state)
+  console.log(state);
 
-  const activities = (state.activities).map((activity) => <Show activity={activity}/>);
+  const activities = state.activities.map((activity) => (
+    <Show activity={activity} />
+  ));
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,7 +83,6 @@ function App() {
             <Route path="/" exact>
               <h1>Home Page</h1>
               <Explore />
-              {activities}
             </Route>
             <Route path="/trips">
               <MyTrips />
@@ -106,7 +106,7 @@ function App() {
               path="/curatedTrips/:placeId"
               children={<CuratedTripsList />}
             >
-              <CuratedTripsList />
+              <CuratedTripsList curatedTrips={state.curatedTrips} />
             </Route>
             <Route path="/curatedTrips/:placeId/:id">
               <Itinerary />

@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   stickToTop: {
-    width: '100%',
     minHeight: '80px',
   },
 });
