@@ -43,7 +43,7 @@ const activityCategories = [
 export default function Timeslot (props) {
 
   const { mode, transition, back } = useVisualMode(
-    props.new ? SHOW : EMPTY
+    props.name ? SHOW : EMPTY
   );
 
   const save = (/*name, interviewer*/) => {
