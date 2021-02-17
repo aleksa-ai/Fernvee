@@ -5,6 +5,7 @@ module.exports = ({
   getUsers
 }) => {
   router.get('/', (req, res) => {
+    console.log(getUsers)
     getUsers()
         .then((users) => res.json(users))
         .catch((err) => res.json({

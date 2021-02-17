@@ -6,11 +6,13 @@ const dotenv = require('dotenv').config();
 const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
 const users = require('./routes/users')
+const activities = require('./routes/activities')
 
 
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var activitiesRouter = require('./routes/activities');
 
 var app = express();
 
@@ -22,5 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', users(dbHelpers));
+app.use('/api/activities', activities(dbHelpers));
 
 module.exports = app;
