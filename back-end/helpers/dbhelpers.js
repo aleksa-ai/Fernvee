@@ -10,6 +10,17 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getActivities = () => {
+    const query = {
+      text: 'SELECT * FROM activities',
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getActivityCategories = () => {
     const query = {
       text: 'SELECT * FROM activity_categories',
@@ -23,6 +34,7 @@ module.exports = (db) => {
 
   return {
     getUsers,
+    getActivities,
     getActivityCategories
   };
 };
