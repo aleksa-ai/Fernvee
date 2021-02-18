@@ -22,16 +22,14 @@ export default function Show(props) {
         <h4 className="text--light">7:30 pm - 9:00 pm</h4>
         <section className="interviewer">
           <h5 className="text--light">
-            Avenue Gustave Eiffel, 75007 Paris, France
+            {props.address}
           </h5>
-          <h3 className="text--regular">+33 1 45 55 61 44</h3>
+          <h3 className="text--regular">{props.phone}</h3>
           <h4 className="text--regular">
-            <a href="restaurants-toureiffel.com">restaurants-toureiffel.com</a>
+            <a href="restaurants-toureiffel.com">{props.website_url}</a>
           </h4>
           <h6 className="text--light">
-            Book way ahead (online only) to feast on Michelin-starred cuisine by
-            Frédéric Anton and the most beautiful view of Paris at this magical
-            spot on the Eiffel Tower's 2nd floor, accessed by a private lift.
+            {props.description}
           </h6>
         </section>
       </section>

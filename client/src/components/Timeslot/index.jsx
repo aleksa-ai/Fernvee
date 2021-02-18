@@ -49,7 +49,7 @@ export default function Timeslot (props) {
   let showFirstActivity = activities.map((act, index) => {
     return (<Show 
       key = {act.id}
-      name = {act.name}
+      {...act}
     />)
   });
 
