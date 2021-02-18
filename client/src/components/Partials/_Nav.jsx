@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   stickToTop: {
-    width: '100%',
     minHeight: '80px',
   },
 });
@@ -20,7 +19,7 @@ const useStyles = makeStyles({
 export default function Nav(props) {
   const classes = useStyles();
   return (
-    <AppBar position="static">
+    <AppBar position="static" >
       <Toolbar className={classes.stickToTop}>
         <a href="/"><img src="images/logo.png" alt="logo" width="70" /></a>
         <Tab label="Explore" component={NavLink} to="/" />

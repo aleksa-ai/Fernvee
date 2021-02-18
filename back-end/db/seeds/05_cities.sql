@@ -1,6 +1,6 @@
-INSERT INTO cities(name, country_id)
+INSERT INTO cities(name, placeId, country_id)
 VALUES
-('Paris', 2),
-('Barcelona', 3),
-('Kherson', 4),
-('Mostar', 1);
+('Paris', 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ', 2),
+('Barcelona', 'ChIJ5TCOcRaYpBIRCmZHTz37sEQ', 3),
+('Kherson', 'ChIJZ_mbXaIaxEAR_iExjoxHpfM', 4),
+('Mostar', 'ChIJqUBjO6RDSxMRWnzj1LIyTwE', 1);

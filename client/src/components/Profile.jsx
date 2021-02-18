@@ -1,3 +1,5 @@
 export default function Profile(props) {
-  return <h1>I am Profile</h1>
+
+  return <div>
+    I am Profile</div>
 }

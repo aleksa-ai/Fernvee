@@ -11,6 +11,7 @@ module.exports = (db) => {
   };
 
   const getActivities = () => {
+
     const query = {
       text: "SELECT * FROM activities",
     };
@@ -52,10 +53,28 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getCuratedTrips = (placeId) => {
+    const query = {
+      text: (`
+      SELECT * FROM cities 
+      JOIN itineraries ON itineraries.city_id = cities.id
+      WHERE cities.placeId = $1
+    `)
+    };
+
+    const values = [placeId];
+
+    return db
+    .query(query, values)
+    .then((result) => result.rows)
+    .catch((err) => err)
+  };
+
   return {
     getUsers,
     getActivities,
     getActivityCategories,
     getPlannedActivities,
+    getCuratedTrips
   };
 };

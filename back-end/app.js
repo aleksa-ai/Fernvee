@@ -9,6 +9,8 @@ const users = require('./routes/users')
 const activities = require('./routes/activities')
 const activityCategories = require('./routes/activityCategories')
 const plannedActivities = require('./routes/plannedActivities')
+const trips = require('./routes/curatedTrips')
+
 
 
 var indexRouter = require('./routes/index');
@@ -26,6 +28,6 @@ app.use('/api/users', users(dbHelpers));
 app.use('/api/activities', activities(dbHelpers));
 app.use('/api/activityCategories', activityCategories(dbHelpers));
 app.use('/api/plannedActivities', plannedActivities(dbHelpers));
-
+app.use('/api/curatedTrips', trips(dbHelpers));
 
 module.exports = app;

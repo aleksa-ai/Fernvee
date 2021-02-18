@@ -36,6 +36,8 @@ export default function useApplicationData(initial) {
     dataFetch();
   }, []);
 
+
+
   //  On click of the Save button in form
   function saveActivity(id, planned_activity) {
     const bookedTimeslot = {

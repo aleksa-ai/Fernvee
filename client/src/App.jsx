@@ -2,7 +2,12 @@ import React from "react";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+} from "react-router-dom";
 
 import MyTrips from "./components/MyTrips/index";
 import Profile from "./components/Profile";
@@ -17,6 +22,8 @@ import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
 import Explore from "./components/Explore";
 
+
+
 import useApplicationData from "./hooks/useApplicationData";
 
 import {
@@ -26,15 +33,14 @@ import {
 } from "../src/helpers/selectors";
 
 //Temmporary paths
-import Timeslots from "./components/Timeslot/index"
-import Confirm from "./components/Timeslot/Confirm"
-import Empty from "./components/Timeslot/Empty"
-import Error from "./components/Timeslot/Error"
-import Form from "./components/Timeslot/Form"
-import Header from "./components/Timeslot/Header"
-import Show from "./components/Timeslot/Show"
-import Status from "./components/Timeslot/Status"
-
+import Timeslots from "./components/Timeslot/index";
+import Confirm from "./components/Timeslot/Confirm";
+import Empty from "./components/Timeslot/Empty";
+import Error from "./components/Timeslot/Error";
+import Form from "./components/Timeslot/Form";
+import Header from "./components/Timeslot/Header";
+import Show from "./components/Timeslot/Show";
+import Status from "./components/Timeslot/Status";
 
 import "./App.css";
 
@@ -42,7 +48,6 @@ import "./App.css";
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
 />;
-
 
 const theme = createMuiTheme({
   palette: {
@@ -73,7 +78,6 @@ function App() {
           <Nav />
           <Switch>
             <Route path="/" exact>
-              <h1>Home Page</h1>
               <Explore />
               {/* {activities} */}
             </Route>
@@ -95,10 +99,13 @@ function App() {
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/curatedTrips">
+            <Route
+              path="/curatedTrips/:placeId"
+              children={<CuratedTripsList />}
+            >
               <CuratedTripsList />
             </Route>
-            <Route path="/curatedTrips/:id">
+            <Route path="/curatedTrips/:placeId/:id">
               <Itinerary />
             </Route>
             <Route path="/aboutUs">
@@ -141,12 +148,8 @@ function App() {
           <Footer />
         </div>
       </Router>
-
-      
-      
     </ThemeProvider>
   );
-
 }
 
 export default App;
