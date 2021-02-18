@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -27,10 +28,15 @@ const useStyles = makeStyles({
 
 export default function Signup(props) {
   const classes = useStyles();
+  const history = useHistory();
+
+
+  const redirect = () => {
+    const url = `/create`;
+    history.push(url);
+  };
 
   return (
-
-     
         <Card className={classes.root}>
           <CardActionArea>
             <CardMedia className={classes.media} image={props.image} />
@@ -41,7 +47,7 @@ export default function Signup(props) {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={redirect} type="submit">
               View Details
             </Button>
             <Button size="small" color="primary">
