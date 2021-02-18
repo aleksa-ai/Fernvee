@@ -37,11 +37,11 @@ export default function Timeslot(props) {
     activities.lenght > 0 === true ? SHOW : EMPTY
   );
 
-  const save = (/*name, category*/) => {
-        // const timeslot = {
-        //   activity: name,
-        //   category,
-        // };
+  const save = (/*name,*/ category) => {
+        const timeslot = {
+          //activity: name,
+          category,
+        };
     
         transition(SAVING, true);
     
