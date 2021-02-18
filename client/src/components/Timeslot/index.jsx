@@ -49,9 +49,11 @@ export default function Timeslot (props) {
     />)
   });
 
+  let showFirstActivtiy = showActivities[0]
+
   return ( 
     <div>{activityCategory}
-    {showActivities}
+    {showFirstActivtiy}
     {/* <Show
           //activity = {props.activities[0]}
           // onDelete={() => transition(CONFIRM)}
