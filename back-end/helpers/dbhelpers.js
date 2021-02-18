@@ -11,6 +11,7 @@ module.exports = (db) => {
   };
 
   const getActivities = () => {
+
     const query = {
       text: 'SELECT * FROM activities',
     };
@@ -38,11 +39,13 @@ module.exports = (db) => {
       SELECT * FROM cities 
       JOIN itineraries ON itineraries.city_id = cities.id
       WHERE cities.placeId = $1
-    `, [placeId])
+    `)
     };
 
+    const values = [placeId];
+
     return db
-    .query(query)
+    .query(query, values)
     .then((result) => result.rows)
     .catch((err) => err)
   };
