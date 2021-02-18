@@ -121,7 +121,9 @@ function App() {
               <Timeslots 
               activityCategories = {state.activity_categories}
               activities = {state.activities}
-              plannedActivities = {state.planned_activities}/>
+              plannedActivities = {state.planned_activities}
+              saveActivity = {state.saveActivity}
+              cancelActivity = {state.cancelActivity}/>
             </Route>
             <Route path="/Confirm">
               <Confirm />
