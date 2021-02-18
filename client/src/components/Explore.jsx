@@ -112,7 +112,8 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
                     const style = {
                       backgroundColor: suggestion.active ? "#2A9D8F" : "#fff",
                       fontWeight: "bold",
-                      opacity: 0.8,
+                      opacity: 0.7,
+                      textAlign: "left",
                     };
 
                     return (
