@@ -18,20 +18,18 @@ export default function Show(props) {
   return (
     <main className="timeslot__card timeslot__card--show">
       <section className="timeslot__card-left">
-        <h2 className="text--regular">{props.name}</h2>
-        <h4 className="text--light">7:30 pm - 9:00 pm</h4>
-        <section className="interviewer">
+        <h1 className="text--regular">{props.name}</h1>
+        <h5 className="text--light">7:30 pm - 9:00 pm</h5>
           <h5 className="text--light">
             {props.address}
           </h5>
-          <h3 className="text--regular">{props.phone}</h3>
-          <h4 className="text--regular">
-            <a href="restaurants-toureiffel.com">{props.website_url}</a>
-          </h4>
+          <h5 className="text--regular">{props.phone}</h5>
+          <h5 className="text--light">
+            <a href={props.website_url}>{props.website_url}</a>
+          </h5>
           <h6 className="text--light">
             {props.description}
           </h6>
-        </section>
       </section>
       <section className="timeslot__card-right">
         <section className="timeslot__actions">

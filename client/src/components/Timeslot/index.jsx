@@ -42,11 +42,7 @@ export default function Timeslot (props) {
     return <p key={index}>{cat.name}</p>
   });
 
-  let activity = activities.map((act, index) => {
-    return <p key={index}>{act.name}</p>
-  });
-
-  let showFirstActivity = activities.map((act, index) => {
+  let showActivities = activities.map((act, index) => {
     return (<Show 
       key = {act.id}
       {...act}
@@ -55,13 +51,12 @@ export default function Timeslot (props) {
 
   return ( 
     <div>{activityCategory}
-    {showFirstActivity}
+    {showActivities}
     {/* <Show
           //activity = {props.activities[0]}
           // onDelete={() => transition(CONFIRM)}
           // onEdit={() => transition(EDIT)}
         /> */}
-        {activity}
         </div>
   )  
 
