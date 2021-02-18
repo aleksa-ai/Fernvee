@@ -18,7 +18,7 @@ export default function Show(props) {
   return (
     <main className="timeslot__card timeslot__card--show">
       <section className="timeslot__card-left">
-        <h2 className="text--regular">{props.activities[0].name}</h2>
+        <h2 className="text--regular">{props.name}</h2>
         <h4 className="text--light">7:30 pm - 9:00 pm</h4>
         <section className="interviewer">
           <h5 className="text--light">

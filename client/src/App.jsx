@@ -111,7 +111,9 @@ function App() {
               <Contact />
             </Route>
             <Route path="/timeslots">
-              <Timeslots activityCategory = {state.activity_category}/>
+              <Timeslots 
+              activityCategories = {state.activity_categories}
+              activities = {state.activities}/>
             </Route>
             <Route path="/Confirm">
               <Confirm />

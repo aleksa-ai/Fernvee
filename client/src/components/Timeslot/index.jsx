@@ -22,12 +22,15 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-export default function Timeslot ({activityCategory}) {
-  let [state, setState] = useState([{id: 0, name: "John Doe"}]);
+export default function Timeslot (props) {
+  let activityCategories = props.activityCategories
+  let activities = props.activities
+  let [state, setState] = useState([{activity_categories: ['Eat'],
+  activities: ['Jules Vernes']}]);
 
   useEffect(() => {
-    setState(activityCategory)
-  }, [activityCategory]);
+    setState(activityCategories, activities)
+  }, [activityCategories, activities]);
 
   // const { mode, transition, back } = useVisualMode(
   //   props ? SHOW : EMPTY
@@ -35,11 +38,32 @@ export default function Timeslot ({activityCategory}) {
 
   console.log(state);
 
-  let items = activityCategory.map((cat, index) => {
+  let activityCategory = activityCategories.map((cat, index) => {
     return <p key={index}>{cat.name}</p>
   });
 
-  return <div>{items}</div>
+  let activity = activities.map((act, index) => {
+    return <p key={index}>{act.name}</p>
+  });
+
+  let showFirstActivity = activities.map((act, index) => {
+    return (<Show 
+      key = {act.id}
+      name = {act.name}
+    />)
+  });
+
+  return ( 
+    <div>{activityCategory}
+    {showFirstActivity}
+    {/* <Show
+          //activity = {props.activities[0]}
+          // onDelete={() => transition(CONFIRM)}
+          // onEdit={() => transition(EDIT)}
+        /> */}
+        {activity}
+        </div>
+  )  
 
   // //if (isLoading)
   // if (!props.activity_category) {
@@ -51,24 +75,6 @@ export default function Timeslot ({activityCategory}) {
   // IF props does exist use MODE to determine which component to render
   
 }
-
-// const activityCategories = [
-//   {
-//     name: "eat",
-//     label: "Eat",
-//     activities: ["Jules Verne", "Resto2", "Resto3"],
-//   },
-//   {
-//     name: "drink",
-//     label: "Drink",
-//     activities: ["Bar1", "Bar2", "Bar3"],
-//   },
-//   {
-//     name: "shop",
-//     label: "Shop",
-//     activities: ["Shop1", "Shop2", "Shop3"],
-//   },
-// ];
 
 // export default function Timeslot (props) {
 //   console.log('PROP INDEX',props)

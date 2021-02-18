@@ -6,7 +6,7 @@ export default function useApplicationData(initial) {
     //city: 'Paris',
     //itinerary: 'Foodie',
     activities: [],
-    activity_category: [],
+    activity_categories: [],
   });
 
   const setActivity = (activity) => setState({ ...state, activity });
@@ -27,7 +27,7 @@ export default function useApplicationData(initial) {
           //city: all[0].data,
           //itinerary: all[1].data,
           activities: all[0].data,
-          activity_category: all[1].data,
+          activity_categories: all[1].data,
         }));
       })
       .catch((error) => console.log('ERROR', error))
