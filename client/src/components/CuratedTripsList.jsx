@@ -32,14 +32,18 @@ export default function CuratedTripsList(props) {
 
   // <See if can sepeate this into another file>
   useEffect(() => {
-    axios.get(`/api/curatedTrips/${placeId}`).then(
-      (result) => {
-        setCuratedTrips(result.data);
-      },
-      (error) => {
-        console.log("ERROR" + error.message);
-      }
-    );
+    const fetchData = async () => {
+      const result = await axios.get(`/api/curatedTrips/${placeId}`).then(
+        (result) => result.data,
+        (error) => {
+          console.log("ERROR " + error.message);
+          return[]
+        }
+      );
+
+      setCuratedTrips(result);
+    };
+    fetchData();
   }, [placeId]);
 
   let parsedCuratedTrips = [];
