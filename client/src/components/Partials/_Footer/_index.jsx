@@ -7,7 +7,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   stickToBottom: {
-    bottom: 20,
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+
   },
 });
 
@@ -17,8 +20,7 @@ export default function Footer(props) {
 
   return (
     <BottomNavigation
-   
-    position="sticky"
+    position="static"
     value={value}
     onChange={(event, newValue) => {
       setValue(newValue);

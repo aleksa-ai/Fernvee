@@ -21,8 +21,8 @@ import About from "./components/Partials/_Footer/About";
 import Blog from "./components/Partials/_Footer/Blog";
 import Contact from "./components/Partials/_Footer/Contact";
 import Explore from "./components/Explore";
-import CuratedTripItem from "./components/CuratedTripItem";
-import CuratedTripList from "./components/CuratedTripsList";
+
+
 
 import useApplicationData from "./hooks/useApplicationData";
 
@@ -81,7 +81,6 @@ function App() {
           <Nav />
           <Switch>
             <Route path="/" exact>
-              <h1>Home Page</h1>
               <Explore />
             </Route>
             <Route path="/trips">
