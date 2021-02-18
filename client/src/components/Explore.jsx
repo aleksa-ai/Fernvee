@@ -112,8 +112,9 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
 
                   {suggestions.map((suggestion, index) => {
                     const style = {
-                      color: suggestion.active ? "#2A9D8F" : "#fff",
+                      backgroundColor: suggestion.active ? "#2A9D8F" : "#fff",
                       fontWeight: "bold",
+                      opacity: 0.8,
                     };
 
                     return (
