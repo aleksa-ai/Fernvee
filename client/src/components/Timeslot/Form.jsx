@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
+  console.log('FORM PROPS', props)
   const classes = useStyles();
   const [catOfThings, setCatOfThings] = useState(
     props.activityCategories[0].name

@@ -5,31 +5,35 @@ export default function useApplicationData(initial) {
   const [state, setState] = useState({
     //city: 'Paris',
     //itinerary: 'Foodie',
-    //activity_category: 'Eat',
-    activities: []
+    activities: [],
+    activity_category: [],
   });
 
-const setActivity = (activity) => setState({ ...state, activity });
+  const setActivity = (activity) => setState({ ...state, activity });
 
 
   // Load information from database on pageload
   useEffect(() => {
-    Promise.all([
-      // axios.get("/api/cities"),
-      // axios.get("/api/itineraries"),
-      // axios.get("/api/interviewers"),
-      axios.get("/api/activities"),
-    ]).then((all) => {
-      setState((prev) => ({
-        ...prev,
-        //city: all[0].data,
-        //itinerary: all[1].data,
-        //activity_category:: all[2].data,
-        activities: all[0].data
-      }));
-    });
+    async function dataFetch() {
+      Promise.all([
+        // axios.get("/api/cities"),
+        // axios.get("/api/itineraries"),
+        // axios.get("/api/interviewers"),
+        axios.get("/api/activities"),
+        axios.get("/api/activityCategories")
+      ]).then((all) => {
+        setState((prev) => ({
+          ...prev,
+          //city: all[0].data,
+          //itinerary: all[1].data,
+          activities: all[0].data,
+          activity_category: all[1].data,
+        }));
+      })
+      .catch((error) => console.log('ERROR', error))
+    }
+    dataFetch()
   }, []);
-
   //  On click of the Save button in form
   //  function saveActivity - might need helpers in front-end too
 

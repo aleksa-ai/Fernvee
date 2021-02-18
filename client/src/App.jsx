@@ -60,14 +60,11 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const {
-    state,
-    setActivity
-  } = useApplicationData();
+  const { state, setActivity } = useApplicationData();
 
-  console.log(state)
+  console.log('state', state)
 
-  const activities = (state.activities).map((activity) => <Show activity={activity}/>);
+  // const activities = (state.activities).map((activity) => <Show name={activity.name}/>);
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,7 +75,7 @@ function App() {
             <Route path="/" exact>
               <h1>Home Page</h1>
               <Explore />
-              {activities}
+              {/* {activities} */}
             </Route>
             <Route path="/trips">
               <MyTrips />
@@ -113,9 +110,9 @@ function App() {
             <Route path="/contact">
               <Contact />
             </Route>
-            {/* <Route path="/timeslots">
-              <Timeslots />
-            </Route> */}
+            <Route path="/timeslots">
+              <Timeslots activityCategory = {state.activity_category}/>
+            </Route>
             <Route path="/Confirm">
               <Confirm />
             </Route>
