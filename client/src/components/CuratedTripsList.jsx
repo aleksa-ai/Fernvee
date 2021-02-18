@@ -7,8 +7,11 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import axios from "axios";
 
 import CuratedTripItem from "./CuratedTripItem";
+import showCuratedTrips from "../hooks/useApplicationData";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -25,18 +28,33 @@ const useStyles = makeStyles({
 
 export default function CuratedTripsList(props) {
   const classes = useStyles();
-
-  const { curatedTrips } = props;
   let { placeId } = useParams();
+  const [curatedTrips, setCuratedTrips] = useState([]);
+
+
+  useEffect(() => {
+    axios.get(`/api/curatedTrips/${placeId}`)
+      .then((result) => {
+          setCuratedTrips(result.data);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          console.log( "ERROR"  + error.message);
+          // setIsLoaded(true);
+          // setError(error);
+        }
+      )
+  }, [placeId]);
+
+
+
 
   let parsedCuratedTrips = [];
-
-  console.log(placeId);
-  console.log(curatedTrips);
-
-  parsedCuratedTrips = curatedTrips.map((curatedTrip) => {
+  parsedCuratedTrips = curatedTrips.map((curatedTrip, index) => {
     return (
-      <Grid item xs={6}>
+      <Grid item xs={6} key={index}>
         <CuratedTripItem
           key={curatedTrip.id}
           name={curatedTrip.name}

@@ -19,7 +19,7 @@ const setActivity = (activity) => setState({ ...state, activity });
       // axios.get("/api/cities"),
       // axios.get("/api/itineraries"),
       // axios.get("/api/interviewers"),
-      axios.get("/api/curatedTrips"),
+     // axios.get("/api/curatedTrips/"),
       axios.get("/api/activities"),
     ]).then((all) => {
       setState((prev) => ({
@@ -27,16 +27,29 @@ const setActivity = (activity) => setState({ ...state, activity });
         //city: all[0].data,
         //itinerary: all[1].data,
         //activity_category:: all[2].data,
-        curatedTrips: all[0].data,
+       // curatedTrips: all[0].data,
         activities: all[0].data
       }));
     });
   }, []);
 
+  // Delete an appointment
+  function showCuratedTrips(id) {
+    console.log("In Show Curated")
+ 
+    // return axios.get(`/api/curatedTrips/${id}`)
+    //   .then((curatedTrips) => {
+    //     console.log( curatedTrips );
+    //     setState((prev) => ({
+    //       ...prev,
+    //      curatedTrips,
+    //     }));
+    //   })
+  }
   //  On click of the Save button in form
   //  function saveActivity - might need helpers in front-end too
 
   //  On click of the Confirm button Delete confirmation
   //  ...
-  return {state, setActivity}
+  return {state, setActivity, showCuratedTrips}
 }

@@ -67,7 +67,7 @@ const theme = createMuiTheme({
 function App() {
   const { state, setActivity } = useApplicationData();
 
-  console.log(state);
+  console.log("state:", state);
 
   const activities = state.activities.map((activity) => (
     <Show activity={activity} />
@@ -106,7 +106,7 @@ function App() {
               path="/curatedTrips/:placeId"
               children={<CuratedTripsList />}
             >
-              <CuratedTripsList curatedTrips={state.curatedTrips} />
+              <CuratedTripsList />
             </Route>
             <Route path="/curatedTrips/:placeId/:id">
               <Itinerary />
