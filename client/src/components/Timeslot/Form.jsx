@@ -24,13 +24,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
+  console.log('FORM PROPS', props)
+
+  let activityCategories = props.activityCategories;
+  let activities = props.activities;
+
   const classes = useStyles();
   const [catOfThings, setCatOfThings] = useState(
-    props.activityCategories[0].name
+    activityCategories[0].name
   );
 
   const [thingToDo, setThingToDo] = useState(
-    props.activityCategories[0].activities[0]
+    // props.activityCategories[0].activities[0]
+    []
   );
 
   const [selectedStartDate, setSelectedStartDate] = useState(
@@ -42,7 +48,7 @@ export default function Form(props) {
 
   const handleCategoryChange = (categoryEvent) => {
     const newCategory = categoryEvent.target.value;
-    const firstActivity = props.activityCategories.find(
+    const firstActivity = activityCategories.find(
       (category) => category.name === newCategory
     ).activities[0];
     setCatOfThings(newCategory);
@@ -65,7 +71,7 @@ export default function Form(props) {
   const [error, setError] = useState("");
   const reset = () => {
     //props.onCancel();
-    setCatOfThings(props.activityCategories[0].name);
+    setCatOfThings(activityCategories[0].name);
     //setThingToDo(null);
   };
 
@@ -80,7 +86,7 @@ export default function Form(props) {
       return;
     }
     setError("");
-    //props.onSave(catOfThings, thingToDo);
+    props.onSave(catOfThings/*, thingToDo*/);
   }
 
   return (
@@ -96,14 +102,14 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {props.activityCategories.map((category) => (
+              {activityCategories.map((category) => (
                 <MenuItem key={category.name} value={category.name}>
                   {category.label}
                 </MenuItem>
               ))}
             </TextField>
           </div>
-          <div>
+          {/* <div>
             <TextField
               id="standard-select-thingToDo"
               select
@@ -112,7 +118,7 @@ export default function Form(props) {
               onChange={handleActivityChange}
               helperText="Please select an activity"
             >
-              {props.activityCategories
+              {activityCategories
                 .find((category) => category.name === catOfThings)
                 .activities.map((option) => (
                   <MenuItem key={option} value={option}>
@@ -120,7 +126,7 @@ export default function Form(props) {
                   </MenuItem>
                 ))}
             </TextField>
-          </div>
+          </div> */}
         </form>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
