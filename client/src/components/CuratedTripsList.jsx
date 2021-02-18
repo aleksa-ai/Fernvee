@@ -10,7 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 
 import CuratedTripItem from "./CuratedTripItem";
-import showCuratedTrips from "../hooks/useApplicationData";
 import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
@@ -31,32 +30,24 @@ export default function CuratedTripsList(props) {
   let { placeId } = useParams();
   const [curatedTrips, setCuratedTrips] = useState([]);
 
-
+  // <See if can sepeate this into another file>
   useEffect(() => {
-    axios.get(`/api/curatedTrips/${placeId}`)
-      .then((result) => {
-          setCuratedTrips(result.data);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          console.log( "ERROR"  + error.message);
-          // setIsLoaded(true);
-          // setError(error);
-        }
-      )
+    axios.get(`/api/curatedTrips/${placeId}`).then(
+      (result) => {
+        setCuratedTrips(result.data);
+      },
+      (error) => {
+        console.log("ERROR" + error.message);
+      }
+    );
   }, [placeId]);
-
-
-
 
   let parsedCuratedTrips = [];
   parsedCuratedTrips = curatedTrips.map((curatedTrip, index) => {
     return (
       <Grid item xs={6} key={index}>
         <CuratedTripItem
-          key={curatedTrip.id}
+          key={curatedTrip.toString()}
           name={curatedTrip.name}
           image={curatedTrip.image_url}
         />
@@ -66,12 +57,12 @@ export default function CuratedTripsList(props) {
 
   return (
     <>
-    <h1>Curated Trips</h1>
-    <div className={classes.container}>
-      <Grid container item xs={12} spacing={6} className={classes.root}>
-        {parsedCuratedTrips}
-      </Grid>
-    </div>
+      <h1>Curated Trips</h1>
+      <div className={classes.container}>
+        <Grid container item xs={12} spacing={6} className={classes.root}>
+          {parsedCuratedTrips}
+        </Grid>
+      </div>
     </>
   );
 }

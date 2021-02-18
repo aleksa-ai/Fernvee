@@ -6,7 +6,6 @@ export default function useApplicationData(initial) {
     //city: 'Paris',
     //itinerary: 'Foodie',
     //activity_category: 'Eat',
-    curatedTrips: [],
     activities: []
   });
 
@@ -33,23 +32,12 @@ const setActivity = (activity) => setState({ ...state, activity });
     });
   }, []);
 
-  // Delete an appointment
-  function showCuratedTrips(id) {
-    console.log("In Show Curated")
- 
-    // return axios.get(`/api/curatedTrips/${id}`)
-    //   .then((curatedTrips) => {
-    //     console.log( curatedTrips );
-    //     setState((prev) => ({
-    //       ...prev,
-    //      curatedTrips,
-    //     }));
-    //   })
-  }
+
+
   //  On click of the Save button in form
   //  function saveActivity - might need helpers in front-end too
 
   //  On click of the Confirm button Delete confirmation
   //  ...
-  return {state, setActivity, showCuratedTrips}
+  return {state, setActivity }
 }
