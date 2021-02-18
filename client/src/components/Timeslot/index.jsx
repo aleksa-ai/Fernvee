@@ -25,6 +25,8 @@ const ERROR_DELETE = "ERROR_DELETE";
 export default function Timeslot(props) {
   let activityCategories = props.activityCategories;
   let activities = props.activities;
+  let plannedActivities = props.plannedActivities;
+  
   let [state, setState] = useState([
     { activity_categories: ["Eat"], activities: [] },
   ]);

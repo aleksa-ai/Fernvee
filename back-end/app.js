@@ -8,6 +8,8 @@ const dbHelpers = require('./helpers/dbHelpers')(db);
 const users = require('./routes/users')
 const activities = require('./routes/activities')
 const activityCategories = require('./routes/activityCategories')
+const plannedActivities = require('./routes/plannedActivities')
+
 
 var indexRouter = require('./routes/index');
 
@@ -23,5 +25,7 @@ app.use('/', indexRouter);
 app.use('/api/users', users(dbHelpers));
 app.use('/api/activities', activities(dbHelpers));
 app.use('/api/activityCategories', activityCategories(dbHelpers));
+app.use('/api/plannedActivities', plannedActivities(dbHelpers));
+
 
 module.exports = app;

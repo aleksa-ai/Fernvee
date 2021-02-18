@@ -60,7 +60,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const { state, setActivity } = useApplicationData();
+  const { state, setActivity, saveActivity, deleteActivity } = useApplicationData();
 
   console.log('state', state)
 
@@ -113,7 +113,8 @@ function App() {
             <Route path="/timeslots">
               <Timeslots 
               activityCategories = {state.activity_categories}
-              activities = {state.activities}/>
+              activities = {state.activities}
+              plannedActivities = {state.planned_activities}/>
             </Route>
             <Route path="/Confirm">
               <Confirm />
