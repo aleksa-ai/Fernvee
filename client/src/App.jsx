@@ -102,6 +102,7 @@ function App() {
             <Route
               path="/curatedTrips/:placeId"
               children={<CuratedTripsList />}
+              exact
             >
               <CuratedTripsList />
             </Route>

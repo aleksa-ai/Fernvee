@@ -8,13 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import Grid from "@material-ui/core/Grid";
+
 
 const useStyles = makeStyles({
   root: {
@@ -32,9 +26,14 @@ export default function Signup(props) {
 
 
   const redirect = () => {
-    const url = `/create`;
+    const url = `/curatedTrips/:placeId/:id`;
     history.push(url);
   };
+
+  const addToTrips = () => {
+    const url = `/trips`;
+    history.push(url);
+  }
 
   return (
         <Card className={classes.root}>
@@ -50,7 +49,7 @@ export default function Signup(props) {
             <Button size="small" color="primary" onClick={redirect} type="submit">
               View Details
             </Button>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={addToTrips} type="submit">
               Add to My Trips
             </Button>
           </CardActions>

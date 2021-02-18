@@ -36,7 +36,7 @@ export default function Timeslot(props) {
   }, [activityCategories, activities]);
 
   const { mode, transition, back } = useVisualMode(
-    activities.lenght > 0 === true ? SHOW : EMPTY
+    activities.length > 0 === true ? SHOW : EMPTY
   );
 
   const save = (/*name,*/ category) => {
