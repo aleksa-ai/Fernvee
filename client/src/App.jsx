@@ -33,7 +33,7 @@ import {
 } from "../src/helpers/selectors";
 
 //Temmporary paths
-import Timeslots from "./components/Timeslot/index";
+import Timeslot from "./components/Timeslot/index";
 import Confirm from "./components/Timeslot/Confirm";
 import Empty from "./components/Timeslot/Empty";
 import Error from "./components/Timeslot/Error";
@@ -117,8 +117,8 @@ function App() {
             <Route path="/contact">
               <Contact />
             </Route>
-            <Route path="/timeslots">
-              <Timeslots 
+            <Route path="/timeslot">
+              <Timeslot 
               activityCategories = {state.activity_categories}
               activities = {state.activities}
               plannedActivities = {state.planned_activities}

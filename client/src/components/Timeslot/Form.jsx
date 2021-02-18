@@ -100,7 +100,7 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {activityCategories.map((category) => (
+              {activityCategories && activityCategories.map((category) => (
                 <MenuItem key={category.name} value={category.name}>
                   {category.name}
                 </MenuItem>

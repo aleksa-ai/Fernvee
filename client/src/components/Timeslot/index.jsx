@@ -29,29 +29,29 @@ export default function Timeslot(props) {
 
   //console.log("TIMESLOT Plan'd Act:", plannedActivities)
   
-  let [state, setState] = useState([
-    { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
-  ]);
+  // let [state, setState] = useState([
+  //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
+  // ]);
 
-  useEffect(() => {
-    setState(activityCategories, activities, plannedActivities);
-  }, [activityCategories, activities, plannedActivities]);
+  // useEffect(() => {
+  //   setState(activityCategories, activities, plannedActivities);
+  // }, [activityCategories, activities, plannedActivities]);
 
   console.log("TIMESLOT props:", props);
   //console.log("TIMESLOT Plan'd Act 2:", plannedActivities['1'].planned_activity)
 
-  let activityCategory = activityCategories.map((cat, index) => {
+  let activityCategory = activityCategories && activityCategories.map((cat, index) => {
     return <p key={index}>{cat.name}</p>;
   });
 
-  let showActivities = activities.map((act, index) => {
+  let showActivities = activities && activities.map((act, index) => {
     return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
   });
 
-  let showFirstActivtiy = showActivities[0];
+  let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    !plannedActivities ? SHOW : EMPTY
+    plannedActivities ? SHOW : EMPTY
   );
 
   const save = (id) => {
