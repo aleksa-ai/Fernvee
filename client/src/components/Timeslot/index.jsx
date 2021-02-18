@@ -26,53 +26,55 @@ export default function Timeslot(props) {
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
-  
-  let [state, setState] = useState([
-    { activity_categories: ["Eat"], activities: [] },
-  ]);
 
-  useEffect(() => {
-    setState(activityCategories, activities);
-  }, [activityCategories, activities]);
+  //console.log("TIMESLOT Plan'd Act:", plannedActivities)
+  
+  // let [state, setState] = useState([
+  //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
+  // ]);
+
+  // useEffect(() => {
+  //   setState(activityCategories, activities, plannedActivities);
+  // }, [activityCategories, activities, plannedActivities]);
+
+  console.log("TIMESLOT props:", props);
+  //console.log("TIMESLOT Plan'd Act 2:", plannedActivities['1'].planned_activity)
+
+  let activityCategory = activityCategories && activityCategories.map((cat, index) => {
+    return <p key={index}>{cat.name}</p>;
+  });
+
+  let showActivities = activities && activities.map((act, index) => {
+    return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
+  });
+
+  let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    activities.length > 0 === true ? SHOW : EMPTY
+    plannedActivities ? SHOW : EMPTY
   );
 
-  const save = (/*name,*/ category) => {
-        const timeslot = {
-          //activity: name,
-          category,
-        };
+  const save = (id) => {
+    const plannedActivity = {
+      name : 'NEWLY SAVED ACTIVITY'
+    };
     
         transition(SAVING, true);
     
         props
-          //.bookTimeslot(props.id, activity)
+          .saveActivity(props.id, plannedActivity)
           .then(() => transition(SHOW))
-          .catch(() => transition(ERROR_SAVE, true));
+          //.catch(() => transition(ERROR_SAVE, true));
       };
 
   const cancel = () => {
     transition(DELETING, true);
 
-    activities
-      //.cancelInterview(props.id)
+    props
+      .cancelActivity(props.id)
       .then(() => transition(EMPTY));
-    //.catch(() => transition(ERROR_DELETE, true));
+      //.catch(() => transition(ERROR_DELETE, true));
   };
-
-  console.log(state);
-
-  let activityCategory = activityCategories.map((cat, index) => {
-    return <p key={index}>{cat.name}</p>;
-  });
-
-  let showActivities = activities.map((act, index) => {
-    return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
-  });
-
-  let showFirstActivtiy = showActivities[0];
 
   return (
     <article className="timeslot">
@@ -87,6 +89,13 @@ export default function Timeslot(props) {
           onCancel={() => back()}
         />
       )}
+      {/* {mode === SHOW && (
+        <Show
+          plannedActivities = {plannedActivities}
+          onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(EDIT)}
+        />
+      )} */}
       {showFirstActivtiy}
       {/* <Show
           //activity = {props.activities[0]}

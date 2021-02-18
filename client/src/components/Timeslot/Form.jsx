@@ -30,9 +30,7 @@ export default function Form(props) {
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState(
-    activityCategories[0].name
-  );
+  const [catOfThings, setCatOfThings] = useState('Eat');
 
   const [thingToDo, setThingToDo] = useState(
     // props.activityCategories[0].activities[0]
@@ -102,15 +100,15 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {activityCategories.map((category) => (
+              {activityCategories && activityCategories.map((category) => (
                 <MenuItem key={category.name} value={category.name}>
-                  {category.label}
+                  {category.name}
                 </MenuItem>
               ))}
             </TextField>
           </div>
-          {/* <div>
-            <TextField
+          <div>
+            {/* <TextField
               id="standard-select-thingToDo"
               select
               label="Select"
@@ -120,13 +118,13 @@ export default function Form(props) {
             >
               {activityCategories
                 .find((category) => category.name === catOfThings)
-                .activities.map((option) => (
+                .then((activities) => activities.map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
                   </MenuItem>
-                ))}
-            </TextField>
-          </div> */}
+                )))}
+            </TextField> */}
+          </div>
         </form>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
