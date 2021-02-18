@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
 import "./Explore.scss";
+import video from "../travel.mp4"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,13 +63,10 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
     history.push(url);
   };
 
-  <></>;
-
   if (isScriptLoaded && isScriptLoadSucceed) {
     return (
       <>
-      {/* Try to figure out how to include video */}
-        {/* <video
+        <video
           autoPlay
           muted
           loop
@@ -77,8 +75,8 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
           className={classes.video}
         >
           <source src={video} type="video/mp4" />
-        </video> */}
-        <img id="homepage" src="https://i.vimeocdn.com/video/775458264.webp?mw=2300&mh=1294&q=70" alt="beach"></img>
+        </video> 
+       
         <div>
           <PlacesAutocomplete
             value={city}
