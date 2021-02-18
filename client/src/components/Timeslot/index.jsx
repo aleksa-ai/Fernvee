@@ -22,55 +22,77 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-export default function Timeslot (props) {
-  let activityCategories = props.activityCategories
-  let activities = props.activities
-  let [state, setState] = useState([{activity_categories: ['Eat'],
-  activities: ['Jules Vernes']}]);
+export default function Timeslot(props) {
+  let activityCategories = props.activityCategories;
+  let activities = props.activities;
+  let [state, setState] = useState([
+    { activity_categories: ["Eat"], activities: [] },
+  ]);
 
   useEffect(() => {
-    setState(activityCategories, activities)
+    setState(activityCategories, activities);
   }, [activityCategories, activities]);
 
-  // const { mode, transition, back } = useVisualMode(
-  //   props ? SHOW : EMPTY
-  // );
+  const { mode, transition, back } = useVisualMode(
+    activities.lenght > 0 === true ? SHOW : EMPTY
+  );
+
+  const save = (/*name, category*/) => {
+        // const timeslot = {
+        //   activity: name,
+        //   category,
+        // };
+    
+        transition(SAVING, true);
+    
+        props
+          //.bookTimeslot(props.id, activity)
+          .then(() => transition(SHOW))
+          .catch(() => transition(ERROR_SAVE, true));
+      };
+
+  const cancel = () => {
+    transition(DELETING, true);
+
+    activities
+      //.cancelInterview(props.id)
+      .then(() => transition(EMPTY));
+    //.catch(() => transition(ERROR_DELETE, true));
+  };
 
   console.log(state);
 
   let activityCategory = activityCategories.map((cat, index) => {
-    return <p key={index}>{cat.name}</p>
+    return <p key={index}>{cat.name}</p>;
   });
 
   let showActivities = activities.map((act, index) => {
-    return (<Show 
-      key = {act.id}
-      {...act}
-    />)
+    return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
   });
 
-  let showFirstActivtiy = showActivities[0]
+  let showFirstActivtiy = showActivities[0];
 
-  return ( 
-    <div>{activityCategory}
-    {showFirstActivtiy}
-    {/* <Show
+  return (
+    <article className="timeslot">
+    <Header time={"Morning"} />
+      {activityCategory}
+      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      {mode === CREATE && (
+        <Form
+          activityCategories={activityCategories}
+          activities = {activities}
+          onSave={save}
+          onCancel={() => back()}
+        />
+      )}
+      {showFirstActivtiy}
+      {/* <Show
           //activity = {props.activities[0]}
           // onDelete={() => transition(CONFIRM)}
           // onEdit={() => transition(EDIT)}
         /> */}
-        </div>
-  )  
-
-  // //if (isLoading)
-  // if (!props.activity_category) {
-  //   return <h1>Loading....</h1>
-  // } else {
-  //   return <h1>Show Form</h1>
-  // }
-  //If props does NOT exist render the EMPTY component
-  // IF props does exist use MODE to determine which component to render
-  
+    </article>
+      );
 }
 
 // export default function Timeslot (props) {
@@ -105,8 +127,8 @@ export default function Timeslot (props) {
 //   };
 
 //   return (
-//     <article className="timeslot">
-//       <Header time={"Morning"} />
+    // <article className="timeslot">
+    //   <Header time={"Morning"} />
 //       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 //       {mode === SAVING && <Status message={"Saving"} />}
 //       {mode === DELETING && <Status message={"Deleting"} />}
