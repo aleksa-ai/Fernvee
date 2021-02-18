@@ -37,7 +37,10 @@ export default function Show(props) {
           View Details
         </Button>
         <Button size="small" color="primary" type="submit">
-          Add to My Trips
+          Edit
+        </Button>
+        <Button size="small" color="primary" type="submit">
+          Delete
         </Button>
       </CardActions>
     </Card>
