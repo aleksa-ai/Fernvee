@@ -52,7 +52,7 @@ export default function Form(props) {
   };
 
   const [error, setError] = useState("");
-  
+
   const reset = () => {
     props.onCancel();
     setActivityCategoryState(activityCategories[0].id);
@@ -70,7 +70,7 @@ export default function Form(props) {
       return;
     }
     setError("");
-    props.onSave(activityCategoryState, activityBasedOnCategory);
+    props.onSave(activityBasedOnCategory);
   }
 
   console.log("activityCategoryState", activityCategoryState);

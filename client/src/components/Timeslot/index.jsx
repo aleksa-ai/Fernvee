@@ -72,16 +72,22 @@ export default function Timeslot(props) {
     !plannedActivities ? SHOW : EMPTY
   );
 
-  const save = (id) => {
-    const plannedActivity = {
-      name: "NEWLY SAVED ACTIVITY",
-    };
+  // const save = (id) => {
+  //   const plannedActivity = {
+  //     name: "NEWLY SAVED ACTIVITY",
+  //   };
 
-    transition(SAVING, true);
+  //   transition(SAVING, true);
 
-    props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW))
-    .catch(() => transition(ERROR_SAVE, true));
-  };
+  //   props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW))
+  //   .catch(() => transition(ERROR_SAVE, true));
+  // };
+
+  const saveToState = (activity) => {
+    
+
+    props.updateActivityTimeslot(activity, props.slotTime, props.dayIndex)
+  }
 
   const cancel = () => {
     transition(DELETING, true);
@@ -109,7 +115,7 @@ export default function Timeslot(props) {
             time={props.slotTime}
             activityCategories={activityCategories}
             activities={activities}
-            onSave={save}
+            onSave={saveToState}
             onCancel={() => back()}
           />
         )}

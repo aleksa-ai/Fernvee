@@ -23,31 +23,37 @@ export default function CenteredGrid(props) {
         <Grid item xs={12}>
           <Timeslot
             slotTime="Morning"
+            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
+            updateActivityTimeslot={props.updateActivityTimeslot}
           />
         </Grid>
         <Grid item xs={12}>
           <Timeslot
             slotTime="Afternoon"
+            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
-          />{" "}
+            updateActivityTimeslot={props.updateActivityTimeslot}
+          />
         </Grid>
         <Grid item xs={12}>
           <Timeslot
             slotTime="Evening"
+            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
+            updateActivityTimeslot={props.updateActivityTimeslot}
           />
         </Grid>
       </Grid>
