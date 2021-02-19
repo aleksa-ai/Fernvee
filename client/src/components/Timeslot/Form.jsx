@@ -68,9 +68,9 @@ export default function Form(props) {
 
   const [error, setError] = useState("");
   const reset = () => {
-    //props.onCancel();
+    props.onCancel();
     setCatOfThings(activityCategories[0].name);
-    //setThingToDo(null);
+    setThingToDo(null);
   };
 
   function validate() {

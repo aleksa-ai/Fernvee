@@ -84,7 +84,13 @@ function App() {
               <MyTrips />
             </Route>
             <Route path="/create">
-              <Itinerary />
+              <Itinerary  
+              activityCategories = {state.activity_categories}
+              activities = {state.activities}
+              plannedActivities = {state.planned_activities}
+              saveActivity = {saveActivity}
+              cancelActivity = {state.cancelActivity}
+              />
             </Route>
             <Route path="/myProfile">
               <Profile />
@@ -101,6 +107,7 @@ function App() {
             <Route
               path="/curatedTrips/:placeId"
               children={<CuratedTripsList />}
+              exact
             >
               <CuratedTripsList />
             </Route>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -7,13 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import Grid from "@material-ui/core/Grid";
+
 
 const useStyles = makeStyles({
   root: {
@@ -27,10 +22,20 @@ const useStyles = makeStyles({
 
 export default function Signup(props) {
   const classes = useStyles();
+  const history = useHistory();
+
+
+  const redirect = () => {
+    const url = `/curatedTrips/:placeId/:id`;
+    history.push(url);
+  };
+
+  const addToTrips = () => {
+    const url = `/trips`;
+    history.push(url);
+  }
 
   return (
-
-     
         <Card className={classes.root}>
           <CardActionArea>
             <CardMedia className={classes.media} image={props.image} />
@@ -41,10 +46,10 @@ export default function Signup(props) {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={redirect} type="submit">
               View Details
             </Button>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={addToTrips} type="submit">
               Add to My Trips
             </Button>
           </CardActions>

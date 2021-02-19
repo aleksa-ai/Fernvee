@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CenteredGrid() {
+export default function CenteredGrid(props) {
+  console.log("DLI Props", props)
   const classes = useStyles();
 
   return (
@@ -26,7 +27,7 @@ export default function CenteredGrid() {
       justify="center"
       >
         <Grid item xs={12} >
-          <Timeslot />
+          <Timeslot saveActivity={props.saveActivity}/>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>Activity 2</Paper>

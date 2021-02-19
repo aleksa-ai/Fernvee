@@ -10,6 +10,21 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getUserTrips = () => {
+    const query = {
+      text: (`
+      SELECT * FROM users
+      JOIN user_trips ON users.id = user_trips.user_id
+      JOIN itineraries ON itineraries.id = user_trips.itinerary_id
+      `),
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  }
+
   const getActivities = () => {
 
     const query = {
@@ -75,6 +90,7 @@ module.exports = (db) => {
     getActivities,
     getActivityCategories,
     getPlannedActivities,
-    getCuratedTrips
+    getCuratedTrips,
+    getUserTrips
   };
 };
