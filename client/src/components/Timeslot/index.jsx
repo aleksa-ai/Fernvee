@@ -8,6 +8,10 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+
+
 import "./styles.scss";
 
 import useVisualMode from "../../hooks/useVisualMode";
@@ -22,10 +26,23 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '90%',
+  },
+}));
+
 export default function Timeslot(props) {
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
+
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   //console.log("TIMESLOT Plan'd Act:", plannedActivities)
 
@@ -77,6 +94,7 @@ export default function Timeslot(props) {
   return (
     <article className="timeslot">
       <Header time={"Morning"} />
+      <Card className={classes.root}>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETING && <Status message={"Deleting"} />}
@@ -105,6 +123,7 @@ export default function Timeslot(props) {
         />
       )}
       {mode === EDIT && <h1>EDIT MODE</h1>}¸
+      </Card>
     </article>
   );
 }
