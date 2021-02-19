@@ -58,7 +58,7 @@ export default function Itinerary(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  function getStepContent(stepIndex) {
+  function getStepContent(stepIndex, activities) {
     switch (stepIndex) {
       case 0:
         return (
@@ -68,7 +68,7 @@ export default function Itinerary(props) {
           />
         );
       case 1:
-        return <DayList startDate={startDate} endDate={endDate} />;
+        return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity}/>
       case 2:
         return "REVIEW";
       default:
@@ -92,7 +92,7 @@ export default function Itinerary(props) {
           </div>
         ) : (
           <div>
-            {getStepContent(activeStep)}
+            {getStepContent(activeStep, props.activities)}
             <div>
               <Button
                 disabled={activeStep === 0}

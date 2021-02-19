@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VerticalTabs(props) {
+export default function DayList(props) {
+  console.log("Day L Props", props.activities)
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -83,7 +84,7 @@ export default function VerticalTabs(props) {
       </Tabs>
 
       <div className={classes.tabpanel}>
-        <DayListItem />
+        <DayListItem activities={props.activities} activityCategories={props.activityCategories} saveActivity={props.saveActivity} />
       </div>
     </div>
   );

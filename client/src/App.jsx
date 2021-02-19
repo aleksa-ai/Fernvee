@@ -79,13 +79,18 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Explore />
-              {/* {activities} */}
             </Route>
             <Route path="/trips">
               <MyTrips />
             </Route>
             <Route path="/create">
-              <Itinerary />
+              <Itinerary  
+              activityCategories = {state.activity_categories}
+              activities = {state.activities}
+              plannedActivities = {state.planned_activities}
+              saveActivity = {saveActivity}
+              cancelActivity = {state.cancelActivity}
+              />
             </Route>
             <Route path="/myProfile">
               <Profile />

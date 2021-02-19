@@ -84,7 +84,7 @@ export default function Form(props) {
       return;
     }
     setError("");
-    props.onSave(catOfThings/*, thingToDo*/);
+    props.saveActivity(catOfThings/*, thingToDo*/);
   }
 
   return (
