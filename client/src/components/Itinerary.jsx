@@ -68,7 +68,7 @@ export default function Itinerary(props) {
           />
         );
       case 1:
-        return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity}/>
+        return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities}/>
       case 2:
         return "REVIEW";
       default:

@@ -27,7 +27,7 @@ export default function CenteredGrid(props) {
       justify="center"
       >
         <Grid item xs={12} >
-          <Timeslot saveActivity={props.saveActivity}/>
+          <Timeslot activityCategories={props.activityCategories} activities={props.activities} plannedActivities = {props.plannedActivities} saveActivity={props.saveActivity}/>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>Activity 2</Paper>

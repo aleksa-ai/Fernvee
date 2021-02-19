@@ -44,14 +44,14 @@ export default function Timeslot(props) {
     return <p key={index}>{cat.name}</p>;
   });
 
-  let showActivities = activities && activities.map((act, index) => {
-    return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
-  });
+  // let showActivities = activities && activities.map((act, index) => {
+  //   return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
+  // });
 
-  let showFirstActivtiy = showActivities ? showActivities[0] : null ;
+  // let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    !plannedActivities ? SHOW : EMPTY
+    plannedActivities ? SHOW : EMPTY
   );
 
   const save = (id) => {
@@ -81,6 +81,7 @@ export default function Timeslot(props) {
     <Header time={"Morning"} />
       {activityCategory}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+      
       {mode === CREATE && (
         <Form
           activityCategories={activityCategories}
@@ -89,19 +90,15 @@ export default function Timeslot(props) {
           onCancel={() => back()}
         />
       )}
-      {/* {mode === SHOW && (
+      {mode === SHOW && (
         <Show
+          activities = {activities}
+          activityCategories={activityCategories}
           plannedActivities = {plannedActivities}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
-      )} */}
-      {showFirstActivtiy}
-      {/* <Show
-          //activity = {props.activities[0]}
-          // onDelete={() => transition(CONFIRM)}
-          // onEdit={() => transition(EDIT)}
-        /> */}
+      )}
     </article>
       );
 }
