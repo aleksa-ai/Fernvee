@@ -12,21 +12,20 @@ module.exports = (db) => {
 
   const getUserTrips = () => {
     const query = {
-      text: (`
+      text: `
       SELECT * FROM users
       JOIN user_trips ON users.id = user_trips.user_id
       JOIN itineraries ON itineraries.id = user_trips.itinerary_id
-      `),
+      `,
     };
 
     return db
       .query(query)
       .then((result) => result.rows)
       .catch((err) => err);
-  }
+  };
 
   const getActivities = () => {
-
     const query = {
       text: "SELECT * FROM activities",
     };
@@ -39,8 +38,16 @@ module.exports = (db) => {
 
   const getActivityCategories = () => {
     const query = {
-      text: "SELECT * FROM activity_categories",
+      text: `SELECT *
+      FROM activity_categories`,
     };
+
+  // const getActivityCategories = () => {
+  //   const query = {
+  //     text: `SELECT
+  //      activity_categories.id
+  //      FROM activity_categories JOIN activities ON activity_categories.id = activities.category_id GROUP BY activity_categories.id ORDER BY activity_categories.id`,
+  //   };
 
     return db
       .query(query)
@@ -50,7 +57,7 @@ module.exports = (db) => {
 
   const getPlannedActivities = () => {
     //Could add day_id, start_time, end_time, itinerary_id from planned_activities
-    
+
     const query = {
       text: `SELECT
       planned_activities.id,
@@ -70,19 +77,19 @@ module.exports = (db) => {
 
   const getCuratedTrips = (placeId) => {
     const query = {
-      text: (`
+      text: `
       SELECT * FROM cities 
       JOIN itineraries ON itineraries.city_id = cities.id
       WHERE cities.placeId = $1
-    `)
+    `,
     };
 
     const values = [placeId];
 
     return db
-    .query(query, values)
-    .then((result) => result.rows)
-    .catch((err) => err)
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
   };
 
   return {
@@ -91,6 +98,6 @@ module.exports = (db) => {
     getActivityCategories,
     getPlannedActivities,
     getCuratedTrips,
-    getUserTrips
+    getUserTrips,
   };
 };

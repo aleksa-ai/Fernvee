@@ -84,7 +84,7 @@ export default function DayList(props) {
       </Tabs>
 
       <div className={classes.tabpanel}>
-        <DayListItem activities={props.activities} activityCategories={props.activityCategories} saveActivity={props.saveActivity} />
+        <DayListItem activities={props.activities} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} saveActivity={props.saveActivity} deleteActivity = {props.deleteActivity}/>
       </div>
     </div>
   );

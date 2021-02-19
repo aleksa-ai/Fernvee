@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
-  console.log('FORM PROPS', props)
+  console.log("FORM PROPS", props);
 
   let activityCategories = props.activityCategories;
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState('Eat');
+  const [catOfThings, setCatOfThings] = useState(activityCategories[0].id);
 
   const [thingToDo, setThingToDo] = useState(
     // props.activityCategories[0].activities[0]
@@ -47,8 +47,11 @@ export default function Form(props) {
   const handleCategoryChange = (categoryEvent) => {
     const newCategory = categoryEvent.target.value;
     const firstActivity = activityCategories.find(
-      (category) => category.name === newCategory
-    ).activities[0];
+      (category) => category.name === newCategory ? category.id : null
+    )
+
+    console.log('1stAct', firstActivity)
+
     setCatOfThings(newCategory);
     setThingToDo(firstActivity);
   };
@@ -72,7 +75,6 @@ export default function Form(props) {
     setCatOfThings(activityCategories[0].name);
     setThingToDo(null);
   };
-
   function validate() {
     if (catOfThings === "") {
       setError("An activity category must be selected");
@@ -84,8 +86,10 @@ export default function Form(props) {
       return;
     }
     setError("");
-    props.onSave(catOfThings/*, thingToDo*/);
+    props.onSave(catOfThings /*, thingToDo*/);
   }
+
+  console.log("CatOfThings", catOfThings)
 
   return (
     <main className="timeslot__card timeslot__card--create">
@@ -100,30 +104,29 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {activityCategories && activityCategories.map((category) => (
-                <MenuItem key={category.name} value={category.name}>
-                  {category.name}
-                </MenuItem>
-              ))}
+              {activityCategories &&
+                activityCategories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
             </TextField>
           </div>
           <div>
-            {/* <TextField
+            <TextField
               id="standard-select-thingToDo"
               select
               label="Select"
-              value={thingToDo}
+              //value={thingToDo}
               onChange={handleActivityChange}
               helperText="Please select an activity"
             >
-              {activityCategories
-                .find((category) => category.name === catOfThings)
-                .then((activities) => activities.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+              {activities.filter((activity) => activity.category_id === catOfThings).map((activity) => (
+                  <MenuItem key={activity.id} value={activity.id}>
+                    {activity.name}
                   </MenuItem>
-                )))}
-            </TextField> */}
+                ))}
+            </TextField>
           </div>
         </form>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

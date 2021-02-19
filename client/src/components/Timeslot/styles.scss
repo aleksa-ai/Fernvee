@@ -7,7 +7,6 @@ $timeslot-height: 11rem;
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
 
   &__time {
@@ -69,7 +68,7 @@ $timeslot-height: 11rem;
       justify-content: space-between;
       align-items: center;
     }
-    
+
     &__actions {
       margin-top: 1rem;
     }
@@ -84,7 +83,7 @@ $timeslot-height: 11rem;
         flex-direction: column;
       }
 
-      &-close { 
+      &-close {
         align-self: flex-start;
       }
     }
