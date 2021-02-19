@@ -22,7 +22,6 @@ export default function CenteredGrid(props) {
     <div className={classes.root}>
       <Grid container spacing={4} align="center" justify="center">
         <Grid item xs={12}>
-          {/* <Header time={"Morning"} /> */}
           <Timeslot
             slotTime="Morning"
             activityCategories={props.activityCategories}

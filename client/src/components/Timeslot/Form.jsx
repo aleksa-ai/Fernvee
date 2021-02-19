@@ -3,12 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
-// import Grid from "@material-ui/core/Grid";
-// import DateFnsUtils from "@date-io/date-fns";
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardDatePicker,
-// } from "@material-ui/pickers";
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -30,66 +24,55 @@ export default function Form(props) {
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState(activityCategories[0].id);
 
-  const [thingToDo, setThingToDo] = useState(
+  const [activityCategoryState, setActivityCategoryState] = useState(
+    activityCategories[0].id
+  );
+
+  const [activityBasedOnCategory, setActivityBasedOnCategory] = useState(
     // props.activityCategories[0].activities[0]
     []
   );
 
-  const [selectedStartDate, setSelectedStartDate] = useState(
-    new Date("2021-02-16")
-  );
-  const [selectedEndDate, setSelectedEndDate] = useState(
-    new Date("2021-02-17")
-  );
-
   const handleCategoryChange = (categoryEvent) => {
     const newCategory = categoryEvent.target.value;
-    const firstActivity = activityCategories.find(
-      (category) => category.name === newCategory ? category.id : null
-    )
 
-    console.log('1stAct', firstActivity)
+    const firstActivity = activityCategories.find((category) =>
+      category.id === newCategory ? category.id : null
+    );
+    console.log("1stAct", firstActivity);
 
-    setCatOfThings(newCategory);
-    setThingToDo(firstActivity);
+    setActivityCategoryState(newCategory);
+    setActivityBasedOnCategory(firstActivity);
   };
 
   const handleActivityChange = (event) => {
     const newActivity = event.target.value;
-    setThingToDo(newActivity);
-  };
-
-  const handleStartDateChange = (date) => {
-    setSelectedStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setSelectedEndDate(date);
+    setActivityBasedOnCategory(newActivity);
   };
 
   const [error, setError] = useState("");
   const reset = () => {
     props.onCancel();
-    setCatOfThings(activityCategories[0].name);
-    setThingToDo(null);
+    setActivityCategoryState(activityCategories[0].name);
+    setActivityBasedOnCategory(null);
   };
+
   function validate() {
-    if (catOfThings === "") {
+    if (!activityCategoryState) {
       setError("An activity category must be selected");
       return;
     }
 
-    if (thingToDo === null) {
+    if (!activityBasedOnCategory) {
       setError("An activity must be selected");
       return;
     }
     setError("");
-    props.onSave(catOfThings /*, thingToDo*/);
+    props.onSave(activityCategoryState, activityBasedOnCategory);
   }
 
-  console.log("CatOfThings", catOfThings)
+  console.log("activityCategoryState", activityCategoryState);
 
   return (
     <main className="timeslot__card timeslot__card--create">
@@ -97,10 +80,10 @@ export default function Form(props) {
         <form className={classes.root} noValidate autoComplete="off">
           <div>
             <TextField
-              id="standard-select-thingToDo"
+              id="standard-select-activityBasedOnCategory"
               select
               label="Select"
-              value={catOfThings}
+              value={activityCategoryState}
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
@@ -114,14 +97,18 @@ export default function Form(props) {
           </div>
           <div>
             <TextField
-              id="standard-select-thingToDo"
+              id="standard-select-activityBasedOnCategory"
               select
               label="Select"
-              //value={thingToDo}
+              value={activityBasedOnCategory}
               onChange={handleActivityChange}
               helperText="Please select an activity"
             >
-              {activities.filter((activity) => activity.category_id === catOfThings).map((activity) => (
+              {activities
+                .filter(
+                  (activity) => activity.category_id === activityCategoryState
+                )
+                .map((activity) => (
                   <MenuItem key={activity.id} value={activity.id}>
                     {activity.name}
                   </MenuItem>
@@ -129,42 +116,6 @@ export default function Form(props) {
             </TextField>
           </div>
         </form>
-        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="start-date-picker-inline"
-              label="Check in"
-              value={selectedStartDate}
-              onChange={handleStartDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="end-date-picker-inline"
-              label="Check in"
-              value={selectedEndDate}
-              onChange={handleEndDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </Grid>
-        </MuiPickersUtilsProvider> */}
-        {/* <section className="timeslot__validation">ERROR</section>
-        <InterviewerList
-          interviewers={props.interviewers}
-          value={interviewer}
-          onChange={setInterviewer}
-        /> */}
       </section>
       <section className="timeslot__card-right">
         <section className="timeslot__actions">

@@ -8,9 +8,8 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
 
 import "./styles.scss";
 
@@ -28,7 +27,7 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '90%',
+    maxWidth: "90%",
   },
 }));
 
@@ -80,8 +79,8 @@ export default function Timeslot(props) {
 
     transition(SAVING, true);
 
-    props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW));
-    //.catch(() => transition(ERROR_SAVE, true));
+    props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW))
+    .catch(() => transition(ERROR_SAVE, true));
   };
 
   const cancel = () => {
@@ -93,36 +92,40 @@ export default function Timeslot(props) {
 
   return (
     <article className="timeslot">
-      <Header time ={props.slotTime} />
+      <Header time={props.slotTime} />
       <Card className={classes.root}>
-      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      {mode === SAVING && <Status message={"Saving"} />}
-      {mode === DELETING && <Status message={"Deleting"} />}
-      {mode === CONFIRM && (
-        <Confirm
-          message={"Are you sure you would like to delete?"}
-          onConfirm={cancel}
-          onCancel={() => back()}
-        />
+        {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+        {mode === SAVING && <Status message={"Saving"} />}
+        {mode === DELETING && <Status message={"Deleting"} />}
+        {mode === CONFIRM && (
+          <Confirm
+            message={"Are you sure you would like to delete?"}
+            onConfirm={cancel}
+            onCancel={() => back()}
+          />
+        )}
+        {mode === CREATE && (
+          <Form
+            time={props.slotTime}
+            activityCategories={activityCategories}
+            activities={activities}
+            onSave={save}
+            onCancel={() => back()}
+          />
+        )}
+        {mode === SHOW && (
+          <Show
+            activities={activities}
+            activityCategories={activityCategories}
+            plannedActivities={plannedActivities}
+            onDelete={() => transition(CONFIRM)}
+            onEdit={() => transition(EDIT)}
+          />
+        )}
+        {mode === EDIT && <h1>EDIT MODE</h1>}
+        {mode === ERROR_SAVE && (
+        <Error message={"Could not save appointment."} onClose={() => back()} />
       )}
-      {mode === CREATE && (
-        <Form
-          activityCategories={activityCategories}
-          activities={activities}
-          onSave={save}
-          onCancel={() => back()}
-        />
-      )}
-      {mode === SHOW && (
-        <Show
-          activities={activities}
-          activityCategories={activityCategories}
-          plannedActivities={plannedActivities}
-          onDelete={() => transition(CONFIRM)}
-          onEdit={() => transition(EDIT)}
-        />
-      )}
-      {mode === EDIT && <h1>EDIT MODE</h1>}
       </Card>
     </article>
   );
