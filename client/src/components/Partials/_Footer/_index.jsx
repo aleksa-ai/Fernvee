@@ -20,7 +20,6 @@ export default function Footer(props) {
 
   return (
     <BottomNavigation
-    position="static"
     value={value}
     onChange={(event, newValue) => {
       setValue(newValue);
