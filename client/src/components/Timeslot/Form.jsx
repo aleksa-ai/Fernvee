@@ -30,7 +30,7 @@ export default function Form(props) {
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState(activityCategories[0].name);
+  const [catOfThings, setCatOfThings] = useState(activityCategories[0].id);
 
   const [thingToDo, setThingToDo] = useState(
     // props.activityCategories[0].activities[0]
@@ -89,6 +89,8 @@ export default function Form(props) {
     props.onSave(catOfThings /*, thingToDo*/);
   }
 
+  console.log("CatOfThings", catOfThings)
+
   return (
     <main className="timeslot__card timeslot__card--create">
       <section className="timeslot__card-left">
@@ -104,29 +106,27 @@ export default function Form(props) {
             >
               {activityCategories &&
                 activityCategories.map((category) => (
-                  <MenuItem key={category.name} value={category.name}>
+                  <MenuItem key={category.id} value={category.id}>
                     {category.name}
                   </MenuItem>
                 ))}
             </TextField>
           </div>
           <div>
-            {/* <TextField
+            <TextField
               id="standard-select-thingToDo"
               select
               label="Select"
-              value={thingToDo}
+              //value={thingToDo}
               onChange={handleActivityChange}
               helperText="Please select an activity"
             >
-              {activityCategories
-                .find((category) => category.name === catOfThings)
-                .then((activities) => activities.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+              {activities.filter((activity) => activity.category_id === catOfThings).map((activity) => (
+                  <MenuItem key={activity.id} value={activity.id}>
+                    {activity.name}
                   </MenuItem>
-                )))}
-            </TextField> */}
+                ))}
+            </TextField>
           </div>
         </form>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

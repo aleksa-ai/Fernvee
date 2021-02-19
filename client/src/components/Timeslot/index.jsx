@@ -93,7 +93,7 @@ export default function Timeslot(props) {
 
   return (
     <article className="timeslot">
-      <Header time={"Morning"} />
+      <Header time ={props.slotTime} />
       <Card className={classes.root}>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SAVING && <Status message={"Saving"} />}
@@ -122,7 +122,7 @@ export default function Timeslot(props) {
           onEdit={() => transition(EDIT)}
         />
       )}
-      {mode === EDIT && <h1>EDIT MODE</h1>}¸
+      {mode === EDIT && <h1>EDIT MODE</h1>}
       </Card>
     </article>
   );
