@@ -85,7 +85,7 @@ export default function Timeslot(props) {
         <Form
           activityCategories={activityCategories}
           activities = {activities}
-          saveActivity={save}
+          onSave={save}
           onCancel={() => back()}
         />
       )}
