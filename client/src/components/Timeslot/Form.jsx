@@ -52,9 +52,10 @@ export default function Form(props) {
   };
 
   const [error, setError] = useState("");
+  
   const reset = () => {
     props.onCancel();
-    setActivityCategoryState(activityCategories[0].name);
+    setActivityCategoryState(activityCategories[0].id);
     setActivityBasedOnCategory(null);
   };
 
