@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
-  console.log('FORM PROPS', props)
+  console.log("FORM PROPS", props);
 
   let activityCategories = props.activityCategories;
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState('Eat');
+  const [catOfThings, setCatOfThings] = useState("Eat");
 
   const [thingToDo, setThingToDo] = useState(
     // props.activityCategories[0].activities[0]
@@ -72,7 +72,6 @@ export default function Form(props) {
     setCatOfThings(activityCategories[0].name);
     setThingToDo(null);
   };
-
   function validate() {
     if (catOfThings === "") {
       setError("An activity category must be selected");
@@ -84,7 +83,7 @@ export default function Form(props) {
       return;
     }
     setError("");
-    props.onSave(catOfThings/*, thingToDo*/);
+    props.onSave(catOfThings /*, thingToDo*/);
   }
 
   return (
@@ -100,11 +99,12 @@ export default function Form(props) {
               onChange={handleCategoryChange}
               helperText="Please select an activity category"
             >
-              {activityCategories && activityCategories.map((category) => (
-                <MenuItem key={category.name} value={category.name}>
-                  {category.name}
-                </MenuItem>
-              ))}
+              {activityCategories &&
+                activityCategories.map((category) => (
+                  <MenuItem key={category.name} value={category.name}>
+                    {category.name}
+                  </MenuItem>
+                ))}
             </TextField>
           </div>
           <div>

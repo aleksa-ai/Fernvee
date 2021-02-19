@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Show(props) {
-  console.log('PROP SHOW', props)
-  
-  let plannedActivities = props.plannedActivities
-  let plannedActivity = plannedActivities['1'].planned_activity
-  console.log('plannedActivity', plannedActivity)
+  console.log("PROP SHOW", props);
+
+  let plannedActivities = props.plannedActivities;
+  let plannedActivity = plannedActivities["1"].planned_activity;
+  console.log("plannedActivity", plannedActivity);
 
   const classes = useStyles();
   return (
@@ -25,16 +25,14 @@ export default function Show(props) {
       <section className="timeslot__card-left">
         <h1 className="text--regular">{plannedActivity.name}</h1>
         <h5 className="text--light">7:30 pm - 9:00 pm</h5>
-          <h5 className="text--light">
-            {plannedActivity.address}
-          </h5>
-          <h5 className="text--regular">{plannedActivity.phone}</h5>
-          <h5 className="text--light">
-            <a href={plannedActivity.website_url}>{plannedActivity.website_url}</a>
-          </h5>
-          <h6 className="text--light">
-            {plannedActivity.description}
-          </h6>
+        <h5 className="text--light">{plannedActivity.address}</h5>
+        <h5 className="text--regular">{plannedActivity.phone}</h5>
+        <h5 className="text--light">
+          <a href={plannedActivity.website_url}>
+            {plannedActivity.website_url}
+          </a>
+        </h5>
+        <h6 className="text--light">{plannedActivity.description}</h6>
       </section>
       <section className="timeslot__card-right">
         <section className="timeslot__actions">
