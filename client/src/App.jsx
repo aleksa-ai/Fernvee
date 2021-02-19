@@ -79,7 +79,6 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Explore />
-              {/* {activities} */}
             </Route>
             <Route path="/trips">
               <MyTrips />

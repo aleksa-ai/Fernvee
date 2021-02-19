@@ -51,7 +51,7 @@ export default function Timeslot(props) {
   let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    plannedActivities ? SHOW : EMPTY
+    !plannedActivities ? SHOW : EMPTY
   );
 
   const save = (id) => {
