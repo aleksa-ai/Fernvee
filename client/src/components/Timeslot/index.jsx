@@ -28,7 +28,7 @@ export default function Timeslot(props) {
   let plannedActivities = props.plannedActivities;
 
   //console.log("TIMESLOT Plan'd Act:", plannedActivities)
-  
+
   // let [state, setState] = useState([
   //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
   // ]);
@@ -40,9 +40,11 @@ export default function Timeslot(props) {
   console.log("TIMESLOT props:", props);
   //console.log("TIMESLOT Plan'd Act 2:", plannedActivities['1'].planned_activity)
 
-  let activityCategory = activityCategories && activityCategories.map((cat, index) => {
-    return <p key={index}>{cat.name}</p>;
-  });
+  let activityCategory =
+    activityCategories &&
+    activityCategories.map((cat, index) => {
+      return <p key={index}>{cat.name}</p>;
+    });
 
   // let showActivities = activities && activities.map((act, index) => {
   //   return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
@@ -51,56 +53,64 @@ export default function Timeslot(props) {
   // let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    plannedActivities ? SHOW : EMPTY
+    !plannedActivities ? SHOW : EMPTY
   );
 
   const save = (id) => {
     const plannedActivity = {
-      name : 'NEWLY SAVED ACTIVITY'
+      name: "NEWLY SAVED ACTIVITY",
     };
-    
-        transition(SAVING, true);
-    
-        props
-          .saveActivity(props.id, plannedActivity)
-          .then(() => transition(SHOW))
-          //.catch(() => transition(ERROR_SAVE, true));
-      };
+
+    transition(SAVING, true);
+
+    props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW));
+    //.catch(() => transition(ERROR_SAVE, true));
+  };
 
   const cancel = () => {
     transition(DELETING, true);
 
-    props
-      .cancelActivity(props.id)
-      .then(() => transition(EMPTY));
-      //.catch(() => transition(ERROR_DELETE, true));
+    props.cancelActivity(props.id).then(() => transition(EMPTY));
+    //.catch(() => transition(ERROR_DELETE, true));
   };
 
   return (
     <article className="timeslot">
-    <Header time={"Morning"} />
+      <Header time={"Morning"} />
       {activityCategory}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      
+      {mode === SAVING && <Status message={"Saving"} />}
+      {mode === DELETING && <Status message={"Deleting"} />}
+      {mode === CONFIRM && (
+        <Confirm
+          message={"Are you sure you would like to delete?"}
+          onConfirm={cancel}
+          onCancel={() => back()}
+        />
+      )}
       {mode === CREATE && (
         <Form
           activityCategories={activityCategories}
-          activities = {activities}
+          activities={activities}
           onSave={save}
           onCancel={() => back()}
         />
       )}
       {mode === SHOW && (
         <Show
-          activities = {activities}
+          activities={activities}
           activityCategories={activityCategories}
-          plannedActivities = {plannedActivities}
+          plannedActivities={plannedActivities}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
       )}
+
+      {mode === EDIT && (
+        <h1>EDIT MODE</h1>
+      )}¸
     </article>
-      );
+  );
 }
 
 // export default function Timeslot (props) {
@@ -135,8 +145,8 @@ export default function Timeslot(props) {
 //   };
 
 //   return (
-    // <article className="timeslot">
-    //   <Header time={"Morning"} />
+// <article className="timeslot">
+//   <Header time={"Morning"} />
 //       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 //       {mode === SAVING && <Status message={"Saving"} />}
 //       {mode === DELETING && <Status message={"Deleting"} />}
