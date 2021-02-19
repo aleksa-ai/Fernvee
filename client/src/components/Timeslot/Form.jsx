@@ -30,7 +30,7 @@ export default function Form(props) {
   let activities = props.activities;
 
   const classes = useStyles();
-  const [catOfThings, setCatOfThings] = useState("Eat");
+  const [catOfThings, setCatOfThings] = useState(activityCategories[0].name);
 
   const [thingToDo, setThingToDo] = useState(
     // props.activityCategories[0].activities[0]
@@ -47,8 +47,11 @@ export default function Form(props) {
   const handleCategoryChange = (categoryEvent) => {
     const newCategory = categoryEvent.target.value;
     const firstActivity = activityCategories.find(
-      (category) => category.name === newCategory
-    ).activities[0];
+      (category) => category.name === newCategory ? category.id : null
+    )
+
+    console.log('1stAct', firstActivity)
+
     setCatOfThings(newCategory);
     setThingToDo(firstActivity);
   };
