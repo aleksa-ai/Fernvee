@@ -70,14 +70,13 @@ export default function Timeslot(props) {
   const cancel = () => {
     transition(DELETING, true);
 
-    props.cancelActivity(props.id).then(() => transition(EMPTY));
+    props.deleteActivity(props.id).then(() => transition(EMPTY));
     //.catch(() => transition(ERROR_DELETE, true));
   };
 
   return (
     <article className="timeslot">
       <Header time={"Morning"} />
-      {activityCategory}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETING && <Status message={"Deleting"} />}
@@ -105,90 +104,7 @@ export default function Timeslot(props) {
           onEdit={() => transition(EDIT)}
         />
       )}
-
-      {mode === EDIT && (
-        <h1>EDIT MODE</h1>
-      )}¸
+      {mode === EDIT && <h1>EDIT MODE</h1>}¸
     </article>
   );
 }
-
-// export default function Timeslot (props) {
-//   console.log('PROP INDEX',props)
-
-//   const { mode, transition, back } = useVisualMode(
-//     props ? SHOW : EMPTY
-//   );
-
-//   const save = (/*name, interviewer*/) => {
-//     // const interview = {
-//     //   student: name,
-//     //   interviewer,
-//     // };
-
-//     // //Show SAVING indicator before calling props.bookInterview
-//     transition(SAVING, true);
-
-//     // props
-//     //   //.bookInterview(props.id, interview)
-//     //   .then(() => transition(SHOW))
-//     //   .catch(() => transition(ERROR_SAVE, true));
-//   };
-
-//   const cancel = () => {
-//     transition(DELETING, true);
-
-//     props
-//       .cancelInterview(props.id)
-//       .then(() => transition(EMPTY))
-//       .catch(() => transition(ERROR_DELETE, true));
-//   };
-
-//   return (
-// <article className="timeslot">
-//   <Header time={"Morning"} />
-//       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-//       {mode === SAVING && <Status message={"Saving"} />}
-//       {mode === DELETING && <Status message={"Deleting"} />}
-//       {mode === CONFIRM && (
-//         <Confirm
-//           message={"Are you sure you would like to delete?"}
-//           onConfirm={cancel}
-//           onCancel={() => back()}
-//         />
-//       )}
-//       {mode === SHOW && (
-//         <Show
-//           activity = {props.activities[0]}
-//           onDelete={() => transition(CONFIRM)}
-//           onEdit={() => transition(EDIT)}
-//         />
-//       )}
-//       {mode === CREATE && (
-//         <Form
-//           activityCategories={activityCategories}
-//           onSave={save}
-//           onCancel={() => back()}
-//         />
-//       )}
-//       {mode === EDIT && (
-//         <Form
-//           // name={props.interview && props.interview.student}
-//           // interviewer={props.interview && props.interview.interviewer.id}
-//           // interviewers={props.interviewers}
-//           onSave={save}
-//           onCancel={() => back()}
-//         />
-//       )}
-//       {mode === ERROR_SAVE && (
-//         <Error message={"Could not save activity timeslot."} onClose={() => back()} />
-//       )}
-//       {mode === ERROR_DELETE && (
-//         <Error
-//           message={"Could not delete activity timeslot."}
-//           onClose={() => back()}
-//         />
-//       )}
-//     </article>
-//   );
-// }

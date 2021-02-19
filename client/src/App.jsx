@@ -85,7 +85,7 @@ function App() {
               activities = {state.activities}
               plannedActivities = {state.planned_activities}
               saveActivity = {saveActivity}
-              cancelActivity = {deleteActivity}
+              deleteActivity = {deleteActivity}
               />
             </Route>
             <Route path="/myProfile">
