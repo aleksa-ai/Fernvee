@@ -10,17 +10,38 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const getUserTrips = () => {
+  const getUserTrips = (userId) => {
     const query = {
       text: `
       SELECT * FROM users
       JOIN user_trips ON users.id = user_trips.user_id
       JOIN itineraries ON itineraries.id = user_trips.itinerary_id
+      WHERE users.id = $1
       `,
     };
 
+    const values = [userId];
+
     return db
-      .query(query)
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
+
+  const addUserTrip = (userId, itineraryId) => {
+    const query = {
+      text: `
+      INSERT INTO user_trips(user_id, itinerary_id)
+      VALUES ($1, $2)
+      RETURNING *
+      `,
+    };
+
+    const values = [userId, itineraryId];
+
+    return db
+      .query(query, values)
       .then((result) => result.rows)
       .catch((err) => err);
   };
@@ -99,5 +120,6 @@ module.exports = (db) => {
     getPlannedActivities,
     getCuratedTrips,
     getUserTrips,
+    addUserTrip
   };
 };
