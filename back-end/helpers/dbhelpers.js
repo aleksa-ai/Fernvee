@@ -13,7 +13,7 @@ module.exports = (db) => {
   const getUserTrips = (userId) => {
     const query = {
       text: `
-      SELECT * FROM users
+      SELECT users.id AS user_id, users.first_name, users.last_name, user_trips.id AS user_trip_id, itineraries.id AS itinerary_id, itineraries.name, itineraries.image_url, itineraries.city_id, itineraries.itinerary_type_id FROM users
       JOIN user_trips ON users.id = user_trips.user_id
       JOIN itineraries ON itineraries.id = user_trips.itinerary_id
       WHERE users.id = $1
@@ -46,6 +46,23 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const deleteUserTrip = (id) => {
+    const query = {
+      text: `
+      DELETE FROM user_trips
+      WHERE id = $1
+      RETURNING *
+      `,
+    };
+
+    const values = [id];
+
+    return db
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getActivities = () => {
     const query = {
       text: "SELECT * FROM activities",
@@ -63,12 +80,12 @@ module.exports = (db) => {
       FROM activity_categories`,
     };
 
-  // const getActivityCategories = () => {
-  //   const query = {
-  //     text: `SELECT
-  //      activity_categories.id
-  //      FROM activity_categories JOIN activities ON activity_categories.id = activities.category_id GROUP BY activity_categories.id ORDER BY activity_categories.id`,
-  //   };
+    // const getActivityCategories = () => {
+    //   const query = {
+    //     text: `SELECT
+    //      activity_categories.id
+    //      FROM activity_categories JOIN activities ON activity_categories.id = activities.category_id GROUP BY activity_categories.id ORDER BY activity_categories.id`,
+    //   };
 
     return db
       .query(query)
@@ -120,6 +137,7 @@ module.exports = (db) => {
     getPlannedActivities,
     getCuratedTrips,
     getUserTrips,
-    addUserTrip
+    addUserTrip,
+    deleteUserTrip
   };
 };
