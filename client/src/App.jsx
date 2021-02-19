@@ -34,13 +34,9 @@ import {
 
 //Temmporary paths
 import Timeslot from "./components/Timeslot/index";
-import Confirm from "./components/Timeslot/Confirm";
-import Empty from "./components/Timeslot/Empty";
-import Error from "./components/Timeslot/Error";
 import Form from "./components/Timeslot/Form";
-import Header from "./components/Timeslot/Header";
 import Show from "./components/Timeslot/Show";
-import Status from "./components/Timeslot/Status";
+
 
 import "./App.css";
 
@@ -89,7 +85,7 @@ function App() {
               activities = {state.activities}
               plannedActivities = {state.planned_activities}
               saveActivity = {saveActivity}
-              cancelActivity = {state.cancelActivity}
+              cancelActivity = {deleteActivity}
               />
             </Route>
             <Route path="/myProfile">
@@ -123,34 +119,19 @@ function App() {
             <Route path="/contact">
               <Contact />
             </Route>
-            <Route path="/timeslot">
+            {/* <Route path="/timeslot">
               <Timeslot 
               activityCategories = {state.activity_categories}
               activities = {state.activities}
               plannedActivities = {state.planned_activities}
               saveActivity = {state.saveActivity}
               cancelActivity = {state.cancelActivity}/>
-            </Route>
-            <Route path="/Confirm">
-              <Confirm />
-            </Route>
-            <Route path="/Empty">
-              <Empty />
-            </Route>
-            <Route path="/Error">
-              <Error />
-            </Route>
+            </Route> */}
             <Route path="/Form">
               <Form />
             </Route>
-            <Route path="/Header">
-              <Header />
-            </Route>
             <Route path="/Show">
               <Show />
-            </Route>
-            <Route path="/Status">
-              <Status />
             </Route>
           </Switch>
           <Footer />
