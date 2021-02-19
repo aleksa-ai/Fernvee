@@ -3,12 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+// import Grid from "@material-ui/core/Grid";
+// import DateFnsUtils from "@date-io/date-fns";
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardDatePicker,
+// } from "@material-ui/pickers";
 import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -129,7 +129,7 @@ export default function Form(props) {
             </TextField>
           </div>
         </form>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker
               disableToolbar
@@ -158,7 +158,7 @@ export default function Form(props) {
               }}
             />
           </Grid>
-        </MuiPickersUtilsProvider>
+        </MuiPickersUtilsProvider> */}
         {/* <section className="timeslot__validation">ERROR</section>
         <InterviewerList
           interviewers={props.interviewers}

@@ -22,7 +22,7 @@ export default function CenteredGrid(props) {
     <div className={classes.root}>
       <Grid container spacing={4} align="center" justify="center">
         <Grid item xs={12}>
-        {/* <Header time={"Morning"} /> */}
+          {/* <Header time={"Morning"} /> */}
           <Timeslot
             slotTime="Morning"
             activityCategories={props.activityCategories}
@@ -34,6 +34,7 @@ export default function CenteredGrid(props) {
         </Grid>
         <Grid item xs={12}>
           <Timeslot
+            slotTime="Afternoon"
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
@@ -43,6 +44,7 @@ export default function CenteredGrid(props) {
         </Grid>
         <Grid item xs={12}>
           <Timeslot
+            slotTime="Evening"
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}

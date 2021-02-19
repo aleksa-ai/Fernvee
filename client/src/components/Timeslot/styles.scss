@@ -10,25 +10,25 @@ $timeslot-height: 11rem;
   }
 
   &__time {
-    //display: flex;
+    display: flex;
   }
 
-  // &__separator {
-  //   border: 0;
-  //   //border-bottom: 1px solid darken($white, 5%);
-  //   width: 100%;
-  //   margin-left: 1rem;
-  // }
+  &__separator {
+    border: 0;
+    //border-bottom: 1px solid darken(white, 5%);
+    width: 100%;
+    margin-left: 1rem;
+  }
 
   &__card {
     min-height: $timeslot-height;
-    // margin-left: 3rem;
+    margin-left: 3rem;
     border-radius: 0.5rem;
-    // padding: 1.2rem 1.5rem;
+    padding: 1.2rem 1.5rem;
     display: flex;
     justify-content: space-between;
     flex-flow: row wrap;
-    // color: $white;
+    color: white;
 
     &-left {
       display: flex;
@@ -45,7 +45,7 @@ $timeslot-height: 11rem;
     }
 
     &--create {
-      //background-color: $dark-background;
+      background-color: dark-background;
       display: flex;
     }
 
