@@ -69,7 +69,8 @@ export default function CuratedTripsList(props) {
     return (
       <Grid item xs={6} key={index}>
         <CuratedTripItem
-          key={curatedTrip.toString()}
+          key={curatedTrip.id}
+          id={curatedTrip.id}
           name={curatedTrip.name}
           image={curatedTrip.image_url}
         />
