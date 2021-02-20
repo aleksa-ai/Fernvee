@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DayList(props) {
-  console.log("DAY LIST PROPS:", props.activities)
+  //console.log("DAY LIST PROPS:", props.activities)
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -67,12 +67,9 @@ export default function DayList(props) {
   }
 
   let i = 0;
-  
-
   function updateActivityTimeslot(activity, timeslot, day){
-    
     props.setDayList([...props.dayList, {activity, timeslot, day}])
-
+    console.log("SET DAY LIST");
   }
 
   return (
@@ -91,7 +88,16 @@ export default function DayList(props) {
       </Tabs>
 
       <div className={classes.tabpanel}>
-        <DayListItem activities={props.activities} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} saveActivity={props.saveActivity} deleteActivity = {props.deleteActivity} updateActivityTimeslot={props.updateActivityTimeslot} updateActivityTimeslot={updateActivityTimeslot} dayIndex={value} dayList={props.dayList} daysArray={daysArray}/>
+        <DayListItem 
+          activities={props.activities} 
+          activityCategories={props.activityCategories} 
+          plannedActivities = {props.plannedActivities} 
+          saveActivity={props.saveActivity} 
+          deleteActivity = {props.deleteActivity} 
+          updateActivityTimeslot={updateActivityTimeslot} 
+          dayIndex={value} 
+          dayList={props.dayList} 
+          daysArray={daysArray}/>
       </div>
     </div>
   );

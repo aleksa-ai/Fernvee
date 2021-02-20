@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Timeslot(props) {
-  console.log("TIMESLOT PROPS:", props);
+  //console.log(props.slotTime + " TIMESLOT PROPS: ", props);
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
@@ -44,6 +44,8 @@ export default function Timeslot(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+
 
   // let [state, setState] = useState([
   //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
@@ -59,8 +61,24 @@ export default function Timeslot(props) {
       return <p key={index}>{cat.name}</p>;
     });
 
+    // if( dayList !== undefined){
+    //   let activity = activities.filter(
+    //     (activity) => activity.id === plannedActivity.activity
+    //   )[0];
+    //   if( dayList.filter)
+    // }
+
+    
+  let slotActivity = null;
+  // {activity: 3, timeslot: "Morning", day: 0}
+  
+  // slotActivity = dayList.filter( (d => d.timeslot === props.slotTime))[0];
+  slotActivity = dayList.filter( (d) => (d.timeslot === props.slotTime && d.day === props.dayIndex))[0];
+
+  console.log("slot Activity ", slotActivity)
+  
   const { mode, transition, back } = useVisualMode(
-    dayList === undefined ? SHOW : EMPTY
+    slotActivity ? SHOW : EMPTY
   );
 
   // USE THIS FUNCTION WHEN PUSHING TO B-E
@@ -78,7 +96,6 @@ export default function Timeslot(props) {
   const saveToState = (activity) => {
     transition(SAVING, true);
     props.updateActivityTimeslot(activity, props.slotTime, props.dayIndex);
-
     transition(SHOW);
   };
 
@@ -113,7 +130,7 @@ export default function Timeslot(props) {
         )}
         {mode === SHOW && (
           <Show
-            dayList={dayList}
+            slotActivity={slotActivity}
             activities={activities}
             activityCategories={activityCategories}
             plannedActivities={plannedActivities}

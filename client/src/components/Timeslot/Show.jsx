@@ -23,45 +23,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Show(props) {
-  console.log("SHOW PROPS:", props);
+  
+  if(!props.slotActivity)
+  {
+    console.log("SlotActivity is undefined, I shouldn't be here");
 
-  let dayList = props.dayList;
-  let firstPlannedActivity = dayList["0"];
+  }
+  // {activity: 3, timeslot: "Morning", day: 0}
+  let slotActivity = props.slotActivity;
 
-  let activities = props.activities;
-  let activity = activities.filter(
-    (activity) => activity.id === firstPlannedActivity.activity
-  )["0"];
+  // Populate activity
+  let activity = null;
+  
+  if (slotActivity) {
+    let activities = props.activities;
+    activity = activities.filter(
+      (activity) => activity.id === slotActivity.activity
+    )[0];
+  }
 
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {activity.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <h5 className="text--light">{firstPlannedActivity.timeslot}</h5>
-              <h5 className="text--light">{activity.address}</h5>
-              <h5 className="text--regular">{activity.phone}</h5>
-              <h5 className="text--light">
-                <a href={activity.website_url}>{activity.website_url}</a>
-              </h5>
-              <h6 className="text--light">{activity.description}</h6>
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <div className={classes.root}>
-            <IconButton aria-label="edit" onClick={props.onEdit}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" onClick={() => props.onDelete()}>
-              <DeleteIcon />
-            </IconButton>
-          </div>
-        </CardActions>
+      <CardActionArea>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {activity.name}
+          </Typography>
+
+          <h5 className="text--light">{slotActivity.timeslot}</h5>
+          <h5 className="text--light">{activity.address}</h5>
+          <h5 className="text--regular">{activity.phone}</h5>
+          <h5 className="text--light">
+            <a href={activity.website_url}>{activity.website_url}</a>
+          </h5>
+          <h6 className="text--light">{activity.description}</h6>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <div className={classes.root}>
+          <IconButton aria-label="edit" onClick={props.onEdit}>
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="delete" onClick={() => props.onDelete()}>
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      </CardActions>
     </Card>
   );
 }

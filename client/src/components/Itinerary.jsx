@@ -40,7 +40,7 @@ export default function Itinerary(props) {
   const [endDate, setEndDate] = useState(0);
 
   const [dayList, setDayList] = useState([]);
-  console.log("ITINERARY dayList STATE:", dayList);
+  // console.log("ITINERARY dayList STATE:", dayList);
 
   const startDateChanged = (date) => {
     setStartDate(date);

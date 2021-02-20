@@ -25,6 +25,11 @@ export default function TripForm(props) {
   const [selectedStartDate, setSelectedStartDate] = React.useState(null);
   const [selectedEndDate, setSelectedEndDate] = React.useState(null);
 
+  //setSelectedStartDate("2021-03-21");
+
+  // var sevenDaysAfter = Date.now();
+  // sevenDaysAfter.setDate(sevenDaysAfter.getDate() + 4);
+  // setSelectedEndDate(selectedStartDate);
 
   const handleStartDateChange = (date) => {
     setSelectedStartDate (date);
