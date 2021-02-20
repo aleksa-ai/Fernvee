@@ -1,5 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -9,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
+    maxWidth: "flex",
   },
 }));
 
@@ -25,19 +35,24 @@ export default function Show(props) {
 
   const classes = useStyles();
   return (
-    <main className="timeslot__card timeslot__card--show">
-      <section className="timeslot__card-left">
-        <h1 className="text--regular">{activity.name}</h1>
-        <h5 className="text--light">{firstPlannedActivity.timeslot}</h5>
-        <h5 className="text--light">{activity.address}</h5>
-        <h5 className="text--regular">{activity.phone}</h5>
-        <h5 className="text--light">
-          <a href={activity.website_url}>{activity.website_url}</a>
-        </h5>
-        <h6 className="text--light">{activity.description}</h6>
-      </section>
-      <section className="timeslot__card-right">
-        <section className="timeslot__actions">
+    <Card className={classes.root}>
+        <CardActionArea>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {activity.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <h5 className="text--light">{firstPlannedActivity.timeslot}</h5>
+              <h5 className="text--light">{activity.address}</h5>
+              <h5 className="text--regular">{activity.phone}</h5>
+              <h5 className="text--light">
+                <a href={activity.website_url}>{activity.website_url}</a>
+              </h5>
+              <h6 className="text--light">{activity.description}</h6>
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
           <div className={classes.root}>
             <IconButton aria-label="edit" onClick={props.onEdit}>
               <EditIcon />
@@ -46,8 +61,7 @@ export default function Show(props) {
               <DeleteIcon />
             </IconButton>
           </div>
-        </section>
-      </section>
-    </main>
+        </CardActions>
+    </Card>
   );
 }
