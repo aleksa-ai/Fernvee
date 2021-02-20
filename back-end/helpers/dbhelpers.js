@@ -10,6 +10,17 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getUserWithEmail = function(email) {
+    const queryString = `
+    SELECT *
+    FROM users
+    WHERE email = $1 AND password = $2;
+    `
+    return pool.query(queryString, [email])
+    .then(res => res.rows[0])
+    .catch(err => console.log(err.stack));
+  };
+
   const getUserTrips = (userId) => {
     const query = {
       text: `
@@ -124,6 +135,7 @@ module.exports = (db) => {
 
   return {
     getUsers,
+    getUserWithEmail,
     getActivities,
     getActivityCategories,
     getPlannedActivities,
