@@ -1,17 +1,17 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-module.exports = ({
-  getActivities
-}) => {
-  router.get('/', (req, res) => {
-    console.log(getActivities)
+module.exports = ({ getActivities }) => {
+  router.get("/", (req, res) => {
+    console.log(getActivities);
     getActivities()
-        .then((activities) => res.json(activities))
-        .catch((err) => res.json({
-            error: err.message
-        }));
-});
+      .then((activities) => res.json(activities))
+      .catch((err) =>
+        res.json({
+          error: err.message,
+        })
+      );
+  });
 
-return router;
-}
+  return router;
+};

@@ -42,13 +42,6 @@ module.exports = (db) => {
       FROM activity_categories`,
     };
 
-  // const getActivityCategories = () => {
-  //   const query = {
-  //     text: `SELECT
-  //      activity_categories.id
-  //      FROM activity_categories JOIN activities ON activity_categories.id = activities.category_id GROUP BY activity_categories.id ORDER BY activity_categories.id`,
-  //   };
-
     return db
       .query(query)
       .then((result) => result.rows)
