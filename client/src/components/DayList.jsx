@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DayList(props) {
-  console.log("Day L Props", props.activities)
+  console.log("DAY LIST PROPS:", props.activities)
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
