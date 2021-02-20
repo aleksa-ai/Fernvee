@@ -10,12 +10,14 @@ import StepLabel from "@material-ui/core/StepLabel";
 
 import DayList from "./DayList";
 import TripForm from "./TripForm";
+import Review from "./Review";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: "100%",
+      // width: "100%",
+      
     },
     backButton: {
       marginRight: theme.spacing(1),
@@ -70,7 +72,7 @@ export default function Itinerary(props) {
       case 1:
         return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} deleteActivity = {props.deleteActivity}/>
       case 2:
-        return "REVIEW";
+        return (<Review />)
       default:
         return "Unknown stepIndex";
     }
