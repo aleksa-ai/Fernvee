@@ -62,8 +62,8 @@ export default function Form(props) {
       setError("An activity category must be selected");
       return;
     }
-
-    if (!activityBasedOnCategory) {
+      console.log("ABOC!!!", activityBasedOnCategory)
+    if (activityBasedOnCategory.length === 0) {
       setError("An activity must be selected");
       return;
     }
@@ -72,12 +72,12 @@ export default function Form(props) {
   }
 
   return (
-    <main className="timeslot__card timeslot__card--create">
+    <main className="timeslot timeslot__card--create">
       <section className="timeslot__card-left">
         <form className={classes.root} noValidate autoComplete="off">
           <div>
             <TextField
-              id="standard-select-activityBasedOnCategory"
+              id="standard-select-activityCategoryState"
               select
               label="Select"
               value={activityCategoryState}
@@ -113,7 +113,10 @@ export default function Form(props) {
             </TextField>
           </div>
         </form>
+
       </section>
+
+      <section className="timeslot__validation">{error}</section>
       <section className="timeslot__card-right">
         <section className="timeslot__actions">
           <div className={classes.root}>

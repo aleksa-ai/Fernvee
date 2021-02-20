@@ -88,4 +88,9 @@ $timeslot-height: 11rem;
       }
     }
   }
+
+  &__validation {
+    color: red;
+    margin-bottom: 1rem;
+  }
 }
