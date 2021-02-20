@@ -39,7 +39,7 @@ export default function Itinerary(props) {
 
   const [dayList, setDayList] = useState([]);
 
-  console.log(dayList)
+  console.log("It. DL: ", dayList)
 
   const startDateChanged = (date) => {
     setStartDate(date);
@@ -72,7 +72,7 @@ export default function Itinerary(props) {
           />
         );
       case 1:
-        return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} deleteActivity = {props.deleteActivity} dayList={dayList} setDayList={setDayList} />
+        return <DayList startDate={startDate} endDate={endDate} activities={activities} saveActivity={props.saveActivity} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} deleteActivity = {props.deleteActivity} dayList={dayList} setDayList={setDayList}/>
       case 2:
         return "REVIEW";
       default:

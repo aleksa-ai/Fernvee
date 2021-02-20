@@ -30,6 +30,7 @@ export default function CenteredGrid(props) {
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
             updateActivityTimeslot={props.updateActivityTimeslot}
+            dayList={props.dayList}
           />
         </Grid>
         <Grid item xs={12}>
@@ -42,6 +43,7 @@ export default function CenteredGrid(props) {
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
             updateActivityTimeslot={props.updateActivityTimeslot}
+            dayList={props.dayList}
           />
         </Grid>
         <Grid item xs={12}>
@@ -54,6 +56,8 @@ export default function CenteredGrid(props) {
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
             updateActivityTimeslot={props.updateActivityTimeslot}
+            dayList={props.dayList}
+
           />
         </Grid>
       </Grid>

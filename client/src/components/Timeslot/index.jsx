@@ -35,6 +35,9 @@ export default function Timeslot(props) {
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
+  let dayList = props.dayList
+
+  console.log("INDEX PAFTD!!!", dayList)
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -69,7 +72,7 @@ export default function Timeslot(props) {
   // let showFirstActivtiy = showActivities ? showActivities[0] : null ;
 
   const { mode, transition, back } = useVisualMode(
-    !plannedActivities ? SHOW : EMPTY
+    dayList === undefined ? SHOW : EMPTY
   );
 
   // const save = (id) => {
@@ -84,10 +87,17 @@ export default function Timeslot(props) {
   // };
 
   const saveToState = (activity) => {
-    
+    transition(SAVING, true);
+    console.log("INDEX PROP!!!", props)
+    console.log("INDEX ACTIVITY!!!", activity)
+    props
+      .updateActivityTimeslot(activity, props.slotTime, props.dayIndex)
 
-    props.updateActivityTimeslot(activity, props.slotTime, props.dayIndex)
-  }
+      transition(SHOW)
+
+      // .then(() => transition(SHOW))
+      // .catch(() => transition(ERROR_SAVE, true));
+  };
 
   const cancel = () => {
     transition(DELETING, true);
@@ -121,6 +131,7 @@ export default function Timeslot(props) {
         )}
         {mode === SHOW && (
           <Show
+            dayList={dayList}
             activities={activities}
             activityCategories={activityCategories}
             plannedActivities={plannedActivities}
@@ -130,8 +141,11 @@ export default function Timeslot(props) {
         )}
         {mode === EDIT && <h1>EDIT MODE</h1>}
         {mode === ERROR_SAVE && (
-        <Error message={"Could not save appointment."} onClose={() => back()} />
-      )}
+          <Error
+            message={"Could not save appointment."}
+            onClose={() => back()}
+          />
+        )}
       </Card>
     </article>
   );
