@@ -1,5 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import axios from "axios";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -21,14 +22,25 @@ const useStyles = makeStyles({
 
 export default function Show(props) {
   const classes = useStyles();
+  const { trip } = props;
+
+  // Delete a trip from My Trips
+  const deleteTrip = () => {
+    const userTripId = trip.user_trip_id;
+
+    axios.delete(`/api/userTrips/${userTripId}/`).then((response) => {
+      // Delete request succeded, notify parent
+      props.onDelete(trip);
+    });
+  };
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={props.image} />
+        <CardMedia className={classes.media} image={trip.image_url} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.name}
+            {trip.name}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -39,7 +51,7 @@ export default function Show(props) {
         <Button size="small" color="primary" type="submit">
           Edit
         </Button>
-        <Button size="small" color="primary" type="submit">
+        <Button size="small" color="primary" type="submit" onClick={deleteTrip}>
           Delete
         </Button>
       </CardActions>

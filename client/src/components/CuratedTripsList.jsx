@@ -5,8 +5,17 @@ import {
   useParams,
 } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 
 import CuratedTripItem from "./CuratedTripItem";
@@ -14,19 +23,28 @@ import { useEffect, useState } from "react";
 
 const useStyles = makeStyles({
   root: {
-    paddingTop: "3%",
+    paddingBottom: "3rem",
     width: "100%",
     alignContent: "center",
   },
   container: {
     margin: "auto",
-    position: "relative",
+    position: "static",
     width: "60%",
+  },
+  cardRoot: {
+    minWidth: 400,
+    maxWidth: 400,
+    margin: "auto",
+  },
+  cardMedia: {
+    height: 300,
   },
 });
 
 export default function CuratedTripsList(props) {
   const classes = useStyles();
+  const history = useHistory();
   let { placeId } = useParams();
   const [curatedTrips, setCuratedTrips] = useState([]);
 
@@ -37,7 +55,7 @@ export default function CuratedTripsList(props) {
         (result) => result.data,
         (error) => {
           console.log("ERROR " + error.message);
-          return[]
+          return [];
         }
       );
 
@@ -51,7 +69,8 @@ export default function CuratedTripsList(props) {
     return (
       <Grid item xs={6} key={index}>
         <CuratedTripItem
-          key={curatedTrip.toString()}
+          key={curatedTrip.id}
+          id={curatedTrip.id}
           name={curatedTrip.name}
           image={curatedTrip.image_url}
         />
@@ -59,12 +78,35 @@ export default function CuratedTripsList(props) {
     );
   });
 
+  const createRedirect = () => {
+    const url = `/create`;
+    history.push(url);
+  }
+
   return (
     <>
       <h1>Curated Trips</h1>
       <div className={classes.container}>
         <Grid container item xs={12} spacing={6} className={classes.root}>
           {parsedCuratedTrips}
+          <Card className={classes.cardRoot}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.cardMedia}
+                image="https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Create Trip
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button size="small" color="primary" onClick={createRedirect} type="submit">
+                Create
+              </Button>
+            </CardActions>
+          </Card>
         </Grid>
       </div>
     </>
