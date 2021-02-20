@@ -30,6 +30,7 @@ export default function CuratedTripItem(props) {
     history.push(url);
   };
 
+  // Add trip to my trips
   const addToTrips = () => {
     const userId = "1"; // Will need to change to props.userId when have authentication
     const tripId = props.id;

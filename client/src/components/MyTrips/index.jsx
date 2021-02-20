@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Trips(props) {
+export default function Trips() {
   const [userTrips, setUserTrips] = useState([]);
   const classes = useStyles();
 
@@ -41,12 +41,21 @@ export default function Trips(props) {
     fetchData();
   }, []);
 
+  // Called when user deletes a trip from their collection
+  const deleteTrip = (trip) => {
+    // Filter out the trip that was deleted
+    const updatedUserTrips = userTrips.filter( t => t !== trip);
+
+    // Update state for change detection
+    setUserTrips( updatedUserTrips );
+  }
+
   let parsedUserTrips = [];
 
   parsedUserTrips = userTrips.map((trip, index) => {
     return (
       <Grid item xs={6} key={index}>
-        <Show key={trip.toString()} name={trip.name} image={trip.image_url} />
+        <Show key={trip.toString()} trip={trip} onDelete={deleteTrip}/>
       </Grid>
     );
   });
