@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CenteredGrid(props) {
-  console.log("DLI Props", props);
+  console.log("DAY LIST ITEM PROPS:", props);
   const classes = useStyles();
 
   return (
@@ -57,7 +57,6 @@ export default function CenteredGrid(props) {
             deleteActivity={props.deleteActivity}
             updateActivityTimeslot={props.updateActivityTimeslot}
             dayList={props.dayList}
-
           />
         </Grid>
       </Grid>

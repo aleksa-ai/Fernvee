@@ -32,12 +32,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Timeslot(props) {
+  console.log("TIMESLOT PROPS:", props);
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
-  let dayList = props.dayList
-
-  console.log("INDEX PAFTD!!!", dayList)
+  let dayList = props.dayList;
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -45,8 +44,6 @@ export default function Timeslot(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
-  //console.log("TIMESLOT Plan'd Act:", plannedActivities)
 
   // let [state, setState] = useState([
   //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
@@ -56,25 +53,17 @@ export default function Timeslot(props) {
   //   setState(activityCategories, activities, plannedActivities);
   // }, [activityCategories, activities, plannedActivities]);
 
-  console.log("TIMESLOT props:", props);
-  //console.log("TIMESLOT Plan'd Act 2:", plannedActivities['1'].planned_activity)
-
   let activityCategory =
     activityCategories &&
     activityCategories.map((cat, index) => {
       return <p key={index}>{cat.name}</p>;
     });
 
-  // let showActivities = activities && activities.map((act, index) => {
-  //   return <Show key={act.id} {...act} onDelete={() => transition(CONFIRM)} />;
-  // });
-
-  // let showFirstActivtiy = showActivities ? showActivities[0] : null ;
-
   const { mode, transition, back } = useVisualMode(
     dayList === undefined ? SHOW : EMPTY
   );
 
+  // USE THIS FUNCTION WHEN PUSHING TO B-E
   // const save = (id) => {
   //   const plannedActivity = {
   //     name: "NEWLY SAVED ACTIVITY",
@@ -88,22 +77,15 @@ export default function Timeslot(props) {
 
   const saveToState = (activity) => {
     transition(SAVING, true);
-    console.log("INDEX PROP!!!", props)
-    console.log("INDEX ACTIVITY!!!", activity)
-    props
-      .updateActivityTimeslot(activity, props.slotTime, props.dayIndex)
+    props.updateActivityTimeslot(activity, props.slotTime, props.dayIndex);
 
-      transition(SHOW)
-
-      // .then(() => transition(SHOW))
-      // .catch(() => transition(ERROR_SAVE, true));
+    transition(SHOW);
   };
 
   const cancel = () => {
     transition(DELETING, true);
 
-    props.deleteActivity(props.id).then(() => transition(EMPTY));
-    //.catch(() => transition(ERROR_DELETE, true));
+    // props.deleteActivity(props.id).then(() => transition(EMPTY));
   };
 
   return (
@@ -140,12 +122,6 @@ export default function Timeslot(props) {
           />
         )}
         {mode === EDIT && <h1>EDIT MODE</h1>}
-        {mode === ERROR_SAVE && (
-          <Error
-            message={"Could not save appointment."}
-            onClose={() => back()}
-          />
-        )}
       </Card>
     </article>
   );

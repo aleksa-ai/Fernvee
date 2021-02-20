@@ -30,7 +30,6 @@ export default function Form(props) {
   );
 
   const [activityBasedOnCategory, setActivityBasedOnCategory] = useState(
-    // props.activityCategories[0].activities[0]
     []
   );
 
@@ -40,7 +39,6 @@ export default function Form(props) {
     const firstActivity = activityCategories.find((category) =>
       category.id === newCategory ? category.id : null
     );
-    console.log("1stAct", firstActivity);
 
     setActivityCategoryState(newCategory);
     setActivityBasedOnCategory(firstActivity);
@@ -72,8 +70,6 @@ export default function Form(props) {
     setError("");
     props.onSave(activityBasedOnCategory);
   }
-
-  console.log("activityCategoryState", activityCategoryState);
 
   return (
     <main className="timeslot__card timeslot__card--create">
