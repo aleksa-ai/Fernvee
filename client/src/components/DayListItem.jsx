@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid(props) {
   console.log("DAY LIST ITEM PROPS:", props);
+  const daysArray = props.daysArray
+
   const classes = useStyles();
 
   return (
@@ -59,7 +61,7 @@ export default function CenteredGrid(props) {
             dayList={props.dayList}
           />
         </Grid>
-      </Grid>
+      </Grid>      
     </div>
   );
 }

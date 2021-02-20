@@ -67,6 +67,7 @@ export default function DayList(props) {
   }
 
   let i = 0;
+  
 
   function updateActivityTimeslot(activity, timeslot, day){
     
@@ -90,7 +91,7 @@ export default function DayList(props) {
       </Tabs>
 
       <div className={classes.tabpanel}>
-        <DayListItem activities={props.activities} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} saveActivity={props.saveActivity} deleteActivity = {props.deleteActivity} updateActivityTimeslot={props.updateActivityTimeslot} updateActivityTimeslot={updateActivityTimeslot} dayIndex={value} dayList={props.dayList}/>
+        <DayListItem activities={props.activities} activityCategories={props.activityCategories} plannedActivities = {props.plannedActivities} saveActivity={props.saveActivity} deleteActivity = {props.deleteActivity} updateActivityTimeslot={props.updateActivityTimeslot} updateActivityTimeslot={updateActivityTimeslot} dayIndex={value} dayList={props.dayList} daysArray={daysArray}/>
       </div>
     </div>
   );
