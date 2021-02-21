@@ -64,12 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// firstName,
-//     lastName,
-//     email,
-//     password,
-//     travelStyle,
-//     createdAt
 
 export default function Signup(props) {
   const [cookies, setCookie] = useCookies(["name", "id"]);
@@ -77,7 +71,9 @@ export default function Signup(props) {
 
   const classes = useStyles();
 
-  const onSubmit = (data) => {
+  const onSubmit = (inputData) => {
+    console.log("INPUT DATA", inputData)
+
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -85,44 +81,33 @@ export default function Signup(props) {
     let createdAtTS = dateTime
     //Line Above: Local Date "Created At" Timestamp
 
-    console.log("SIGNUP ONSUBMIT DATA", data, "CREATED AT:", createdAtTS);
+    console.log("SIGNUP ONSUBMIT INPUT DATA", inputData, "CREATED AT:", createdAtTS);
 
     axios.post('/api/users', {
-      email: data.email,
-      password: data.password,
-      firstName: data.firstname,
-      lastName: data.lastname,
+      email: inputData.email,
+      password: inputData.password,
+      firstName: inputData.firstname,
+      lastName: inputData.lastname,
       travelStyle: "Foodie",
       createdAt: createdAtTS
   }
   )
 
-  //   Promise.all([axios.get("/api/users")])
-  //     .then((all) => {
-  //       console.log('SIGNUP ALL!!!!!', all)
-  //       const users = all[0].data;
-  //       const filteredUser = users.filter(
-  //         (filteredUser) => filteredUser.email === email
-  //       )[0];
-  //       if (!filteredUser) {
-  //         console.log("Wrong email");
-  //         return;
-  //       }
-  //       if (filteredUser.password === password) {
-  //         console.log(filteredUser, "in");
-  //         setCookie("name", filteredUser.first_name);
-  //         setCookie("id", filteredUser.id);
-  //         return filteredUser;
-  //       } else if (filteredUser && filteredUser.password !== password) {
-  //         console.log("Wrong password");
-  //         return null;
-  //       }
-  //       console.log("Wrong");
-  //       return null;
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
+  Promise.all([
+    axios.get("/api/users"),
+  ]).then((all) => {
+    let email = inputData.email;
+    const users = all[0].data
+    const filteredUser = users.filter(filteredUser => filteredUser.email === email)[0]
+    setCookie('name', filteredUser.first_name);
+    setCookie('id', filteredUser.id);
+    return;
+}
+)
+.catch(function (error) {
+  console.log(error);
+});
+
   };
 
   return (
@@ -138,6 +123,7 @@ export default function Signup(props) {
             Signup
           </Typography>
           <form
+            method="POST"
             className={classes.form}
             noValidate
             onSubmit={handleSubmit(onSubmit)}

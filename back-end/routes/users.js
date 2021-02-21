@@ -15,12 +15,13 @@ module.exports = ({
   });
 
   router.post("/", (req, res) => {
-    let firstName = req.firstName
-    let lastName = req.lastName
-    let email = req.email
-    let password = req.password
-    let travelStyle = req.travelStyle
-    let createdAt = req.createdAt
+    console.log(req)
+    let firstName = req.body.firstName
+    let lastName = req.body.lastName
+    let email = req.body.email
+    let password = req.body.password
+    let travelStyle = req.body.travelStyle
+    let createdAt = req.body.createdAt
     console.log(addUser)
     addUser(firstName,
       lastName,

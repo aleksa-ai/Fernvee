@@ -21,7 +21,7 @@ module.exports = (db) => {
     const query = {
       text: `INSERT INTO users(first_name, last_name, email, password, travel_style, created_at)
       VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *Î;
+      RETURNING *;
    `,
     };
 

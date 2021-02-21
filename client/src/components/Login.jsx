@@ -70,10 +70,10 @@ export default function Login(props) {
 
   const classes = useStyles();
 
-  const onSubmit = (data) => {
-    console.log("LOGIN ONSUBMIT DATA", data);
-    let email = data.email;
-    let password = data.password;
+  const onSubmit = (inputData) => {
+    console.log("LOGIN ONSUBMIT INPUT DATA", inputData);
+    let email = inputData.email;
+    let password = inputData.password;
     Promise.all([axios.get("/api/users")])
       .then((all) => {
         console.log('LOGIN ALL!!!!!', all)
