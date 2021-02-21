@@ -15,6 +15,7 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import { da } from "date-fns/locale";
 
@@ -90,6 +91,7 @@ export default function Signup(props) {
       inputData,
       "CREATED AT:",
       createdAtTS
+      //Currently travelStyle is hardcoded & set to foodie
     );
 
     let hashedPassword = bcrypt.hashSync(inputData.password, 12);
@@ -100,6 +102,7 @@ export default function Signup(props) {
       firstName: inputData.firstname,
       lastName: inputData.lastname,
       travelStyle: "Foodie",
+      // travelStyle: inputData.travelstyle,
       createdAt: createdAtTS,
     });
 
@@ -168,6 +171,20 @@ export default function Signup(props) {
             <input name="password" ref={register} />
             <input name="firstname" ref={register} />
             <input name="lastname" ref={register} />
+
+            <TextField
+              id="standard-select-itinerary_type"
+              fullWidth
+              select
+              label="Select"
+              helperText="Select the type of traveler you are"
+            >
+              {['Foodie', 'Romantic', 'Historic', 'Glamour', 'Alternative'].map((category) => (
+                  <MenuItem key={category} value={category} name="travelstyle"> 
+                    {category}
+                  </MenuItem>
+                ))}
+            </TextField>
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
