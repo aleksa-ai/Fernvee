@@ -89,6 +89,7 @@ export default function Login(props) {
           console.log(filteredUser, "in");
           setCookie("name", filteredUser.first_name);
           setCookie("id", filteredUser.id);
+          window.location = "/create"
           return filteredUser;
         } else if (filteredUser && filteredUser.password !== password) {
           console.log("Wrong password");
@@ -99,7 +100,7 @@ export default function Login(props) {
       })
       .catch(function (error) {
         console.log(error);
-      });
+      })
   };
 
   return (

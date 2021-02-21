@@ -112,6 +112,7 @@ export default function Signup(props) {
         )[0];
         setCookie("name", filteredUser.first_name);
         setCookie("id", filteredUser.id);
+        window.location = "/create"
         return;
       })
       .catch(function (error) {
@@ -132,7 +133,6 @@ export default function Signup(props) {
             Signup
           </Typography>
           <form
-            method="POST"
             className={classes.form}
             noValidate
             onSubmit={handleSubmit(onSubmit)}
