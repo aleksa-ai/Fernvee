@@ -1,5 +1,5 @@
-import React from "react";
-import { addDays, format } from "date-fns";
+import React, { useState, useEffect } from "react";
+import {format } from "date-fns";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -22,7 +22,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'} >{children}</Typography>
         </Box>
       )}
     </div>
@@ -50,27 +50,72 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DayList(props) {
-  //console.log("DAY LIST PROPS:", props.activities)
+  // console.log("DAY LIST PROPS:", props)
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const dayList = props.dayList;
 
+
+  // When a specific day is clicked
   const handleChange = (event, newValue) => {
+    // console.log("TabChanged", newValue);
     setValue(newValue);
   };
 
-  let startAt = props.startDate;
-  const daysArray = [];
+  function updateActivityTimeSlot(slot){
+    console.log( dayList );
 
-  while (startAt <= props.endDate) {
-    daysArray.push(startAt);
-    startAt = addDays(startAt, 1);
+    // PROBABLY CAN DELETE BUT LEAVE FOR NOW 
+
+    // console.log( "In UpdateActivityTimeSlot: ", slot);
+    //Get slot to update
+    // activity: null
+    // date: Sat Feb 20 2021 22:49:00 GMT-0500 (Eastern Standard Time) {}
+    // timeslot: "Morning"
+
+
+    // let dayKey, idx;
+    // for (const [key, value] of Object.entries(props.dayList)) {
+    //   value.forEach(function(entry, index) {
+    //     if( entry.date === slot.date && entry.timeslot === slot.timeslot){
+    //       console.log("Found" +  entry );
+    //       dayKey = key;
+    //       idx = index;
+    //     }
+    //   });
+    // }
+
+    // console.log( "Key and index ", dayKey, idx)
+
+    // this.setState(prevState => ({
+    //   jasper: {                   // object that we want to update
+    //       ...prevState.jasper,    // keep all other key-value pairs
+    //       name: 'something'       // update the value of specific key
+    //   }
+    // }))
+
+
+    // props.setDayList([...props.dayList, slot])
+
   }
 
-  let i = 0;
-  function updateActivityTimeslot(activity, timeslot, day){
-    props.setDayList([...props.dayList, {activity, timeslot, day}])
-    console.log("SET DAY LIST");
-  }
+  let dayListTabs = [];
+  dayListTabs = Object.keys(dayList).map((keyName, index) => {
+    return (
+      <TabPanel value={value} index={index} key={index} >
+        { <DayListItem
+          daySlots={dayList[keyName]}
+          activities={props.activities} 
+          activityCategories={props.activityCategories} 
+          plannedActivities = {props.plannedActivities} 
+          saveActivity={props.saveActivity} 
+          deleteActivity = {props.deleteActivity} 
+          updateActivityTimeSlot={updateActivityTimeSlot} 
+          /> }
+      </TabPanel>
+    );
+  });
+
 
   return (
     <div className={classes.root}>
@@ -79,26 +124,14 @@ export default function DayList(props) {
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        {daysArray.map((day) => {
-          return <Tab label={format(day, "iiii, PP")} key={i++} />;
+
+        {Object.keys(dayList).map((keyName, i) => {
+            return <Tab label={format(dayList[keyName][0].date, "iiii, PP")} key={i++} />;
         })}
       </Tabs>
-
-      <div className={classes.tabpanel}>
-        <DayListItem 
-          activities={props.activities} 
-          activityCategories={props.activityCategories} 
-          plannedActivities = {props.plannedActivities} 
-          saveActivity={props.saveActivity} 
-          deleteActivity = {props.deleteActivity} 
-          updateActivityTimeslot={updateActivityTimeslot} 
-          dayIndex={value} 
-          dayList={props.dayList} 
-          daysArray={daysArray}/>
-      </div>
+        {dayListTabs}
     </div>
   );
 }

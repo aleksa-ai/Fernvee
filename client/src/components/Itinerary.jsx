@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
 import { Redirect } from "react-router-dom";
+import {
+  addDays,
+  differenceInCalendarISOWeekYears,
+  format,
+  setDay,
+} from "date-fns";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -17,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
       // width: "100%",
-      
     },
     backButton: {
       marginRight: theme.spacing(1),
@@ -38,9 +43,9 @@ export default function Itinerary(props) {
 
   const [startDate, setStartDate] = useState(0);
   const [endDate, setEndDate] = useState(0);
-
-  const [dayList, setDayList] = useState([]);
-  // console.log("ITINERARY dayList STATE:", dayList);
+  const [dayList, setDayList] = useState({});
+  const [activeStep, setActiveStep] = useState(0);
+  const [activeDay, setActiveDay] = useState(0);
 
   const startDateChanged = (date) => {
     setStartDate(date);
@@ -51,12 +56,44 @@ export default function Itinerary(props) {
   };
 
   // Stepper
-  const [activeStep, setActiveStep] = useState(0);
-
   const steps = getSteps();
 
+  // Next step was clicked
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    // If the current step is 0, next step is 1 which
+    // where we load our day list
+    if (activeStep === 0) {
+      // The dayList is an object of { day: arrayOfProperties }
+      const tempDayList = {};
+      let j = 0;
+      let currentDate = startDate;
+      while (currentDate <= endDate) {
+        // For each day populate the 3 slots
+        tempDayList[j] = [];
+        tempDayList[j].push({
+          activity: null,
+          timeslot: "Morning",
+          date: currentDate,
+        });
+        tempDayList[j].push({
+          activity: null,
+          timeslot: "Afternoon",
+          date: currentDate,
+        });
+        tempDayList[j].push({
+          activity: null,
+          timeslot: "Evening",
+          date: currentDate,
+        });
+
+        currentDate = addDays(currentDate, 1);
+        j++;
+      }
+      // Set the state to propogate changes
+      setDayList(tempDayList);
+    }
   };
 
   const handleBack = () => {
@@ -77,17 +114,17 @@ export default function Itinerary(props) {
           <DayList
             startDate={startDate}
             endDate={endDate}
+            dayList={dayList}
             activities={activities}
             saveActivity={props.saveActivity}
             activityCategories={props.activityCategories}
             plannedActivities={props.plannedActivities}
             deleteActivity={props.deleteActivity}
-            dayList={dayList}
-            setDayList={setDayList}
+            // setDayList={setDayList}
           />
         );
       case 2:
-        return (<Review />)
+        return <Review />;
       default:
         return "Unknown stepIndex";
     }

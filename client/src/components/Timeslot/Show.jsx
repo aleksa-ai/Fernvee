@@ -23,35 +23,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Show(props) {
-  
-  if(!props.slotActivity)
-  {
-    console.log("SlotActivity is undefined, I shouldn't be here");
-
-  }
-  // {activity: 3, timeslot: "Morning", day: 0}
-  let slotActivity = props.slotActivity;
+  let slot = props.slot;
 
   // Populate activity
   let activity = null;
-  
-  if (slotActivity) {
-    let activities = props.activities;
-    activity = activities.filter(
-      (activity) => activity.id === slotActivity.activity
-    )[0];
-  }
+
+  let activities = props.activities;
+  activity = activities.filter((activity) => activity.id === slot.activity)[0];
 
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {activity.name}
-          </Typography>
-
-          <h5 className="text--light">{slotActivity.timeslot}</h5>
+          {activity.name}
+          <h5 className="text--light">{slot.timeslot}</h5>
           <h5 className="text--light">{activity.address}</h5>
           <h5 className="text--regular">{activity.phone}</h5>
           <h5 className="text--light">

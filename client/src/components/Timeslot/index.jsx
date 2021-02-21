@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Timeslot(props) {
-  //console.log(props.slotTime + " TIMESLOT PROPS: ", props);
+  console.log(props.slotTime + " TIMESLOT PROPS: ", props);
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
-  let dayList = props.dayList;
+  let slot = props.slot;
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -45,69 +45,32 @@ export default function Timeslot(props) {
     setExpanded(!expanded);
   };
 
-
-
-  // let [state, setState] = useState([
-  //   { activity_categories: ["Eat"], activities: [], plannedActivities: {} },
-  // ]);
-
-  // useEffect(() => {
-  //   setState(activityCategories, activities, plannedActivities);
-  // }, [activityCategories, activities, plannedActivities]);
-
   let activityCategory =
     activityCategories &&
     activityCategories.map((cat, index) => {
       return <p key={index}>{cat.name}</p>;
-    });
+  });
 
-    // if( dayList !== undefined){
-    //   let activity = activities.filter(
-    //     (activity) => activity.id === plannedActivity.activity
-    //   )[0];
-    //   if( dayList.filter)
-    // }
-
-    
-  let slotActivity = null;
-  // {activity: 3, timeslot: "Morning", day: 0}
-  
-  // slotActivity = dayList.filter( (d => d.timeslot === props.slotTime))[0];
-  slotActivity = dayList.filter( (d) => (d.timeslot === props.slotTime && d.day === props.dayIndex))[0];
-
-  console.log("slot Activity ", slotActivity)
-  
+ 
   const { mode, transition, back } = useVisualMode(
-    slotActivity ? SHOW : EMPTY
+    slot.activity !== null ? SHOW : EMPTY
   );
 
-  // USE THIS FUNCTION WHEN PUSHING TO B-E
-  // const save = (id) => {
-  //   const plannedActivity = {
-  //     name: "NEWLY SAVED ACTIVITY",
-  //   };
-
-  //   transition(SAVING, true);
-
-  //   props.saveActivity(props.id, plannedActivity).then(() => transition(SHOW))
-  //   .catch(() => transition(ERROR_SAVE, true));
-  // };
-
   const saveToState = (activity) => {
+    slot.activity = activity;
     transition(SAVING, true);
-    props.updateActivityTimeslot(activity, props.slotTime, props.dayIndex);
+    props.updateActivityTimeSlot(slot);
     transition(SHOW);
   };
 
-  const cancel = () => {
-    transition(DELETING, true);
-
-    // props.deleteActivity(props.id).then(() => transition(EMPTY));
+  const remove = () => {
+    slot.activity = null;
+    transition(EMPTY);
   };
 
   return (
     <article className="timeslot">
-      <Header time={props.slotTime} />
+      <Header time={slot.timeslot} />
       <Card className={classes.root}>
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
         {mode === SAVING && <Status message={"Saving"} />}
@@ -115,13 +78,12 @@ export default function Timeslot(props) {
         {mode === CONFIRM && (
           <Confirm
             message={"Are you sure you would like to delete?"}
-            onConfirm={cancel}
+            onConfirm={remove}
             onCancel={() => back()}
           />
         )}
         {mode === CREATE && (
           <Form
-            time={props.slotTime}
             activityCategories={activityCategories}
             activities={activities}
             onSave={saveToState}
@@ -130,7 +92,7 @@ export default function Timeslot(props) {
         )}
         {mode === SHOW && (
           <Show
-            slotActivity={slotActivity}
+            slot={slot}
             activities={activities}
             activityCategories={activityCategories}
             plannedActivities={plannedActivities}
