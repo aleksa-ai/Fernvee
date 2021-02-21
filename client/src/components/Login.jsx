@@ -71,35 +71,35 @@ export default function SignInSide(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    console.log('LOGIN ONSUBMIT DATA', data)
-    // let email = data.email;
-    // let password = data.password;
-    // Promise.all([axios.get("/api/users")])
-    //   .then((all) => {
-    //     console.log('LOGIN ALL!!!!!', all)
-    //     const users = all[0].data.users;
-    //     const filteredUser = users.filter(
-    //       (filteredUser) => filteredUser.email === email
-    //     )[0];
-    //     if (!filteredUser) {
-    //       console.log("Wrong email");
-    //       return;
-    //     }
-    //     if (filteredUser.password === password) {
-    //       console.log(filteredUser, "in");
-    //       setCookie("name", filteredUser.firstname);
-    //       setCookie("id", filteredUser.id);
-    //       return filteredUser;
-    //     } else if (filteredUser && filteredUser.password !== password) {
-    //       console.log("Wrong password");
-    //       return null;
-    //     }
-    //     console.log("Wrong");
-    //     return null;
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    console.log("LOGIN ONSUBMIT DATA", data);
+    let email = data.email;
+    let password = data.password;
+    Promise.all([axios.get("/api/users")])
+      .then((all) => {
+        console.log('LOGIN ALL!!!!!', all)
+        const users = all[0].data;
+        const filteredUser = users.filter(
+          (filteredUser) => filteredUser.email === email
+        )[0];
+        if (!filteredUser) {
+          console.log("Wrong email");
+          return;
+        }
+        if (filteredUser.password === password) {
+          console.log(filteredUser, "in");
+          setCookie("name", filteredUser.first_name);
+          setCookie("id", filteredUser.id);
+          return filteredUser;
+        } else if (filteredUser && filteredUser.password !== password) {
+          console.log("Wrong password");
+          return null;
+        }
+        console.log("Wrong");
+        return null;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -114,8 +114,12 @@ export default function SignInSide(props) {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-            <TextField
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* <TextField
               variant="outlined"
               margin="normal"
               required
@@ -140,7 +144,9 @@ export default function SignInSide(props) {
               id="password"
               ref={ register }
               autoComplete="current-password"
-            />
+            /> */}
+            <input name="email" ref={register} />
+            <input name="password" ref={register} />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
