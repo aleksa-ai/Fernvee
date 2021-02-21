@@ -64,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function Signup(props) {
   const [cookies, setCookie] = useCookies(["name", "id"]);
   const { register, handleSubmit, errors } = useForm();
@@ -72,42 +71,49 @@ export default function Signup(props) {
   const classes = useStyles();
 
   const onSubmit = (inputData) => {
-    console.log("INPUT DATA", inputData)
-
     let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let dateTime = date+' '+time;
-    let createdAtTS = dateTime
+    let date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    let time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date + " " + time;
+    let createdAtTS = dateTime;
     //Line Above: Local Date "Created At" Timestamp
 
-    console.log("SIGNUP ONSUBMIT INPUT DATA", inputData, "CREATED AT:", createdAtTS);
+    console.log(
+      "SIGNUP INPUT DATA ON SUBMIT:",
+      inputData,
+      "CREATED AT:",
+      createdAtTS
+    );
 
-    axios.post('/api/users', {
+    axios.post("/api/users", {
       email: inputData.email,
       password: inputData.password,
       firstName: inputData.firstname,
       lastName: inputData.lastname,
       travelStyle: "Foodie",
-      createdAt: createdAtTS
-  }
-  )
+      createdAt: createdAtTS,
+    });
 
-  Promise.all([
-    axios.get("/api/users"),
-  ]).then((all) => {
-    let email = inputData.email;
-    const users = all[0].data
-    const filteredUser = users.filter(filteredUser => filteredUser.email === email)[0]
-    setCookie('name', filteredUser.first_name);
-    setCookie('id', filteredUser.id);
-    return;
-}
-)
-.catch(function (error) {
-  console.log(error);
-});
-
+    Promise.all([axios.get("/api/users")])
+      .then((all) => {
+        let email = inputData.email;
+        const users = all[0].data;
+        const filteredUser = users.filter(
+          (filteredUser) => filteredUser.email === email
+        )[0];
+        setCookie("name", filteredUser.first_name);
+        setCookie("id", filteredUser.id);
+        return;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -159,7 +165,7 @@ export default function Signup(props) {
             <input name="password" ref={register} />
             <input name="firstname" ref={register} />
             <input name="lastname" ref={register} />
-            
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

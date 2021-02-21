@@ -71,12 +71,11 @@ export default function Login(props) {
   const classes = useStyles();
 
   const onSubmit = (inputData) => {
-    console.log("LOGIN ONSUBMIT INPUT DATA", inputData);
+    console.log("LOGIN INPUT DATA ON SUBMIT:", inputData);
     let email = inputData.email;
     let password = inputData.password;
     Promise.all([axios.get("/api/users")])
       .then((all) => {
-        console.log('LOGIN ALL!!!!!', all)
         const users = all[0].data;
         const filteredUser = users.filter(
           (filteredUser) => filteredUser.email === email
