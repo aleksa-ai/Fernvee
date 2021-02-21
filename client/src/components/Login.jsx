@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide(props) {
+export default function Login(props) {
   const [cookies, setCookie] = useCookies(["name", "id"]);
   const { register, handleSubmit } = useForm();
 

@@ -15,7 +15,19 @@ module.exports = ({
   });
 
   router.post("/", (req, res) => {
-    addUser()
+    let firstName = req.firstName
+    let lastName = req.lastName
+    let email = req.email
+    let password = req.password
+    let travelStyle = req.travelStyle
+    let createdAt = req.createdAt
+    console.log(addUser)
+    addUser(firstName,
+      lastName,
+      email,
+      password,
+      travelStyle,
+      createdAt)
     .then((user) => res.json(user))
       .catch((err) => res.json({
         error: err.message

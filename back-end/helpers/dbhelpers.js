@@ -34,6 +34,8 @@ module.exports = (db) => {
       createdAt,
     ];
 
+    console.log(values)
+
     return db
       .query(query, values)
       .then((result) => result.rows)
