@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import bcrypt from 'bcryptjs';
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 import Avatar from "@material-ui/core/Avatar";
@@ -84,7 +85,7 @@ export default function Login(props) {
           console.log("Wrong email");
           return;
         }
-        if (filteredUser.password === password) {
+        if (bcrypt.compare(filteredUser.password, password)) {
           console.log(filteredUser, "in");
           setCookie("name", filteredUser.first_name);
           setCookie("id", filteredUser.id);

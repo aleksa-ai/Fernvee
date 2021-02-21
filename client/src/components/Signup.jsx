@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import bcrypt from 'bcryptjs';
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 import Avatar from "@material-ui/core/Avatar";
@@ -91,9 +92,11 @@ export default function Signup(props) {
       createdAtTS
     );
 
+    let hashedPassword = bcrypt.hashSync(inputData.password, 12);
+
     axios.post("/api/users", {
       email: inputData.email,
-      password: inputData.password,
+      password: hashedPassword,
       firstName: inputData.firstname,
       lastName: inputData.lastname,
       travelStyle: "Foodie",
