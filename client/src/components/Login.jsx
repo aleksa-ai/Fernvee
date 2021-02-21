@@ -28,9 +28,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
-    // position: 'fixed',
-    // top: '0'
+    height: '100vh'
   },
   image: {
     backgroundImage: 'url(https://images.unsplash.com/photo-1585224489225-03ca294de508?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=3634&q=80)',
@@ -72,7 +70,7 @@ export default function SignInSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -108,7 +106,7 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              LogIn
             </Button>
             <Grid container>
               <Grid item xs>
