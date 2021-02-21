@@ -39,7 +39,7 @@ export default function Show(props) {
       <CardActionArea>
         <CardMedia className={classes.media} image={trip.image_url} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" component="span">
             {trip.name}
           </Typography>
         </CardContent>

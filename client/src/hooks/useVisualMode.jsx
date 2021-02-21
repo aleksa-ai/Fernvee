@@ -4,6 +4,7 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
+  console.log(initial);
   const transition = (next, replace = false) => {
     setMode(() => next);
 

@@ -14,51 +14,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CenteredGrid(props) {
-  console.log("DAY LIST ITEM PROPS:", props);
-  const daysArray = props.daysArray
-
+  // console.log("DAY LIST ITEM PROPS:", props);
   const classes = useStyles();
+  const daySlots = props.daySlots;
+
 
   return (
     <div className={classes.root}>
       <Grid container spacing={4} align="center" justify="center">
         <Grid item xs={12}>
+
           <Timeslot
-            slotTime="Morning"
-            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
-            updateActivityTimeslot={props.updateActivityTimeslot}
-            dayList={props.dayList}
+            updateActivityTimeSlot={props.updateActivityTimeSlot}
+            slot={daySlots[0]}
           />
         </Grid>
         <Grid item xs={12}>
           <Timeslot
-            slotTime="Afternoon"
-            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
-            updateActivityTimeslot={props.updateActivityTimeslot}
-            dayList={props.dayList}
+            updateActivityTimeSlot={props.updateActivityTimeSlot}
+            slot={daySlots[1]}
           />
         </Grid>
         <Grid item xs={12}>
           <Timeslot
-            slotTime="Evening"
-            dayIndex={props.dayIndex}
             activityCategories={props.activityCategories}
             activities={props.activities}
             plannedActivities={props.plannedActivities}
             saveActivity={props.saveActivity}
             deleteActivity={props.deleteActivity}
-            updateActivityTimeslot={props.updateActivityTimeslot}
-            dayList={props.dayList}
+            updateActivityTimeSlot={props.updateActivityTimeSlot}
+            slot={daySlots[2]}
           />
         </Grid>
       </Grid>      
