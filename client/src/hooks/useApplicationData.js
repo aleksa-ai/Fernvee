@@ -15,7 +15,7 @@ export default function useApplicationData(initial) {
   useEffect(() => {
     async function dataFetch() {
       Promise.all([
-        // axios.get("/api/cities"),
+        axios.get("/api/cities"),
         // axios.get("/api/itineraries"),
         axios.get("/api/activities"),
         axios.get("/api/activityCategories"),
@@ -24,11 +24,11 @@ export default function useApplicationData(initial) {
         .then((all) => {
           setState((prev) => ({
             ...prev,
-            //cities: all[0].data,
+            cities: all[0].data,
             //itineraries: all[1].data,
-            activities: all[0].data,
-            activity_categories: all[1].data,
-            planned_activities: all[2].data,
+            activities: all[1].data,
+            activity_categories: all[2].data,
+            planned_activities: all[3].data,
           }));
         })
         .catch((error) => console.log("ERROR", error));

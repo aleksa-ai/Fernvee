@@ -52,7 +52,7 @@ export default function Review(props) {
   let listOfActivities = [];
   listOfActivities = bookedActivities.map((activity, index) => {
     return (
-      <ListItem>
+      <ListItem key={index}>
         <ListItemAvatar>
           <Avatar
             variant="rounded"

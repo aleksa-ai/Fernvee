@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DayList(props) {
-  // console.log("DAY LIST PROPS:", props)
+   console.log("DAY LIST PROPS:", props)
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const dayList = props.dayList;

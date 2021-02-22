@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import "date-fns";
-import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -22,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
 export default function TripForm(props) {
   const classes = useStyles();
 
-  const [selectedStartDate, setSelectedStartDate] = React.useState(null);
-  const [selectedEndDate, setSelectedEndDate] = React.useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [city, setCity] = useState("");
+  const [tripName, setTripName] = useState("");
 
   //setSelectedStartDate("2021-03-21");
 
@@ -32,7 +35,7 @@ export default function TripForm(props) {
   // setSelectedEndDate(selectedStartDate);
 
   const handleStartDateChange = (date) => {
-    setSelectedStartDate (date);
+    setSelectedStartDate(date);
     props.onStartDateChanged(date);
   };
 
@@ -41,26 +44,46 @@ export default function TripForm(props) {
     props.onEndDateChanged(date);
   };
 
+  const handleNameChange = (name) => {
+    console.log(name)
+    setTripName(name.target.value)
+    props.onNameChange(name)
+  };
+
+  const handleCityChange = (cityId) => {
+    setCity(cityId.target.value)
+    props.onCityChange(cityId);
+  };
+
+
+
+  // console.log("TRIP FORM PROPS ", props);
+
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <Grid
-        container
-        justify="center"
-        direction="column"
-        alignItems="center"
-      >
+      <Grid container justify="center" direction="column" alignItems="center">
         <TextField
           required
           id="standard-required"
           label="Trip Name"
           defaultValue=""
+          onChange={handleNameChange}
         />
         <TextField
-          required
-          id="standard-required"
-          label="City"
-          defaultValue=""
-        />
+          id="standard-select-activityCategoryState"
+          select
+          label="Select"
+          value={city}
+          onChange={handleCityChange}
+          helperText="Please select city"
+        >
+          {props.cities &&
+            props.cities.map((city) => (
+              <MenuItem key={city.id} value={city.id}>
+                {city.name}
+              </MenuItem>
+            ))}
+        </TextField>
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker

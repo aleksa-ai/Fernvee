@@ -63,7 +63,7 @@ const theme = createMuiTheme({
 function App() {
   const { state, setActivity, saveActivity, deleteActivity } = useApplicationData();
 
-  // console.log('state', state)
+   //console.log('state', state)
 
   // const activities = (state.activities).map((activity) => <Show name={activity.name}/>);
 
@@ -86,6 +86,7 @@ function App() {
               plannedActivities = {state.planned_activities}
               saveActivity = {saveActivity}
               deleteActivity = {deleteActivity}
+              cities={state.cities}
               />
             </Route>
             <Route path="/myProfile">
