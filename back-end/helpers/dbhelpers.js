@@ -20,6 +20,38 @@ module.exports = (db) => {
       .then((result) => result.rows)
       .catch((err) => err);
   };
+  
+  const addUser = (
+    firstName,
+    lastName,
+    email,
+    password,
+    travelStyle,
+    createdAt
+  ) => {
+    const query = {
+      text: `INSERT INTO users(first_name, last_name, email, password, travel_style, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
+   `,
+    };
+
+    const values = [
+      firstName,
+      lastName,
+      email,
+      password,
+      travelStyle,
+      createdAt,
+    ];
+
+    console.log(values)
+
+    return db
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
 
   const getUserTrips = (userId) => {
     const query = {
@@ -135,6 +167,7 @@ module.exports = (db) => {
 
   return {
     getUsers,
+    addUser,
     getActivities,
     getActivityCategories,
     getPlannedActivities,

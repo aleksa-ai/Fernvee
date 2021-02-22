@@ -26,7 +26,6 @@ module.exports = ({ getUserTrips, addUserTrip, deleteUserTrip }) => {
     }),
     router.delete("/:user_trip_id", (req, res) => {
       const userTripId = req.params.user_trip_id;
-
       deleteUserTrip(userTripId)
         .then((users) => res.json(users))
         .catch((err) =>
