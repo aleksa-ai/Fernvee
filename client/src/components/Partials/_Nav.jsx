@@ -27,7 +27,7 @@ export default function Nav(props) {
   const classes = useStyles();
   const [cookies, removeCookie] = useCookies(['cookie-name']);
 
-  console.log(cookies.name)
+  console.log("USER NAME", cookies.name, "USER ID", cookies.id, "COOKIE", cookies)
 
   const logout = (cookies) => {
     removeCookie("id")
@@ -43,8 +43,7 @@ export default function Nav(props) {
         <Tab label="Trips" component={NavLink} to="/trips" />
         <Tab label="Create" component={NavLink} to="/create" />
         <Tab label="My Profile" component={NavLink} to="/MyProfile" />
-        <Tab label="Login" component={NavLink} to="/login" />
-        <Tab label="Logout"  onClick={logout}/>
+        {cookies.id === "undefined" ? <Tab label="Login" component={NavLink} to="/login" /> : <Tab label="Logout"  onClick={logout}/>}
         <Tab label="Signup" component={NavLink} to="/signup" />
       </Toolbar>
     </AppBar>
