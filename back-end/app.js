@@ -11,6 +11,7 @@ const activityCategories = require('./routes/activityCategories')
 const plannedActivities = require('./routes/plannedActivities')
 const trips = require('./routes/curatedTrips')
 const userTrips = require('./routes/userTrips')
+const cities = require('./routes/cities')
 
 
 
@@ -31,5 +32,6 @@ app.use('/api/activityCategories', activityCategories(dbHelpers));
 app.use('/api/plannedActivities', plannedActivities(dbHelpers));
 app.use('/api/curatedTrips', trips(dbHelpers));
 app.use('/api/userTrips', userTrips(dbHelpers));
+app.use('/api/cities', cities(dbHelpers));
 
 module.exports = app;

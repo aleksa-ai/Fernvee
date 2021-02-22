@@ -10,6 +10,17 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const getCities = () => {
+    const query = {
+      text: "SELECT * FROM cities",
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getUserTrips = (userId) => {
     const query = {
       text: `
@@ -131,5 +142,6 @@ module.exports = (db) => {
     getUserTrips,
     addUserTrip,
     deleteUserTrip,
+    getCities
   };
 };
