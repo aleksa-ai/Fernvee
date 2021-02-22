@@ -88,8 +88,8 @@ export default function Login(props) {
         if (bcrypt.compare(filteredUser.password, password)) {
           console.log(filteredUser, "in");
           setCookie("name", filteredUser.first_name);
-          //setCookie("id", filteredUser.id);
-          window.location = "/create"
+          setCookie("id", filteredUser.id);
+          window.location = "/"
           return filteredUser;
         } else if (filteredUser && filteredUser.password !== password) {
           console.log("Wrong password");

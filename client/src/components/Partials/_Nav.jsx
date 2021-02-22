@@ -9,6 +9,8 @@ import {
 import { AppBar, Toolbar, Tab, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import ExploreIcon from '@material-ui/icons/Explore';
+
 import { useCookies } from "react-cookie"
 
 
@@ -28,6 +30,7 @@ export default function Nav(props) {
   console.log(cookies.name)
 
   const logout = (cookies) => {
+    removeCookie("id")
     removeCookie("name")
     window.location = "/" 
   }
@@ -36,7 +39,7 @@ export default function Nav(props) {
     <AppBar position="fixed" >
       <Toolbar className={classes.stickToTop}>
         <a href="/"><img src="../images/logo.png" alt="logo" width="70%" /></a>
-        <Tab label="Explore" component={NavLink} to="/" />
+        <Tab label="Explore" icon={<ExploreIcon/>} component={NavLink} to="/" /> 
         <Tab label="Trips" component={NavLink} to="/trips" />
         <Tab label="Create" component={NavLink} to="/create" />
         <Tab label="My Profile" component={NavLink} to="/MyProfile" />
