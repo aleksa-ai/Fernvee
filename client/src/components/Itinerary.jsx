@@ -124,7 +124,11 @@ export default function Itinerary(props) {
           />
         );
       case 2:
-        return <Review />;
+        return <Review
+        startDate={startDate}
+        endDate={endDate}
+        dayList={dayList}
+        activities={activities} />;
       default:
         return "Unknown stepIndex";
     }

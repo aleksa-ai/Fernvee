@@ -8,6 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+
 
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
@@ -18,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
-    maxWidth: "flex",
+    maxWidth: "100%",
+  },
+  avatar: {
+    width: "150px",
+    height: "auto",
+    paddingRight: "10px",
   },
 }));
 
@@ -34,18 +41,20 @@ export default function Show(props) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent>
-          {activity.name}
-          <h5 className="text--light">{slot.timeslot}</h5>
-          <h5 className="text--light">{activity.address}</h5>
-          <h5 className="text--regular">{activity.phone}</h5>
-          <h5 className="text--light">
-            <a href={activity.website_url}>{activity.website_url}</a>
-          </h5>
-          <h6 className="text--light">{activity.description}</h6>
-        </CardContent>
-      </CardActionArea>
+       <CardMedia
+          className={classes.media}
+          image="/static/images/cards/contemplative-reptile.jpg"
+          title="Contemplative Reptile"
+        />
+      <CardContent>
+        <h5 className="text--light">{activity.address}</h5>
+        <h5 className="text--regular">{activity.phone}</h5>
+        <h5 className="text--light">
+          <a href={activity.website_url}>{activity.website_url}</a>
+        </h5>
+        <p className="text--light">{activity.description}</p>
+      </CardContent>
+
       <CardActions>
         <div className={classes.root}>
           <IconButton aria-label="edit" onClick={props.onEdit}>

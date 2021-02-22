@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Timeslot(props) {
-  console.log(props.slotTime + " TIMESLOT PROPS: ", props);
+ 
   let activityCategories = props.activityCategories;
   let activities = props.activities;
   let plannedActivities = props.plannedActivities;
