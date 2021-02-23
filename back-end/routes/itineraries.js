@@ -4,9 +4,10 @@ var router = express.Router();
 
 module.exports = ({ getUserItineraries, addItinerary }) => {
 
-  router.get("/", (req, res) => {
+  router.get("/:id", (req, res) => {
+    let userId = req.params.id;
 
-    getUserItineraries()
+    getUserItineraries(userId)
       .then((users) => res.json(users))
       .catch((err) =>
         res.json({
