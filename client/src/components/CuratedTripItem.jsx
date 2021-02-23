@@ -27,10 +27,6 @@ const useStyles = makeStyles({
   },
 });
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 export default function CuratedTripItem(props) {
   const classes = useStyles();
   const history = useHistory();
@@ -41,10 +37,10 @@ export default function CuratedTripItem(props) {
 
   let tripDetailList = [];
 
-  // const redirect = () => {
-  //   const url = `/curatedTrips/:placeId/:id`;
-  //   history.push(url);
-  // };
+  const redirect = () => {
+    const url = `/create/${systemItineraryId}`;
+    history.push(url);
+  };
 
   // <See if can sepeate this into another file>
   useEffect(() => {
@@ -53,7 +49,6 @@ export default function CuratedTripItem(props) {
         .get(`/api/curatedTripDetails/${systemItineraryId}`)
         .then(
           (result) => {
-            console.log("test", result);
             return result.data;
           },
           (error) => {
@@ -75,27 +70,26 @@ export default function CuratedTripItem(props) {
     setOpen(false);
   };
 
-
   // Add trip to my trips
-  const addToTrips = () => {
-    const userId = "1"; // Will need to change to props.userId when have authentication
-    const tripId = props.id;
-    console.log("prips.id ", props.id);
-    const url = `/trips`;
-    history.push(url);
+  // const addToTrips = () => {
+  //   const userId = "1"; // Will need to change to props.userId when have authentication
+  //   const tripId = props.id;
+  //   console.log("prips.id ", props.id);
+  //   const url = `/trips`;
+  //   history.push(url);
 
-    axios
-      .post(`/api/userIt/${userId}/`, null, {
-        params: {
-          itinerary_id: tripId,
-        },
-      })
-      .then((response) => {
-        console.log("in add trips");
-        console.log(response);
-        // response.status
-      });
-  };
+  //   axios
+  //     .post(`/api/userIt/${userId}/`, null, {
+  //       params: {
+  //         itinerary_id: tripId,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log("in add trips");
+  //       console.log(response);
+  //       // response.status
+  //     });
+  // };
 
   tripDetailList = tripDetails.map((item, index) => {
     return (
@@ -108,7 +102,6 @@ export default function CuratedTripItem(props) {
       </div>
     );
   });
-
 
   return (
     <>
@@ -136,7 +129,7 @@ export default function CuratedTripItem(props) {
           <Button
             size="small"
             color="primary"
-            onClick={addToTrips}
+            onClick={redirect}
             type="submit"
           >
             Add to My Trips

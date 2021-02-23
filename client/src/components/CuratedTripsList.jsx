@@ -3,6 +3,7 @@ import {
   Switch,
   Route,
   useParams,
+  useLocation
 } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
@@ -45,13 +46,17 @@ const useStyles = makeStyles({
 export default function CuratedTripsList(props) {
   const classes = useStyles();
   const history = useHistory();
-  let { placeId } = useParams();
+
+  const search = useLocation().search;
+  const placeId = new URLSearchParams(search).get('placeId');
+  
   const [curatedTrips, setCuratedTrips] = useState([]);
 
   // <See if can sepeate this into another file>
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/api/curatedTrips/${placeId}`).then(
+      const result = await axios.get(`/api/curatedTrips?placeId=${placeId}`)
+      .then(
         (result) => {
           return result.data;
         },
@@ -60,7 +65,6 @@ export default function CuratedTripsList(props) {
           return [];
         }
       );
-
       setCuratedTrips(result);
     };
     fetchData();

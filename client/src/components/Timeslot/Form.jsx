@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
-  console.log("FORM PROPS", props);
+  //console.log("FORM PROPS", props);
 
   let activityCategories = props.activityCategories;
   let activities = props.activities;

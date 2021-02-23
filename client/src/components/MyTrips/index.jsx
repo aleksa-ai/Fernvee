@@ -24,22 +24,22 @@ export default function Trips() {
   const [userTrips, setUserTrips] = useState([]);
   const classes = useStyles();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(`/api/userTrips/1`).then(
-        (result) => result.data,
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios.get(`/api/userItineraries/1`).then(
+  //       (result) => result.data,
 
-        (error) => {
-          console.log("ERROR " + error.message);
-          return [];
-        }
-      );
-      console.log(result);
-      setUserTrips(result);
-    };
+  //       (error) => {
+  //         console.log("ERROR " + error.message);
+  //         return [];
+  //       }
+  //     );
+  //     console.log(result);
+  //     setUserTrips(result);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   // Called when user deletes a trip from their collection
   const deleteTrip = (trip) => {

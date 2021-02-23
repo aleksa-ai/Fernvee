@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import {
   addDays,
   differenceInCalendarISOWeekYears,
@@ -48,8 +48,49 @@ export default function Itinerary(props) {
   const [dayList, setDayList] = useState({});
   const [activeStep, setActiveStep] = useState(0);
   const [city, setCity] = useState("");
+
+  // All the following states are for cases with curated trips
   const [tripName, setTripName] = useState("");
-  // const [activeDay, setActiveDay] = useState(0);
+  const [readOnly, setReadyOnly] = useState(false);
+  const [tripDuration, setTripDuration] = useState(0);
+  const [systemActivities, setSystemActivities] = useState([]);
+  let { id } = useParams();
+
+  // <See if can sepeate this into another file>
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    const fetchData = async () => {
+      const result = await axios.get(`/api/curatedTrips/${id}`).then(
+        (result) => {
+          return result.data[0];
+        },
+        (error) => {
+          console.log("ERROR " + error.message);
+          return [];
+        }
+      );
+
+      const detailedResult = await axios
+        .get(`/api/curatedTripDetails/${id}`)
+        .then(
+          (result) => {
+            return result.data;
+          },
+          (error) => {
+            console.log("ERROR " + error.message);
+            return [];
+          }
+        );
+      setTripName(result.name);
+      setCity(result.city_id);
+      setTripDuration(result.duration);
+      setReadyOnly(true);
+      setSystemActivities(detailedResult);
+    };
+    fetchData();
+  }, [id]);
 
   const startDateChanged = (date) => {
     setStartDate(date);
@@ -58,8 +99,6 @@ export default function Itinerary(props) {
   const endDateChanged = (date) => {
     setEndDate(date);
   };
-
-
 
   // The dayList is an object of { day: arrayOfProperties }
   const populatedDayList = function () {
@@ -70,17 +109,17 @@ export default function Itinerary(props) {
       // For each day populate the 3 slots
       tempDayList[j] = [];
       tempDayList[j].push({
-        activity: null,
+        activity: findSlotInList(j, "Morning"),
         timeslot: "Morning",
         date: currentDate,
       });
       tempDayList[j].push({
-        activity: null,
+        activity: findSlotInList(j, "Afternoon"),
         timeslot: "Afternoon",
         date: currentDate,
       });
       tempDayList[j].push({
-        activity: null,
+        activity: findSlotInList(j, "Evening"),
         timeslot: "Evening",
         date: currentDate,
       });
@@ -90,38 +129,105 @@ export default function Itinerary(props) {
     }
     // Set the state to propogate changes
     setDayList(tempDayList);
+    console.log("DAYLIST", tempDayList);
+  };
+
+  // Find activity based on day of occurence and timeslot
+  const findSlotInList = (day, slotTime) => {
+    let found = systemActivities.filter(
+      (a) => a.day_number === day + 1 && a.timeslot === slotTime
+    );
+    if (found.length > 0) {
+      return found[0].activity_id;
+    } else {
+      return null;
+    }
   };
 
   // Add newly created trip to my trips
-  const addNewTrip = async() => {
+  const addNewTrip = async () => {
     const userId = "1"; // Will need to change to props.userId when have authentication
-    // const url = `/trips`;
-    // history.push(url);
 
-   
 
-      const res = await axios.post("/api/itineraries", {
-        name: tripName,
-        imageUrl: "https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80",
-        startTime: startDate,
-        endTime: endDate,
-        cityId: city
-      });
-  
-      const info = res.data.id;
-  
-      const res2 = await axios.post("/api/planedActivities");
-  
-      const info2 = res2.data;
-
-      const res3 = await axios.post(`/api/userTrips/${userId}`);
-  
-      const info3 = res.data;
-  
-  
-      return info3;
-    }
+      const postItinerary = await axios
+        .post("/api/userItineraries", {
+          name: tripName,
+          imageUrl:
+            "https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80",
+          startTime: startDate,
+          endTime: endDate,
+          cityId: city,
+          userId: userId,
+        })
+        .then(
+          (result) => {
+            console.log(result.data[0]);
+            return result.data[0];
+          },
+          (error) => {
+            console.log("ERROR " + error.message);
+          }
+        );
     
+
+    console.log("POST ", postItinerary );
+
+
+
+    // Create an array of booked dayList slots
+    const plannedActivities = [];
+    Object.keys(dayList).forEach((keyName, index) => {
+      for (let day of dayList[keyName]) {
+        if (day.activity) {
+          let activityDetail = {
+            ...props.activities.filter((a) => a.id === day.activity)[0],
+          };
+          activityDetail["timeslot"] = day.timeslot;
+          activityDetail["date"] = day.date;
+          activityDetail["userIteneraryId"] = postItinerary.id;
+          plannedActivities.push(activityDetail);
+        }
+      }
+    });
+
+    // const plannedActities = dayList.map( (activity) => {
+    //   return {
+    //     activity_id =
+    //     activity_id INTEGER REFERENCES activities(id) ON DELETE CASCADE,
+    //     user_itinerary_id INTEGER REFERENCES users_itineraries(id) ON DELETE CASCADE,
+    //     day_number INT,
+    //     timeslot varchar(20)
+    //   }
+
+    // })
+
+    console.log( "BEFORE", JSON.stringify(plannedActivities));
+
+    const res2 = await axios
+      .post("/api/plannedActivities", {
+        activities: plannedActivities})
+      .then(
+        (result) => {
+          console.log(result.data);
+        },
+        (error) => {
+          console.log("ERROR " + error.message);
+        }
+      );
+  };
+
+  // const info = res.data.id;
+
+  // const res2 = await axios.post("/api/planedActivities");
+
+  // const info2 = res2.data;
+
+  // const res3 = await axios.post(`/api/userTrips/${userId}`);
+
+  // const info3 = res.data;
+
+  // return info3;
+
   //   Promise.all([
   //     axios.post(`/api/userTrips/${userId}`),
   //     axios.post("/api/itineraries"),
@@ -159,7 +265,10 @@ export default function Itinerary(props) {
       case 0:
         return (
           <TripForm
-            name={city}
+            cityId={city}
+            tripName={tripName}
+            makeReadOnly={readOnly}
+            duration={tripDuration}
             onStartDateChanged={startDateChanged}
             onEndDateChanged={endDateChanged}
             onCityChange={setCity}

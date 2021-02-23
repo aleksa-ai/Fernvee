@@ -30,7 +30,7 @@ export default function Review(props) {
   const [dense, setDense] = useState(false);
   const { dayList, activities } = props;
 
-  console.log(activities);
+  // console.log(activities);
 
   let dayListTabs = [];
   let bookedActivities = [];
@@ -56,7 +56,7 @@ export default function Review(props) {
         <ListItemAvatar>
           <Avatar
             variant="rounded"
-            alt="Remy Sharp"
+            alt="Activity image"
             src={activity.image_url}
             className={classes.avatar}
           />
@@ -69,7 +69,7 @@ export default function Review(props) {
     );
   });
 
-  console.log(bookedActivities);
+ // console.log(bookedActivities);
 
   return (
     <div className={classes.root}>

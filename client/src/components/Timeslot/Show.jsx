@@ -47,6 +47,7 @@ export default function Show(props) {
           title="Contemplative Reptile"
         />
       <CardContent>
+        <h2 className="text--light">{activity.name}</h2>
         <h5 className="text--light">{activity.address}</h5>
         <h5 className="text--regular">{activity.phone}</h5>
         <h5 className="text--light">

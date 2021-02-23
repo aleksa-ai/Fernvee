@@ -9,6 +9,10 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import DateFnsUtils from "@date-io/date-fns";
 import {
+  addDays,
+} from "date-fns";
+
+import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
@@ -30,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TripForm(props) {
   const classes = useStyles();
-
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [selectedCity, setSelectedCity] = useState("");
@@ -45,6 +48,10 @@ export default function TripForm(props) {
   const handleStartDateChange = (date) => {
     setSelectedStartDate(date);
     props.onStartDateChanged(date);
+    if( props.makeReadOnly ){
+      // Include 1st day
+      handleEndDateChange(addDays(date, props.duration-1))
+    }
   };
 
   const handleEndDateChange = (date) => {
@@ -68,17 +75,22 @@ export default function TripForm(props) {
       <Grid container justify="center" direction="column" alignItems="center">
         <TextField
           required
+          InputProps={{
+            readOnly: props.makeReadOnly,
+          }}
           id="standard-required"
           label="Trip Name"
-          defaultValue=""
+          value={props.tripName}
           onChange={handleNameChange}
         />
         <FormControl className={classes.formControl}>
           <InputLabel>Select City</InputLabel>
           <Select
             className={classes.dropdown}
-            value={selectedCity}
+            value={props.cityId}
             onChange={handleCityChange}
+            inputProps={{ readOnly: props.makeReadOnly }}
+            
           >
             {props.cities &&
               props.cities.map((city) => (
@@ -113,6 +125,7 @@ export default function TripForm(props) {
             id="date-picker-inline"
             label="End Date"
             value={selectedEndDate}
+            InputProps={{ disabled: props.makeReadOnly }}
             onChange={handleEndDateChange}
             KeyboardButtonProps={{
               "aria-label": "change date",
