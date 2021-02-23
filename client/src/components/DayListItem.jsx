@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    width: "100%",
     flexGrow: 1,
   },
   paper: {

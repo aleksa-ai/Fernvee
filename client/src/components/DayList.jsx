@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     display: "flex",
+    width: "auto"
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,

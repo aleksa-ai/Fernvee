@@ -59,7 +59,7 @@ export default function Show(props) {
           <Typography gutterBottom variant="h2" component="h2">
             {activity.name}
           </Typography>
-
+          
           <Typography variant="h6" component="h5">
             {activity.address}
           </Typography>
