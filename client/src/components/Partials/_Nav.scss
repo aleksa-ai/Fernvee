@@ -1,0 +1,41 @@
+.main-nav-buttons{
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+  display: flex; /* Standard syntax */
+}
+
+//Desktop styles
+@media only screen and (min-width: 980px) {
+  .logo{
+    width: 70%;
+
+  }
+}
+
+//Mobile styles
+@media (max-width: 979px) {
+  .main-nav-buttons{
+    height: 80%;
+
+  }
+
+  .logo{
+    height: 98px;
+    width: 108px;
+  }
+}
+
+
+//Mobile styles
+@media (max-width: 450px) {
+  .main-nav-buttons{
+    height: 75%;
+
+  }
+
+  .logo{
+    height: 75px;
+    width: 81px;
+  }
+}
