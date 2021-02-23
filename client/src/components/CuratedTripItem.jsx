@@ -15,6 +15,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+
+
 import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles({
@@ -24,6 +28,10 @@ const useStyles = makeStyles({
   },
   media: {
     height: 300,
+  },
+  avatar: {
+    width: "100%",
+    height: "auto",
   },
 });
 
@@ -94,12 +102,23 @@ export default function CuratedTripItem(props) {
   tripDetailList = tripDetails.map((item, index) => {
     return (
       <div  key={index}>
+        <br></br>
+         <Typography  color="primary" variant="h5" component="h2" gutterBottom>
         {item.name} <br></br>
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom>
         Day {item.day_number} {item.timeslot}<br></br>
-        <img src={item.image_url} alt="Girl in a jacket"/> <br></br>
+        </Typography>
+        <Avatar  variant="rounded" className={classes.avatar} alt="activity_image" src={item.image_url} />
+        <br></br>
+        <Typography  color="secondary"  variant="h6" gutterBottom>
         Description<br></br>
+        </Typography>
         {item.description}<br></br> <br></br>
+  
+        <Divider variant="fullwidth" />
       </div>
+     
     );
   });
 
@@ -144,7 +163,9 @@ export default function CuratedTripItem(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle   id="alert-dialog-title" >
-          {"Trip Details"}
+        <Typography variant="heading" display="block" >
+          Trip Details
+          </Typography>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

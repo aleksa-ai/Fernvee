@@ -35,7 +35,9 @@ const useStyles = makeStyles({
   },
   cardRoot: {
     minWidth: 400,
-    maxWidth: 400,
+    // maxWidth: 350,
+    minHeight: 460,
+    maxHeight: 470,
     margin: "auto",
   },
   cardMedia: {
@@ -52,7 +54,6 @@ export default function CuratedTripsList(props) {
   
   const [curatedTrips, setCuratedTrips] = useState([]);
 
-  // <See if can sepeate this into another file>
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(`/api/curatedTrips?placeId=${placeId}`)
