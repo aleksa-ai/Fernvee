@@ -19,8 +19,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 
 
-import Slide from '@material-ui/core/Slide';
-
 const useStyles = makeStyles({
   root: {
     maxWidth: 400,
@@ -77,27 +75,6 @@ export default function CuratedTripItem(props) {
   const closeDialog = () => {
     setOpen(false);
   };
-
-  // Add trip to my trips
-  // const addToTrips = () => {
-  //   const userId = "1"; // Will need to change to props.userId when have authentication
-  //   const tripId = props.id;
-  //   console.log("prips.id ", props.id);
-  //   const url = `/trips`;
-  //   history.push(url);
-
-  //   axios
-  //     .post(`/api/userIt/${userId}/`, null, {
-  //       params: {
-  //         itinerary_id: tripId,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log("in add trips");
-  //       console.log(response);
-  //       // response.status
-  //     });
-  // };
 
   tripDetailList = tripDetails.map((item, index) => {
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -11,26 +11,30 @@ const useStyles = makeStyles({
     bottom: 0,
     width: "100%",
 
+
   },
 });
 
 export default function Footer(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState();
+  const [value, setValue] = useState();
 
   return (
     <BottomNavigation
-    value={value}
-    onChange={(event, newValue) => {
-      setValue(newValue);
-    }}
-    showLabels
-    className={classes.stickToBottom} 
-  >
-  
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      showLabels
+      className={classes.stickToBottom}
+    >
       <BottomNavigationAction label="About Us" component={Link} to="/AboutUs" />
       <BottomNavigationAction label="Blog" component={Link} to="/Blog" />
-      <BottomNavigationAction label="Contact Us" component={Link} to="/ContactUs" />
+      <BottomNavigationAction
+        label="Contact Us"
+        component={Link}
+        to="/ContactUs"
+      />
     </BottomNavigation>
   );
 }

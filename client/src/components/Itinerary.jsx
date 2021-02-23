@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useCookies } from "react-cookie";
 import { Redirect, useParams } from "react-router-dom";
 import {
   addDays,
@@ -42,7 +42,9 @@ function getSteps() {
 
 export default function Itinerary(props) {
   const classes = useStyles();
+  const cookies = useCookies();
 
+  const history = useHistory();
   const [startDate, setStartDate] = useState(0);
   const [endDate, setEndDate] = useState(0);
   const [dayList, setDayList] = useState({});
@@ -53,8 +55,17 @@ export default function Itinerary(props) {
   const [tripName, setTripName] = useState("");
   const [readOnly, setReadyOnly] = useState(false);
   const [tripDuration, setTripDuration] = useState(0);
+  const [imageUrl, setImageUrl] = useState(
+    "https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
+  );
   const [systemActivities, setSystemActivities] = useState([]);
+  const [filteredActivities, setFilteredActivities] = useState(
+    props.activities
+  );
+
   let { id } = useParams();
+
+  console.log("Itinerary props ", props);
 
   // <See if can sepeate this into another file>
   useEffect(() => {
@@ -83,14 +94,15 @@ export default function Itinerary(props) {
             return [];
           }
         );
+      setReadyOnly(true);
       setTripName(result.name);
       setCity(result.city_id);
       setTripDuration(result.duration);
-      setReadyOnly(true);
+      setImageUrl(result.image_url);
       setSystemActivities(detailedResult);
     };
     fetchData();
-  }, [id]);
+  }, [id, props.activities]);
 
   const startDateChanged = (date) => {
     setStartDate(date);
@@ -146,33 +158,26 @@ export default function Itinerary(props) {
 
   // Add newly created trip to my trips
   const addNewTrip = async () => {
-    const userId = "1"; // Will need to change to props.userId when have authentication
+    const userId = cookies.id; // COOKIES - CHECK IF WORKS
 
-
-      const postItinerary = await axios
-        .post("/api/userItineraries", {
-          name: tripName,
-          imageUrl:
-            "https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80",
-          startTime: startDate,
-          endTime: endDate,
-          cityId: city,
-          userId: userId,
-        })
-        .then(
-          (result) => {
-            console.log(result.data[0]);
-            return result.data[0];
-          },
-          (error) => {
-            console.log("ERROR " + error.message);
-          }
-        );
-    
-
-    console.log("POST ", postItinerary );
-
-
+    const postItinerary = await axios
+      .post("/api/userItineraries", {
+        name: tripName,
+        imageUrl: imageUrl,
+        startTime: startDate,
+        endTime: endDate,
+        cityId: city,
+        userId: userId,
+      })
+      .then(
+        (result) => {
+          console.log(result.data[0]);
+          return result.data[0];
+        },
+        (error) => {
+          console.log("ERROR " + error.message);
+        }
+      );
 
     // Create an array of booked dayList slots
     const plannedActivities = [];
@@ -180,8 +185,9 @@ export default function Itinerary(props) {
       for (let day of dayList[keyName]) {
         if (day.activity) {
           let activityDetail = {
-            ...props.activities.filter((a) => a.id === day.activity)[0],
+            ...filteredActivities.filter((a) => a.id === day.activity)[0],
           };
+          activityDetail["day_number"] = index + 1;
           activityDetail["timeslot"] = day.timeslot;
           activityDetail["date"] = day.date;
           activityDetail["userIteneraryId"] = postItinerary.id;
@@ -190,52 +196,22 @@ export default function Itinerary(props) {
       }
     });
 
-    // const plannedActities = dayList.map( (activity) => {
-    //   return {
-    //     activity_id =
-    //     activity_id INTEGER REFERENCES activities(id) ON DELETE CASCADE,
-    //     user_itinerary_id INTEGER REFERENCES users_itineraries(id) ON DELETE CASCADE,
-    //     day_number INT,
-    //     timeslot varchar(20)
-    //   }
-
-    // })
-
-    console.log( "BEFORE", JSON.stringify(plannedActivities));
-
-    const res2 = await axios
+    // console.log( "BEFORE", JSON.stringify(plannedActivities));
+    // Post itinerary activities
+    await axios
       .post("/api/plannedActivities", {
-        activities: plannedActivities})
+        activities: plannedActivities,
+      })
       .then(
         (result) => {
           console.log(result.data);
+          redirect();
         },
         (error) => {
           console.log("ERROR " + error.message);
         }
       );
   };
-
-  // const info = res.data.id;
-
-  // const res2 = await axios.post("/api/planedActivities");
-
-  // const info2 = res2.data;
-
-  // const res3 = await axios.post(`/api/userTrips/${userId}`);
-
-  // const info3 = res.data;
-
-  // return info3;
-
-  //   Promise.all([
-  //     axios.post(`/api/userTrips/${userId}`),
-  //     axios.post("/api/itineraries"),
-  //     axios.post("/api/planedActivities"),
-  //   ]).then((all) => {
-  //     console.log("ITINIERARY AXIOS POST: " + all);
-  //   });
-  // };
 
   // Stepper
   const steps = getSteps();
@@ -248,6 +224,11 @@ export default function Itinerary(props) {
     // If the current step is 0, next step is 1 which
     // where we load our day list
     if (activeStep === 0) {
+      const newActivities = props.activities.filter(
+        (act) => act.city_id === city
+      );
+      setFilteredActivities(newActivities);
+
       populatedDayList();
     }
     // If last step, post to database
@@ -256,11 +237,16 @@ export default function Itinerary(props) {
     }
   };
 
+  const redirect = () => {
+    const url = `/trips/1`;
+    history.push(url);
+  };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  function getStepContent(stepIndex, activities) {
+  function getStepContent(stepIndex, filteredActivities) {
     switch (stepIndex) {
       case 0:
         return (
@@ -283,7 +269,7 @@ export default function Itinerary(props) {
             startDate={startDate}
             endDate={endDate}
             dayList={dayList}
-            activities={activities}
+            activities={filteredActivities}
             saveActivity={props.saveActivity}
             activityCategories={props.activityCategories}
             plannedActivities={props.plannedActivities}
@@ -297,7 +283,7 @@ export default function Itinerary(props) {
             startDate={startDate}
             endDate={endDate}
             dayList={dayList}
-            activities={activities}
+            activities={filteredActivities}
           />
         );
       default:
@@ -317,31 +303,21 @@ export default function Itinerary(props) {
         ))}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
+        <div>
+          {getStepContent(activeStep, filteredActivities)}
           <div>
-            <Redirect to="/trips" />
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              className={classes.backButton}
+            >
+              Back
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleNext}>
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            </Button>
           </div>
-        ) : (
-          <div>
-            {getStepContent(activeStep, props.activities)}
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleNext}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

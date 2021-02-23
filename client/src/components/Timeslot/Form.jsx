@@ -18,8 +18,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form(props) {
-  //console.log("FORM PROPS", props);
-
   let activityCategories = props.activityCategories;
   let activities = props.activities;
 
@@ -62,7 +60,7 @@ export default function Form(props) {
       setError("An activity category must be selected");
       return;
     }
-      console.log("ABOC!!!", activityBasedOnCategory)
+
     if (activityBasedOnCategory.length === 0) {
       setError("An activity must be selected");
       return;

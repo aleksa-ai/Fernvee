@@ -77,7 +77,7 @@ function App() {
               <Explore />
             </Route>
             <Route path="/trips">
-              <MyTrips />
+              <MyTrips activities = {state.activities} />
             </Route>
             <Route path="/create" exact>
               <Itinerary  
@@ -145,8 +145,8 @@ function App() {
               <Show />
             </Route>
           </Switch>
-          <Footer />
-        </div>
+        </div>  
+        <Footer />
       </Router>
     </ThemeProvider>
   );
