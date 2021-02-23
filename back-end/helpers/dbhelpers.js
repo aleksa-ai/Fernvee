@@ -1,11 +1,11 @@
 const format = require('pg-format');
 
 module.exports = (db) => {
+
   const getUsers = () => {
     const query = {
       text: "SELECT * FROM users",
     };
-
     return db
       .query(query)
       .then((result) => result.rows)
@@ -16,7 +16,6 @@ module.exports = (db) => {
     const query = {
       text: "SELECT * FROM cities",
     };
-
     return db
       .query(query)
       .then((result) => result.rows)
@@ -37,7 +36,6 @@ module.exports = (db) => {
       RETURNING *;
    `,
     };
-
     const values = [
       firstName,
       lastName,
@@ -46,9 +44,6 @@ module.exports = (db) => {
       travelStyle,
       createdAt,
     ];
-
-    console.log(values)
-
     return db
       .query(query, values)
       .then((result) => result.rows)
@@ -93,14 +88,12 @@ module.exports = (db) => {
   const deleteUserTrip = (id) => {
     const query = {
       text: `
-      DELETE FROM user_trips
+      DELETE FROM users_itineraries
       WHERE id = $1
       RETURNING *
       `,
     };
-
     const values = [id];
-
     return db
       .query(query, values)
       .then((result) => result.rows)
@@ -139,7 +132,7 @@ module.exports = (db) => {
     // };
 
     const query = {
-      text: `SELECT users_itineraries.id, users_itineraries.name,  users_itineraries.user_id,
+      text: `SELECT users_itineraries.id, users_itineraries.name, users_itineraries.image_url, users_itineraries.user_id, users_itineraries.start_time, users_itineraries.end_time, users_itineraries.city_id,
       json_agg(json_build_object('activity_id', planned_activities.activity_id, 'day', planned_activities.day_number, 'timeslot', planned_activities.timeslot)) AS activities
       FROM users_itineraries
       JOIN planned_activities ON planned_activities.user_itinerary_id = users_itineraries.id

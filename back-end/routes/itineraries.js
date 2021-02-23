@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 
-module.exports = ({ getUserItineraries, addItinerary }) => {
+module.exports = ({ getUserItineraries, addItinerary, deleteUserTrip }) => {
 
   router.get("/:id", (req, res) => {
     let userId = req.params.id;
@@ -28,6 +28,17 @@ module.exports = ({ getUserItineraries, addItinerary }) => {
       .then((itinerary) => {
         res.json(itinerary)
       })
+      .catch((err) =>
+        res.json({
+          error: err.message,
+        })
+      );
+  });
+
+  router.delete("/:user_trip_id", (req, res) => {
+    const userTripId = req.params.user_trip_id;
+    deleteUserTrip(userTripId)
+      .then((users) => res.json(users))
       .catch((err) =>
         res.json({
           error: err.message,
