@@ -1,3 +1,5 @@
+const format = require('pg-format');
+
 module.exports = (db) => {
   const getUsers = () => {
     const query = {
@@ -20,7 +22,7 @@ module.exports = (db) => {
       .then((result) => result.rows)
       .catch((err) => err);
   };
-  
+
   const addUser = (
     firstName,
     lastName,
@@ -115,7 +117,8 @@ module.exports = (db) => {
       .then((result) => result.rows)
       .catch((err) => err);
   };
-  
+
+  // Add itinerary to collection
   const addItinerary = (tripName, imageUrl, tripStart, tripEnd, cityId, userId) => {
     const query = {
       text: `
@@ -132,13 +135,38 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  // Add planned activities to table -> these are many to one with itinerary
+  const addPlannedActivities = (activities) => {
+    //const values = activities.map(Object.values);
+    //console.log ("addPlanned",  values );
+    const values = [];
+    
+    activities.forEach( item => {
+      //let temp = 
+      values.push( [item.id, item.userIteneraryId, 0, item.timeslot] );
+    })
+    console.log ("addPlanned",  values[0] );
+
+    const query = {
+      text: format(`
+        INSERT INTO planned_activities(activity_id, user_itinerary_id, day_number, timeslot)
+        VALUES %L`, values
+        ),
+    };
+    // const values = [activities.map( item => item.id, item.userIteneraryId, 0, item.timeslot )]
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
   const getActivities = () => {
     const query = {
       text: "SELECT * FROM activities",
     };
 
     return db
-      .query(query)
+      .query(query, [values[0]])
       .then((result) => result.rows)
       .catch((err) => err);
   };
@@ -156,17 +184,12 @@ module.exports = (db) => {
   };
 
 
+  // Provided a systemItineraryId, returns the activities
   const getSystemActivitiesForItinerary = (systemItineraryId) => {
     //Could add day_id, start_time, end_time, itinerary_id from planned_activities
-
-    // id SERIAL PRIMARY KEY NOT NULL,
-    // activity_id INTEGER REFERENCES activities(id) ON DELETE CASCADE,
-    // system_itinerary_id INTEGER REFERENCES system_itineraries(id) ON DELETE CASCADE,
-    // day_number INT,
-    // timeslot varchar(20)
     const query = {
-      text: `SELECT
-        system_activities.id, 
+      text: `SELECT 
+        system_activities.activity_id,
         system_activities.day_number, 
         system_activities.timeslot,
         activities.name,
@@ -194,6 +217,8 @@ module.exports = (db) => {
     const query = {
       text: `SELECT
       planned_activities.id,
+      planned_activities.timeslot,
+      planned_activities.user_itinerary_id,
       json_build_object('name', activities.name, 'phone', activities.phone, 'website_url', activities.website_url, 'address', activities.address, 'description', activities.description, 'image_url', activities.image_url, 'city_id', activities.city_id, 'category_id', activities.category_id) AS planned_activity
       FROM planned_activities
       JOIN activities ON  activities.id = planned_activities.activity_id
@@ -208,16 +233,16 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const getCuratedTrips = (placeId) => {
+  // Get a list of curated trips based on place id
+  const getCuratedTripById = (id) => {
     const query = {
       text: `
-      SELECT * FROM cities 
-      JOIN system_itineraries ON system_itineraries.city_id = cities.id
-      WHERE cities.placeId = $1
-    `,
+        SELECT * FROM system_itineraries 
+        WHERE system_itineraries.id = $1
+      `,
     };
 
-    const values = [placeId];
+    const values = [id];
 
     return db
       .query(query, values)
@@ -225,18 +250,42 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  // Get a list of all curated trips, if a placeId is provided, results are filtered 
+  const getCuratedTrips = (placeId) => {
+
+    const query = {
+      text: `
+      SELECT * FROM cities 
+      JOIN system_itineraries ON system_itineraries.city_id = cities.id
+    `,
+    };
+
+    if (placeId) {
+      query.text += ` WHERE cities.placeId='${placeId}'`;
+    }
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
+
+
   return {
     getUsers,
     addUser,
     getActivities,
     getActivityCategories,
     getPlannedActivities,
+    getCuratedTripById,
     getCuratedTrips,
     getUserTrips,
     deleteUserTrip,
     getCities,
     getUserItineraries,
     addItinerary,
+    addPlannedActivities,
     getSystemActivitiesForItinerary
   };
 };

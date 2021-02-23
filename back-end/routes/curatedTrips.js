@@ -1,11 +1,21 @@
 var express = require("express");
 var router = express.Router();
 
-module.exports = ({ getCuratedTrips }) => {
+module.exports = ({getCuratedTripById, getCuratedTrips }) => {
   router.get("/:id", (req, res) => {
-    const placeId = req.params.id;
+    const id = req.params.id;
 
-    getCuratedTrips(placeId)
+    getCuratedTripById(id)
+      .then((trips) => res.json(trips))
+      .catch((err) =>
+        res.json({
+          error: err.message,
+        })
+      );
+  });
+  
+  router.get("/", (req, res) => {
+    getCuratedTrips(req.query.placeId)
       .then((trips) => res.json(trips))
       .catch((err) =>
         res.json({

@@ -3,6 +3,7 @@ var router = express.Router();
 
 
 module.exports = ({ getUserItineraries, addItinerary }) => {
+
   router.get("/", (req, res) => {
 
     getUserItineraries()
@@ -20,8 +21,9 @@ module.exports = ({ getUserItineraries, addItinerary }) => {
     let tripStart = req.body.startTime;
     let tripEnd = req.body.endTime;
     let cityId = req.body.cityId;
+    let userId = req.body.userId
 
-    addItinerary(tripName, imageUrl, tripStart, tripEnd, cityId)
+    addItinerary(tripName, imageUrl, tripStart, tripEnd, cityId, userId)
       .then((itinerary) => {
         res.json(itinerary)
       })

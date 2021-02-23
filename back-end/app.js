@@ -32,7 +32,7 @@ app.use('/api/plannedActivities', plannedActivities(dbHelpers));
 app.use('/api/curatedTrips', trips(dbHelpers));
 
 app.use('/api/cities', cities(dbHelpers));
-app.use('/api/itineraries', itineraries(dbHelpers));
+// app.use('/api/itineraries', itineraries(dbHelpers));
 app.use('/api/systemItineraries', itineraries(dbHelpers));
 app.use('/api/userItineraries', itineraries(dbHelpers));
 app.use('/api/curatedTripDetails', curatedTripDetails(dbHelpers));
