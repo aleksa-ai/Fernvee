@@ -19,16 +19,20 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
-    maxWidth: "100%",
+    maxHeight: "98%",
+    maxWidth: "98%",
   },
   media: {
     height: 140,
+  },
+  buttons: {
+    justifyContent: "flex-end",
   },
   avatar: {
     width: "150px",
     height: "auto",
     paddingRight: "10px",
-  }
+  },
 }));
 
 export default function Show(props) {
@@ -40,23 +44,30 @@ export default function Show(props) {
   let activities = props.activities;
   activity = activities.filter((activity) => activity.id === slot.activity)[0];
 
-  console.log("ACTIVITY", activity)
+  console.log("ACTIVITY", activity);
 
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={activity.image_url} title="image_url" />
+        <CardMedia
+          className={classes.media}
+          image={activity.image_url}
+          title="image_url"
+        />
         <CardContent>
           <Typography gutterBottom variant="h2" component="h2">
             {activity.name}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h5">
+
+          <Typography variant="h6" component="h5">
             {activity.address}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h5">
+
+          <Typography variant="h6" component="h5">
             {activity.phone}
           </Typography>
+
           <Typography variant="body2" color="textSecondary" component="p">
             {activity.description}
           </Typography>
@@ -65,7 +76,7 @@ export default function Show(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions className={classes.buttons}>
         <IconButton aria-label="edit" onClick={props.onEdit}>
           <EditIcon />
         </IconButton>
