@@ -4,6 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -15,8 +18,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(3),
-      width: "25ch",
+      width: "35ch",
     },
+  },
+  dropdown: {
+    // margin: theme.spacing(3),
+    width: "40ch",
+    textAlign: "left",
   },
 }));
 
@@ -25,8 +33,8 @@ export default function TripForm(props) {
 
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
-  const [city, setCity] = useState("");
-  const [tripName, setTripName] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [enteredTripName, setEnteredTripName] = useState("");
 
   //setSelectedStartDate("2021-03-21");
 
@@ -45,19 +53,15 @@ export default function TripForm(props) {
   };
 
   const handleNameChange = (name) => {
-    console.log(name)
-    setTripName(name.target.value)
-    props.onNameChange(name)
+    //setTripName(name.target.value)
+    props.onNameChange(name.target.value);
   };
 
   const handleCityChange = (cityId) => {
-    setCity(cityId.target.value)
-    props.onCityChange(cityId);
+    setSelectedCity(cityId.target.value);
+
+    props.onCityChange(cityId.target.value);
   };
-
-
-
-  // console.log("TRIP FORM PROPS ", props);
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -69,21 +73,21 @@ export default function TripForm(props) {
           defaultValue=""
           onChange={handleNameChange}
         />
-        <TextField
-          id="standard-select-activityCategoryState"
-          select
-          label="Select"
-          value={city}
-          onChange={handleCityChange}
-          helperText="Please select city"
-        >
-          {props.cities &&
-            props.cities.map((city) => (
-              <MenuItem key={city.id} value={city.id}>
-                {city.name}
-              </MenuItem>
-            ))}
-        </TextField>
+        <FormControl className={classes.formControl}>
+          <InputLabel>Select City</InputLabel>
+          <Select
+            className={classes.dropdown}
+            value={selectedCity}
+            onChange={handleCityChange}
+          >
+            {props.cities &&
+              props.cities.map((city) => (
+                <MenuItem key={city.id} value={city.id}>
+                  {city.name}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker

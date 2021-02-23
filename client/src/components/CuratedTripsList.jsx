@@ -52,7 +52,9 @@ export default function CuratedTripsList(props) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(`/api/curatedTrips/${placeId}`).then(
-        (result) => result.data,
+        (result) => {
+          return result.data;
+        },
         (error) => {
           console.log("ERROR " + error.message);
           return [];
@@ -72,7 +74,9 @@ export default function CuratedTripsList(props) {
           key={curatedTrip.id}
           id={curatedTrip.id}
           name={curatedTrip.name}
+          duration={curatedTrip.duration}
           image={curatedTrip.image_url}
+          systemItineraryId={curatedTrip.id}
         />
       </Grid>
     );

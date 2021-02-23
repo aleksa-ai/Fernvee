@@ -93,19 +93,43 @@ export default function Itinerary(props) {
   };
 
   // Add newly created trip to my trips
-  const addNewTrip = () => {
+  const addNewTrip = async() => {
     const userId = "1"; // Will need to change to props.userId when have authentication
     // const url = `/trips`;
     // history.push(url);
 
-    Promise.all([
-      axios.post(`/api/userTrips/${userId}`),
-      axios.post("/api/itineraries"),
-      axios.post("/api/planedActivities"),
-    ]).then((all) => {
-      console.log("ITINIERARY AXIOS POST: " + all);
-    });
-  };
+   
+
+      const res = await axios.post("/api/itineraries", {
+        name: tripName,
+        imageUrl: "https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80",
+        startTime: startDate,
+        endTime: endDate,
+        cityId: city
+      });
+  
+      const info = res.data.id;
+  
+      const res2 = await axios.post("/api/planedActivities");
+  
+      const info2 = res2.data;
+
+      const res3 = await axios.post(`/api/userTrips/${userId}`);
+  
+      const info3 = res.data;
+  
+  
+      return info3;
+    }
+    
+  //   Promise.all([
+  //     axios.post(`/api/userTrips/${userId}`),
+  //     axios.post("/api/itineraries"),
+  //     axios.post("/api/planedActivities"),
+  //   ]).then((all) => {
+  //     console.log("ITINIERARY AXIOS POST: " + all);
+  //   });
+  // };
 
   // Stepper
   const steps = getSteps();
