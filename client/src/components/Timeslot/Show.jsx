@@ -55,17 +55,6 @@ export default function Show(props) {
           image={activity.image_url}
           title="image_url"
         />
-<<<<<<< HEAD
-      <CardContent>
-        <h2 className="text--light">{activity.name}</h2>
-        <h5 className="text--light">{activity.address}</h5>
-        <h5 className="text--regular">{activity.phone}</h5>
-        <h5 className="text--light">
-          <a href={activity.website_url}>{activity.website_url}</a>
-        </h5>
-        <p className="text--light">{activity.description}</p>
-      </CardContent>
-=======
         <CardContent>
           <Typography gutterBottom variant="h2" component="h2">
             {activity.name}
@@ -78,7 +67,6 @@ export default function Show(props) {
           <Typography variant="h6" component="h5">
             {activity.phone}
           </Typography>
->>>>>>> master
 
           <Typography variant="body2" color="textSecondary" component="p">
             {activity.description}
