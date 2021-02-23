@@ -12,7 +12,8 @@ const plannedActivities = require('./routes/plannedActivities')
 const trips = require('./routes/curatedTrips')
 const userTrips = require('./routes/userTrips')
 const cities = require('./routes/cities')
-
+const itineraries = require('./routes/itineraries')
+const curatedTripDetails =  require('./routes/curatedTripDetails');
 var indexRouter = require("./routes/index");
 
 var app = express();
@@ -29,7 +30,11 @@ app.use('/api/activities', activities(dbHelpers));
 app.use('/api/activityCategories', activityCategories(dbHelpers));
 app.use('/api/plannedActivities', plannedActivities(dbHelpers));
 app.use('/api/curatedTrips', trips(dbHelpers));
-app.use('/api/userTrips', userTrips(dbHelpers));
+
 app.use('/api/cities', cities(dbHelpers));
+app.use('/api/itineraries', itineraries(dbHelpers));
+app.use('/api/systemItineraries', itineraries(dbHelpers));
+app.use('/api/userItineraries', itineraries(dbHelpers));
+app.use('/api/curatedTripDetails', curatedTripDetails(dbHelpers));
 
 module.exports = app;

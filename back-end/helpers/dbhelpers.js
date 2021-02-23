@@ -58,7 +58,7 @@ module.exports = (db) => {
       text: `
       SELECT users.id AS user_id, users.first_name, users.last_name, user_trips.id AS user_trip_id, itineraries.id AS itinerary_id, itineraries.name, itineraries.image_url, itineraries.city_id, itineraries.itinerary_type_id FROM users
       JOIN user_trips ON users.id = user_trips.user_id
-      JOIN itineraries ON itineraries.id = user_trips.itinerary_id
+      JOIN user_itineraries ON user_itineraries.id = user_trips.itinerary_id
       WHERE users.id = $1
       `,
     };
@@ -71,22 +71,22 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
-  const addUserTrip = (userId, itineraryId) => {
-    const query = {
-      text: `
-      INSERT INTO user_trips(user_id, itinerary_id)
-      VALUES ($1, $2)
-      RETURNING *
-      `,
-    };
+  // const addUserTrip = (userId, itineraryId) => {
+  //   const query = {
+  //     text: `
+  //     INSERT INTO user_trips(user_id, itinerary_id)
+  //     VALUES ($1, $2)
+  //     RETURNING *
+  //     `,
+  //   };
 
-    const values = [userId, itineraryId];
+  //   const values = [userId, itineraryId];
 
-    return db
-      .query(query, values)
-      .then((result) => result.rows)
-      .catch((err) => err);
-  };
+  //   return db
+  //     .query(query, values)
+  //     .then((result) => result.rows)
+  //     .catch((err) => err);
+  // };
 
   const deleteUserTrip = (id) => {
     const query = {
@@ -99,6 +99,33 @@ module.exports = (db) => {
 
     const values = [id];
 
+    return db
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
+  const getUserItineraries = () => {
+    const query = {
+      text: "SELECT * FROM user_itineraries",
+    };
+
+    return db
+      .query(query)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+  
+  const addItinerary = (tripName, imageUrl, tripStart, tripEnd, cityId, userId) => {
+    const query = {
+      text: `
+      INSERT INTO users_itineraries(name, image_url, start_time, end_time, city_id, user_id)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+      `,
+    };
+
+    const values = [tripName, imageUrl, tripStart, tripEnd, cityId, userId];
     return db
       .query(query, values)
       .then((result) => result.rows)
@@ -128,6 +155,39 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+
+  const getSystemActivitiesForItinerary = (systemItineraryId) => {
+    //Could add day_id, start_time, end_time, itinerary_id from planned_activities
+
+    // id SERIAL PRIMARY KEY NOT NULL,
+    // activity_id INTEGER REFERENCES activities(id) ON DELETE CASCADE,
+    // system_itinerary_id INTEGER REFERENCES system_itineraries(id) ON DELETE CASCADE,
+    // day_number INT,
+    // timeslot varchar(20)
+    const query = {
+      text: `SELECT
+        system_activities.id, 
+        system_activities.day_number, 
+        system_activities.timeslot,
+        activities.name,
+        activities.description,
+        activities.image_url,
+        system_activities.system_itinerary_id
+      FROM system_activities
+      JOIN activities ON  activities.id = system_activities.activity_id
+      WHERE system_activities.system_itinerary_id = $1
+      `,
+    };
+
+    const values = [systemItineraryId];
+
+    return db
+      .query(query, values)
+      .then((result) => result.rows)
+      .catch((err) => err);
+  };
+
+
   const getPlannedActivities = () => {
     //Could add day_id, start_time, end_time, itinerary_id from planned_activities
 
@@ -152,7 +212,7 @@ module.exports = (db) => {
     const query = {
       text: `
       SELECT * FROM cities 
-      JOIN itineraries ON itineraries.city_id = cities.id
+      JOIN system_itineraries ON system_itineraries.city_id = cities.id
       WHERE cities.placeId = $1
     `,
     };
@@ -173,8 +233,10 @@ module.exports = (db) => {
     getPlannedActivities,
     getCuratedTrips,
     getUserTrips,
-    addUserTrip,
     deleteUserTrip,
-    getCities
+    getCities,
+    getUserItineraries,
+    addItinerary,
+    getSystemActivitiesForItinerary
   };
 };
