@@ -25,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "9vh",
       marginBottom: "9vh"
     },
-    backButton: {
-      marginRight: theme.spacing(1),
-    },
-    instructions: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-    },
   },
 }));
 
