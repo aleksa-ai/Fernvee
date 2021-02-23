@@ -42,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    overflow: "visible"
+
   },
   tabpanel: {
     marginLeft: "auto",
