@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   stickToBottom: {
-    position: "static",
+    position: "fixed",
     bottom: 0,
     width: "100%",
     justifyContent: "flex-end",
