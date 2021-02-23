@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   tabpanel: {
+    width: "100%",
     marginLeft: "auto",
     marginRight: "auto",
   },
@@ -105,7 +106,7 @@ export default function DayList(props) {
   let dayListTabs = [];
   dayListTabs = Object.keys(dayList).map((keyName, index) => {
     return (
-      <TabPanel value={value} index={index} key={index} >
+      <TabPanel value={value} index={index} key={index} className={classes.TabPanel} >
         { <DayListItem
           daySlots={dayList[keyName]}
           activities={props.activities} 
