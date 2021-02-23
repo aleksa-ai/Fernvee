@@ -24,14 +24,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      // width: "100%",
-    },
-    backButton: {
-      marginRight: theme.spacing(1),
-    },
-    instructions: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
+      marginTop: "9vh",
+      marginBottom: "9vh"
     },
   },
 }));
