@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 
-
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -22,11 +21,14 @@ const useStyles = makeStyles((theme) => ({
     },
     maxWidth: "100%",
   },
+  media: {
+    height: 140,
+  },
   avatar: {
     width: "150px",
     height: "auto",
     paddingRight: "10px",
-  },
+  }
 }));
 
 export default function Show(props) {
@@ -38,32 +40,38 @@ export default function Show(props) {
   let activities = props.activities;
   activity = activities.filter((activity) => activity.id === slot.activity)[0];
 
+  console.log("ACTIVITY", activity)
+
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-       <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
-      <CardContent>
-        <h5 className="text--light">{activity.address}</h5>
-        <h5 className="text--regular">{activity.phone}</h5>
-        <h5 className="text--light">
-          <a href={activity.website_url}>{activity.website_url}</a>
-        </h5>
-        <p className="text--light">{activity.description}</p>
-      </CardContent>
-
+      <CardActionArea>
+        <CardMedia className={classes.media} image={activity.image_url} title="image_url" />
+        <CardContent>
+          <Typography gutterBottom variant="h2" component="h2">
+            {activity.name}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h5">
+            {activity.address}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h5">
+            {activity.phone}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {activity.description}
+          </Typography>
+          <Typography gutterBottom variant="p" component="p">
+            {<a href={activity.website_url}>{activity.website_url}</a>}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
       <CardActions>
-        <div className={classes.root}>
-          <IconButton aria-label="edit" onClick={props.onEdit}>
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete" onClick={() => props.onDelete()}>
-            <DeleteIcon />
-          </IconButton>
-        </div>
+        <IconButton aria-label="edit" onClick={props.onEdit}>
+          <EditIcon />
+        </IconButton>
+        <IconButton aria-label="delete" onClick={() => props.onDelete()}>
+          <DeleteIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );
