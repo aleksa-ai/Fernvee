@@ -24,6 +24,7 @@ import "./_Nav.scss";
 const useStyles = makeStyles({
   stickToTop: {
     minHeight: "80px",
+
   },
 });
 

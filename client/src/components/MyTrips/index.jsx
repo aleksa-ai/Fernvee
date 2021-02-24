@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     margin: "auto",
     position: "relative",
     width: "60%",
+    marginTop: "2%"
   },
 });
 

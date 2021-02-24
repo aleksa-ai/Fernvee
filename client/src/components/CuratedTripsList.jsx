@@ -3,7 +3,7 @@ import {
   Switch,
   Route,
   useParams,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
@@ -32,6 +32,7 @@ const useStyles = makeStyles({
     margin: "auto",
     position: "static",
     width: "60%",
+    marginTop: "2%"
   },
   cardRoot: {
     minWidth: 400,
@@ -50,22 +51,23 @@ export default function CuratedTripsList(props) {
   const history = useHistory();
 
   const search = useLocation().search;
-  const placeId = new URLSearchParams(search).get('placeId');
-  
+  const placeId = new URLSearchParams(search).get("placeId");
+
   const [curatedTrips, setCuratedTrips] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/api/curatedTrips?placeId=${placeId}`)
-      .then(
-        (result) => {
-          return result.data;
-        },
-        (error) => {
-          console.log("ERROR " + error.message);
-          return [];
-        }
-      );
+      const result = await axios
+        .get(`/api/curatedTrips?placeId=${placeId}`)
+        .then(
+          (result) => {
+            return result.data;
+          },
+          (error) => {
+            console.log("ERROR " + error.message);
+            return [];
+          }
+        );
       setCuratedTrips(result);
     };
     fetchData();
@@ -90,11 +92,13 @@ export default function CuratedTripsList(props) {
   const createRedirect = () => {
     const url = `/create`;
     history.push(url);
-  }
+  };
 
   return (
     <>
-      <h1>Curated Trips</h1>
+      <Typography gutterBottom variant="h4">
+        Curated Trips
+      </Typography>
       <div className={classes.container}>
         <Grid container item xs={12} spacing={6} className={classes.root}>
           {parsedCuratedTrips}
@@ -111,7 +115,12 @@ export default function CuratedTripsList(props) {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary" onClick={createRedirect} type="submit">
+              <Button
+                size="small"
+                color="primary"
+                onClick={createRedirect}
+                type="submit"
+              >
                 Create
               </Button>
             </CardActions>

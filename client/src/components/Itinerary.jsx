@@ -23,9 +23,9 @@ import Review from "./Review";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(1),
-      marginTop: "7vh",
-      marginBottom: "1vh"
+      // margin: theme.spacing(1),
+      marginTop: "2%",
+      marginBottom: "2%",
     },
   },
 }));
