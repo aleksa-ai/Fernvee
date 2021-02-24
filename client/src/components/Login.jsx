@@ -75,10 +75,6 @@ export default function Login(props) {
   const { register, handleSubmit } = useForm();
   const [email, setEmail] = useState("");
 
-  const handleEmailChange = (name) => {
-    setEmail(name.target.value);
-  };
-
   const classes = useStyles();
 
   const onSubmit = (inputData) => {
