@@ -108,8 +108,8 @@ export default function CuratedTripItem(props) {
             <Typography gutterBottom variant="h5" component="h2">
               {props.name}
             </Typography>
-            <Typography gutterBottom variant="h6" component="h2">
-              {props.duration} days
+            <Typography gutterBottom color="textSecondary" variant="body1" component="span">
+              Duration: {props.duration} days
             </Typography>
           </CardContent>
         </CardActionArea>

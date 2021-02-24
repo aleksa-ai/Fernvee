@@ -6,12 +6,7 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(15),
-    textAlign: "center",
-  },
+  }
 }));
 
 export default function CenteredGrid(props) {
@@ -22,9 +17,8 @@ export default function CenteredGrid(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={4} align="center" justify="center">
+      <Grid container spacing={12} align="center" justify="center">
         <Grid item xs={12}>
-
           <Timeslot
             activityCategories={props.activityCategories}
             activities={props.activities}
@@ -34,6 +28,7 @@ export default function CenteredGrid(props) {
             updateActivityTimeSlot={props.updateActivityTimeSlot}
             slot={daySlots[0]}
           />
+  
         </Grid>
         <Grid item xs={12}>
           <Timeslot
@@ -57,7 +52,7 @@ export default function CenteredGrid(props) {
             slot={daySlots[2]}
           />
         </Grid>
-      </Grid>      
+      </Grid>   
     </div>
   );
 }

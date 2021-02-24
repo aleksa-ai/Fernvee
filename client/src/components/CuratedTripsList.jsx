@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   cardRoot: {
     minWidth: 400,
     // maxWidth: 350,
-    minHeight: 460,
+    minHeight: 440,
     maxHeight: 470,
     margin: "auto",
   },

@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      marginTop: "9vh",
-      marginBottom: "9vh"
+      marginTop: "7vh",
+      marginBottom: "1vh"
     },
   },
 }));
@@ -190,7 +190,6 @@ export default function Itinerary(props) {
       }
     });
 
-    // console.log( "BEFORE", JSON.stringify(plannedActivities));
     // Post itinerary activities
     await axios
       .post("/api/plannedActivities", {
@@ -268,7 +267,6 @@ export default function Itinerary(props) {
             activityCategories={props.activityCategories}
             plannedActivities={props.plannedActivities}
             deleteActivity={props.deleteActivity}
-            // setDayList={setDayList}
           />
         );
       case 2:

@@ -50,8 +50,8 @@ export default function Nav(props) {
     <AppBar position="fixed">
       <Toolbar className={classes.stickToTop}>
         <div class="main-nav-buttons">
-           <a href="/">
-              <img src="../images/logo.png" class="logo" alt="logo"/>
+          <a href="/">
+            <img src="../images/logo.png" class="logo" alt="logo" />
           </a>
           <Tab
             label="Explore"
@@ -60,16 +60,16 @@ export default function Nav(props) {
             to="/"
           />
           <Tab
-            label="Trips"
-            icon={<MapIcon fontSize="large" />}
-            component={NavLink}
-            to="/trips"
-          />
-          <Tab
             label="Create"
             icon={<CreateIcon fontSize="large" />}
             component={NavLink}
             to="/create"
+          />
+          <Tab
+            label="Trips"
+            icon={<MapIcon fontSize="large" />}
+            component={NavLink}
+            to="/trips"
           />
         </div>
         {/* <Tab label="My Profile" icon={<AccountCircleSharpIcon/>} component={NavLink} to="/MyProfile" /> */}

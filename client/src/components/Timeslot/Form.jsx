@@ -11,8 +11,9 @@ import "./styles.scss";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
+      margin: theme.spacing(5),
+      width: "60%",
+      textAlign: "left",
     },
   },
 }));
@@ -70,8 +71,8 @@ export default function Form(props) {
   }
 
   return (
-    <main className="timeslot timeslot__card--create">
-      <section className="timeslot__card-left">
+    <main >
+      <section>
         <form className={classes.root} noValidate autoComplete="off">
           <div>
             <TextField

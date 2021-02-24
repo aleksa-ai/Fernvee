@@ -19,19 +19,13 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
-    maxHeight: "98%",
-    maxWidth: "98%",
+
   },
   media: {
     height: 140,
   },
   buttons: {
     justifyContent: "flex-end",
-  },
-  avatar: {
-    width: "150px",
-    height: "auto",
-    paddingRight: "10px",
   },
 }));
 
@@ -48,7 +42,7 @@ export default function Show(props) {
 
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <Card >
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -56,7 +50,7 @@ export default function Show(props) {
           title="image_url"
         />
         <CardContent>
-          <Typography gutterBottom variant="h2" component="h2">
+          <Typography  variant="h4" component="span">
             {activity.name}
           </Typography>
           
@@ -68,7 +62,7 @@ export default function Show(props) {
             {activity.phone}
           </Typography>
 
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography gutterBottom variant="body1" color="textSecondary" component="p">
             {activity.description}
           </Typography>
           <Typography gutterBottom variant="p" component="p">

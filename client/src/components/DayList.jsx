@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {format } from "date-fns";
+import { format } from "date-fns";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -22,7 +22,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography component={'span'} >{children}</Typography>
+          <Typography component={"span"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -37,19 +37,21 @@ TabPanel.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    height: "100%",
+    width: "100%",
     display: "flex",
-    width: "auto"
+    flexWrap: "wrap",
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    overflow: "visible"
-
+    flex: "10%",
   },
   tabpanel: {
-    width: "100%",
-    marginLeft: "auto",
-    marginRight: "auto",
+    flex: "80%",
+    textAlign: "left"
+  },
+  div: {
+    padding: "0",
+    margin: "0",
   },
 }));
 
@@ -59,67 +61,32 @@ export default function DayList(props) {
   const [value, setValue] = useState(0);
   const dayList = props.dayList;
 
-
   // When a specific day is clicked
   const handleChange = (event, newValue) => {
     // console.log("TabChanged", newValue);
     setValue(newValue);
   };
 
-  function updateActivityTimeSlot(slot){
-    console.log( dayList );
-
-    // PROBABLY CAN DELETE BUT LEAVE FOR NOW 
-
-    // console.log( "In UpdateActivityTimeSlot: ", slot);
-    //Get slot to update
-    // activity: null
-    // date: Sat Feb 20 2021 22:49:00 GMT-0500 (Eastern Standard Time) {}
-    // timeslot: "Morning"
-
-
-    // let dayKey, idx;
-    // for (const [key, value] of Object.entries(props.dayList)) {
-    //   value.forEach(function(entry, index) {
-    //     if( entry.date === slot.date && entry.timeslot === slot.timeslot){
-    //       console.log("Found" +  entry );
-    //       dayKey = key;
-    //       idx = index;
-    //     }
-    //   });
-    // }
-
-    // console.log( "Key and index ", dayKey, idx)
-
-    // this.setState(prevState => ({
-    //   jasper: {                   // object that we want to update
-    //       ...prevState.jasper,    // keep all other key-value pairs
-    //       name: 'something'       // update the value of specific key
-    //   }
-    // }))
-
-
-    // props.setDayList([...props.dayList, slot])
-
-  }
+  function updateActivityTimeSlot(slot) {}
 
   let dayListTabs = [];
   dayListTabs = Object.keys(dayList).map((keyName, index) => {
     return (
-      <TabPanel value={value} index={index} key={index} className={classes.TabPanel} >
-        { <DayListItem
-          daySlots={dayList[keyName]}
-          activities={props.activities} 
-          activityCategories={props.activityCategories} 
-          plannedActivities = {props.plannedActivities} 
-          saveActivity={props.saveActivity} 
-          deleteActivity = {props.deleteActivity} 
-          updateActivityTimeSlot={updateActivityTimeSlot} 
-          /> }
+      <TabPanel value={value} index={index} key={index} className={classes.div}>
+        {
+          <DayListItem
+            daySlots={dayList[keyName]}
+            activities={props.activities}
+            activityCategories={props.activityCategories}
+            plannedActivities={props.plannedActivities}
+            saveActivity={props.saveActivity}
+            deleteActivity={props.deleteActivity}
+            updateActivityTimeSlot={updateActivityTimeSlot}
+          />
+        }
       </TabPanel>
     );
   });
-
 
   return (
     <div className={classes.root}>
@@ -130,12 +97,16 @@ export default function DayList(props) {
         onChange={handleChange}
         className={classes.tabs}
       >
-
         {Object.keys(dayList).map((keyName, i) => {
-            return <Tab label={format(dayList[keyName][0].date, "iiii, PP")} key={i++} />;
+          return (
+            <Tab
+              label={format(dayList[keyName][0].date, "iiii, PP")}
+              key={i++}
+            />
+          );
         })}
       </Tabs>
-        {dayListTabs}
+      <div className={classes.tabpanel}>{dayListTabs}</div>
     </div>
   );
 }
