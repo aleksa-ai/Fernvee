@@ -88,7 +88,7 @@ export default function Nav(props) {
             onClick={logout}
           />
         )}
-        {/* <Tab label="Signup" icon={<AssignmentTurnedInSharpIcon/>} component={NavLink} to="/signup" /> */}
+        <Tab label="Signup" icon={<AssignmentTurnedInSharpIcon/>} component={NavLink} to="/signup" />
       </Toolbar>
     </AppBar>
   );
