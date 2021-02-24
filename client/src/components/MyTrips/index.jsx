@@ -20,56 +20,61 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Trips() {
+export default function Trips(props) {
   const [userTrips, setUserTrips] = useState([]);
   const classes = useStyles();
+  let userId = 1;
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/api/userTrips/1`).then(
+      const result = await axios.get(`/api/userItineraries/${userId}`).then(
         (result) => result.data,
-
         (error) => {
           console.log("ERROR " + error.message);
           return [];
         }
       );
-      console.log(result);
+
       setUserTrips(result);
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   // Called when user deletes a trip from their collection
   const deleteTrip = (trip) => {
     // Filter out the trip that was deleted
-    const updatedUserTrips = userTrips.filter( t => t !== trip);
+    const updatedUserTrips = userTrips.filter((t) => t !== trip);
 
     // Update state for change detection
-    setUserTrips( updatedUserTrips );
-  }
+    setUserTrips(updatedUserTrips);
+  };
 
   let parsedUserTrips = [];
 
-  parsedUserTrips = userTrips.map((trip, index) => {
-    return (
-      <Grid item xs={6} key={index}>
-        <Show key={trip.toString()} trip={trip} onDelete={deleteTrip}/>
-      </Grid>
-    );
-  });
+  if (props.activities.length > 0) {
+    parsedUserTrips = userTrips.map((trip, index) => {
+      return (
+        <Grid item xs={6} key={index}>
+          <Show
+            activities={props.activities}
+            key={trip.toString()}
+            trip={trip}
+            onDelete={deleteTrip}
+          />
+        </Grid>
+      );
+    });
+  }
 
   return (
     <>
-    <Typography variant="h4">
-     My Trips 
-     </Typography>
-    <div className={classes.container}>
-      <Grid container item xs={12} spacing={6}>
-        {parsedUserTrips}
-      </Grid>
-    </div>
+      <Typography variant="h4">My Trips</Typography>
+      <div className={classes.container}>
+        <Grid container item xs={12} spacing={6}>
+          {parsedUserTrips}
+        </Grid>
+      </div>
     </>
   );
 }

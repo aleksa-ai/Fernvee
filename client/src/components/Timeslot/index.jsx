@@ -28,6 +28,7 @@ const ERROR_DELETE = "ERROR_DELETE";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+
   },
 }));
 
@@ -69,7 +70,8 @@ export default function Timeslot(props) {
   };
 
   return (
-    <article className={classes.root}>
+    // <article className={classes.root}>
+    <div className={classes.root}> 
       <Header time={slot.timeslot}/>
       <Card>
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -102,6 +104,7 @@ export default function Timeslot(props) {
         )}
         {mode === EDIT && <h1>EDIT MODE</h1>}
       </Card>
-    </article>
+      </div>
+    // </article>
   );
 }

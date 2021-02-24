@@ -1,9 +1,17 @@
+import React, { useState } from "react";
 import "date-fns";
-import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 import DateFnsUtils from "@date-io/date-fns";
+import {
+  addDays,
+} from "date-fns";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -14,16 +22,22 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(3),
-      width: "25ch",
+      width: "35ch",
     },
+  },
+  dropdown: {
+    // margin: theme.spacing(3),
+    width: "40ch",
+    textAlign: "left",
   },
 }));
 
 export default function TripForm(props) {
   const classes = useStyles();
-
-  const [selectedStartDate, setSelectedStartDate] = React.useState(null);
-  const [selectedEndDate, setSelectedEndDate] = React.useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [enteredTripName, setEnteredTripName] = useState("");
 
   //setSelectedStartDate("2021-03-21");
 
@@ -32,8 +46,12 @@ export default function TripForm(props) {
   // setSelectedEndDate(selectedStartDate);
 
   const handleStartDateChange = (date) => {
-    setSelectedStartDate (date);
+    setSelectedStartDate(date);
     props.onStartDateChanged(date);
+    if( props.makeReadOnly ){
+      // Include 1st day
+      handleEndDateChange(addDays(date, props.duration-1))
+    }
   };
 
   const handleEndDateChange = (date) => {
@@ -41,26 +59,47 @@ export default function TripForm(props) {
     props.onEndDateChanged(date);
   };
 
+  const handleNameChange = (name) => {
+    //setTripName(name.target.value)
+    props.onNameChange(name.target.value);
+  };
+
+  const handleCityChange = (cityId) => {
+    setSelectedCity(cityId.target.value);
+
+    props.onCityChange(cityId.target.value);
+  };
+
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <Grid
-        container
-        justify="center"
-        direction="column"
-        alignItems="center"
-      >
+      <Grid container justify="center" direction="column" alignItems="center">
         <TextField
           required
+          InputProps={{
+            readOnly: props.makeReadOnly,
+          }}
           id="standard-required"
           label="Trip Name"
-          defaultValue=""
+          value={props.tripName}
+          onChange={handleNameChange}
         />
-        <TextField
-          required
-          id="standard-required"
-          label="City"
-          defaultValue=""
-        />
+        <FormControl className={classes.formControl}>
+          <InputLabel>Select City</InputLabel>
+          <Select
+            className={classes.dropdown}
+            value={props.cityId}
+            onChange={handleCityChange}
+            inputProps={{ readOnly: props.makeReadOnly }}
+            
+          >
+            {props.cities &&
+              props.cities.map((city) => (
+                <MenuItem key={city.id} value={city.id}>
+                  {city.name}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
 
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
@@ -86,6 +125,7 @@ export default function TripForm(props) {
             id="date-picker-inline"
             label="End Date"
             value={selectedEndDate}
+            InputProps={{ disabled: props.makeReadOnly }}
             onChange={handleEndDateChange}
             KeyboardButtonProps={{
               "aria-label": "change date",

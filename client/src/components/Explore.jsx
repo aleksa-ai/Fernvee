@@ -59,7 +59,7 @@ function Explore({ isScriptLoaded, isScriptLoadSucceed }) {
   };
 
   const redirect = () => {
-    const url = "/curatedTrips/" + placeId;
+    const url = "/curatedTrips?placeId=" + placeId;
     history.push(url);
   };
 

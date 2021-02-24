@@ -63,7 +63,7 @@ const theme = createMuiTheme({
 function App() {
   const { state, setActivity, saveActivity, deleteActivity } = useApplicationData();
 
-  // console.log('state', state)
+   //console.log('state', state)
 
   // const activities = (state.activities).map((activity) => <Show name={activity.name}/>);
 
@@ -77,15 +77,26 @@ function App() {
               <Explore />
             </Route>
             <Route path="/trips">
-              <MyTrips />
+              <MyTrips activities = {state.activities} />
             </Route>
-            <Route path="/create">
+            <Route path="/create" exact>
               <Itinerary  
               activityCategories = {state.activity_categories}
               activities = {state.activities}
               plannedActivities = {state.planned_activities}
               saveActivity = {saveActivity}
               deleteActivity = {deleteActivity}
+              cities={state.cities}
+              />
+            </Route>
+            <Route path="/create/:id">
+              <Itinerary  
+              activityCategories = {state.activity_categories}
+              activities = {state.activities}
+              plannedActivities = {state.planned_activities}
+              saveActivity = {saveActivity}
+              deleteActivity = {deleteActivity}
+              cities={state.cities}
               />
             </Route>
             <Route path="/myProfile">
@@ -101,7 +112,7 @@ function App() {
               <Signup />
             </Route>
             <Route
-              path="/curatedTrips/:placeId"
+              path="/curatedTrips"
               children={<CuratedTripsList />}
               exact
             >
@@ -134,8 +145,8 @@ function App() {
               <Show />
             </Route>
           </Switch>
-          <Footer />
-        </div>
+        </div>  
+        {/* <Footer /> */}
       </Router>
     </ThemeProvider>
   );

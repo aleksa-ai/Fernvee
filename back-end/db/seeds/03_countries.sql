@@ -3,4 +3,5 @@ VALUES
 ('Bosnia'),
 ('France'),
 ('Spain'),
-('Ukraine');
+('Ukraine'),
+('England');

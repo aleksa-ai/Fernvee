@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -29,7 +29,7 @@ function Copyright() {
 
 export default function Footer(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState();
+  const [value, setValue] = useState();
 
   return (
     <BottomNavigation

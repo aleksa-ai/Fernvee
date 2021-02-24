@@ -3,6 +3,7 @@ import {
   Switch,
   Route,
   useParams,
+  useLocation
 } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
@@ -34,7 +35,9 @@ const useStyles = makeStyles({
   },
   cardRoot: {
     minWidth: 400,
-    maxWidth: 400,
+    // maxWidth: 350,
+    minHeight: 440,
+    maxHeight: 470,
     margin: "auto",
   },
   cardMedia: {
@@ -45,20 +48,24 @@ const useStyles = makeStyles({
 export default function CuratedTripsList(props) {
   const classes = useStyles();
   const history = useHistory();
-  let { placeId } = useParams();
+
+  const search = useLocation().search;
+  const placeId = new URLSearchParams(search).get('placeId');
+  
   const [curatedTrips, setCuratedTrips] = useState([]);
 
-  // <See if can sepeate this into another file>
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(`/api/curatedTrips/${placeId}`).then(
-        (result) => result.data,
+      const result = await axios.get(`/api/curatedTrips?placeId=${placeId}`)
+      .then(
+        (result) => {
+          return result.data;
+        },
         (error) => {
           console.log("ERROR " + error.message);
           return [];
         }
       );
-
       setCuratedTrips(result);
     };
     fetchData();
@@ -72,7 +79,9 @@ export default function CuratedTripsList(props) {
           key={curatedTrip.id}
           id={curatedTrip.id}
           name={curatedTrip.name}
+          duration={curatedTrip.duration}
           image={curatedTrip.image_url}
+          systemItineraryId={curatedTrip.id}
         />
       </Grid>
     );
