@@ -24,7 +24,6 @@ import "./_Nav.scss";
 const useStyles = makeStyles({
   stickToTop: {
     minHeight: "80px",
-
   },
 });
 
@@ -88,7 +87,14 @@ export default function Nav(props) {
             onClick={logout}
           />
         )}
-        <Tab label="Signup" icon={<AssignmentTurnedInSharpIcon/>} component={NavLink} to="/signup" />
+        {cookies.id === "undefined" ? (
+          <Tab
+            label="Signup"
+            icon={<AssignmentTurnedInSharpIcon />}
+            component={NavLink}
+            to="/signup"
+          />
+        ) : null}
       </Toolbar>
     </AppBar>
   );
