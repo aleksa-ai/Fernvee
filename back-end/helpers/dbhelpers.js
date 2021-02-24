@@ -14,7 +14,7 @@ module.exports = (db) => {
 
   const getCities = () => {
     const query = {
-      text: "SELECT * FROM cities",
+      text: "SELECT * FROM cities ORDER BY name ASC",
     };
     return db
       .query(query)
