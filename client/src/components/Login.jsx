@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import bcrypt from 'bcryptjs';
 import { useForm } from "react-hook-form";
@@ -6,7 +6,6 @@ import { useCookies } from "react-cookie";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
@@ -60,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  input: {
+    width: "100%",
+    padding: "12px 20px",
+    margin: "8px 0",
+    boxSizing: "border-box"
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -68,6 +73,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const [cookies, setCookie] = useCookies(["name", "id"]);
   const { register, handleSubmit } = useForm();
+  const [email, setEmail] = useState("");
+
+  const handleEmailChange = (name) => {
+    setEmail(name.target.value);
+  };
 
   const classes = useStyles();
 
@@ -120,34 +130,8 @@ export default function Login(props) {
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              type="text"
-              id="email"
-              ref={ register }
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              ref={ register }
-              autoComplete="current-password"
-            /> */}
-            <input name="email" ref={register} />
-            <input name="password" ref={register} />
+            <input name="email" placeholder="Email" className={classes.input} ref={register} />
+            <input name="password" placeholder="Password" type="password" className={classes.input} ref={register} />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
