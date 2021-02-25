@@ -33,6 +33,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
+    margin: "-15px 0 0 0",
   },
   image: {
     backgroundImage:
