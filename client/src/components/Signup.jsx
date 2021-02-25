@@ -1,12 +1,15 @@
 import React from "react";
 import axios from "axios";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "12px 20px",
     margin: "8px 0",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -102,31 +105,31 @@ export default function Signup(props) {
 
     let hashedPassword = bcrypt.hashSync(inputData.password, 12);
 
-    axios.post("/api/users", {
-      email: inputData.email,
-      password: hashedPassword,
-      firstName: inputData.firstname,
-      lastName: inputData.lastname,
-      travelStyle: "Foodie",
-      // travelStyle: inputData.travelstyle,
-      createdAt: createdAtTS,
-    });
+    // axios.post("/api/users", {
+    //   email: inputData.email,
+    //   password: hashedPassword,
+    //   firstName: inputData.firstname,
+    //   lastName: inputData.lastname,
+    //   travelStyle: "Foodie",
+    //   // travelStyle: inputData.travelstyle,
+    //   createdAt: createdAtTS,
+    // });
 
-    Promise.all([axios.get("/api/users")])
-      .then((all) => {
-        let email = inputData.email;
-        const users = all[0].data;
-        const filteredUser = users.filter(
-          (filteredUser) => filteredUser.email === email
-        )[0];
-        setCookie("name", filteredUser.first_name);
-        setCookie("id", filteredUser.id);
-        window.location = "/create"
-        return;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // Promise.all([axios.get("/api/users")])
+    //   .then((all) => {
+    //     let email = inputData.email;
+    //     const users = all[0].data;
+    //     const filteredUser = users.filter(
+    //       (filteredUser) => filteredUser.email === email
+    //     )[0];
+    //     setCookie("name", filteredUser.first_name);
+    //     setCookie("id", filteredUser.id);
+    //     window.location = "/create"
+    //     return;
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -146,24 +149,52 @@ export default function Signup(props) {
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >
-            <input name="firstname" placeholder="First Name" className={classes.input}ref={register} />
-            <input name="lastname" placeholder="Last Name" className={classes.input} ref={register} />
-            <input name="email" placeholder="Email" className={classes.input} ref={register} />
-            <input name="password" placeholder="Password" type="password" className={classes.input} ref={register} />
+            <input
+              name="firstname"
+              placeholder="First Name"
+              className={classes.input}
+              ref={register}
+            />
+            <input
+              name="lastname"
+              placeholder="Last Name"
+              className={classes.input}
+              ref={register}
+            />
+            <input
+              name="email"
+              placeholder="Email"
+              className={classes.input}
+              ref={register}
+            />
+            <input
+              name="password"
+              placeholder="Password"
+              type="password"
+              className={classes.input}
+              ref={register}
+            />
 
-            <TextField
-              id="standard-select-itinerary_type"
-              fullWidth
-              select
-              label="Select"
-              helperText="Select the type of traveler you are"
-            >
-              {['Foodie', 'Romantic', 'Historic', 'Glamour', 'Alternative'].map((category) => (
-                  <MenuItem key={category} value={category} name="travelstyle"> 
+            <label for="travelInterest">Choose a car:</label>
+            <select name="travelInterest" id="cars">
+              <option name="travelInterest" value="volvo">Volvo</option>
+              <option name="travelInterest" value="saab">Saab</option>
+              <option name="travelInterest" value="opel">Opel</option>
+              <option name="travelInterest" value="audi">Audi</option>
+            </select>
+
+            {/* <FormControl className={classes.formControl}>
+          <InputLabel>Select Your Travel Interest</InputLabel>
+          <Select
+            className={classes.dropdown}          
+          >
+            {['Foodie', 'Romantic', 'Historic', 'Glamour', 'Alternative'].map((category) => (
+                  <MenuItem key={category} value={category} name="travelStyle"> 
                     {category}
                   </MenuItem>
                 ))}
-            </TextField>
+          </Select>
+        </FormControl> */}
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
