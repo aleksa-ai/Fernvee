@@ -72,7 +72,7 @@ export default function Nav(props) {
             to="/trips"
           />
         </div>
-        {/* <Tab label="My Profile" icon={<AccountCircleSharpIcon/>} component={NavLink} to="/MyProfile" /> */}
+        {/* <Tab label="My Profile" icon={<AccountCircleSharpIcon fontSize="large"/>} component={NavLink} to="/MyProfile" /> */}
         {cookies.id === "undefined" ? (
           <Tab
             label="Login"
@@ -90,7 +90,7 @@ export default function Nav(props) {
         {cookies.id === "undefined" ? (
           <Tab
             label="Signup"
-            icon={<AssignmentTurnedInSharpIcon />}
+            icon={<AssignmentTurnedInSharpIcon fontSize="large" />}
             component={NavLink}
             to="/signup"
           />
