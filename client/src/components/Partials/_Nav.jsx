@@ -94,7 +94,7 @@ export default function Nav(props) {
             component={NavLink}
             to="/signup"
           />
-        ) : <Tab label={"Hi " + cookies.name + "!" } icon={<AccountCircleSharpIcon/>} component={NavLink} to="/" />}
+        ) : <Tab label={"Hi " + cookies.name + "!" } icon={<AccountCircleSharpIcon fontSize="large" />} component={NavLink} to="/" />}
       </Toolbar>
     </AppBar>
   );
