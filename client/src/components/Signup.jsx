@@ -105,31 +105,31 @@ export default function Signup(props) {
 
     let hashedPassword = bcrypt.hashSync(inputData.password, 12);
 
-    // axios.post("/api/users", {
-    //   email: inputData.email,
-    //   password: hashedPassword,
-    //   firstName: inputData.firstname,
-    //   lastName: inputData.lastname,
-    //   travelStyle: "Foodie",
-    //   // travelStyle: inputData.travelstyle,
-    //   createdAt: createdAtTS,
-    // });
+    axios.post("/api/users", {
+      email: inputData.email,
+      password: hashedPassword,
+      firstName: inputData.firstname,
+      lastName: inputData.lastname,
+      travelStyle: "Foodie",
+      // travelStyle: inputData.travelstyle,
+      createdAt: createdAtTS,
+    });
 
-    // Promise.all([axios.get("/api/users")])
-    //   .then((all) => {
-    //     let email = inputData.email;
-    //     const users = all[0].data;
-    //     const filteredUser = users.filter(
-    //       (filteredUser) => filteredUser.email === email
-    //     )[0];
-    //     setCookie("name", filteredUser.first_name);
-    //     setCookie("id", filteredUser.id);
-    //     window.location = "/create"
-    //     return;
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    Promise.all([axios.get("/api/users")])
+      .then((all) => {
+        let email = inputData.email;
+        const users = all[0].data;
+        const filteredUser = users.filter(
+          (filteredUser) => filteredUser.email === email
+        )[0];
+        setCookie("name", filteredUser.first_name);
+        setCookie("id", filteredUser.id);
+        window.location = "/create"
+        return;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -174,27 +174,6 @@ export default function Signup(props) {
               className={classes.input}
               ref={register}
             />
-
-            <label for="travelInterest">Choose a car:</label>
-            <select name="travelInterest" id="cars">
-              <option name="travelInterest" value="volvo">Volvo</option>
-              <option name="travelInterest" value="saab">Saab</option>
-              <option name="travelInterest" value="opel">Opel</option>
-              <option name="travelInterest" value="audi">Audi</option>
-            </select>
-
-            {/* <FormControl className={classes.formControl}>
-          <InputLabel>Select Your Travel Interest</InputLabel>
-          <Select
-            className={classes.dropdown}          
-          >
-            {['Foodie', 'Romantic', 'Historic', 'Glamour', 'Alternative'].map((category) => (
-                  <MenuItem key={category} value={category} name="travelStyle"> 
-                    {category}
-                  </MenuItem>
-                ))}
-          </Select>
-        </FormControl> */}
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
