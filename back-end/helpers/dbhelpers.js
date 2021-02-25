@@ -208,7 +208,7 @@ module.exports = (db) => {
   // Get activity collection
   const getActivities = () => {
     const query = {
-      text: "SELECT * FROM activities",
+      text: "SELECT * FROM activities ORDER BY name ASC",
     };
     return db
       .query(query)
@@ -220,7 +220,8 @@ module.exports = (db) => {
   const getActivityCategories = () => {
     const query = {
       text: `SELECT *
-      FROM activity_categories`,
+      FROM activity_categories 
+      ORDER BY name ASC`,
     };
     return db
       .query(query)
