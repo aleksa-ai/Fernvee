@@ -61,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  input: {
+    width: "100%",
+    padding: "12px 20px",
+    margin: "8px 0",
+    boxSizing: "border-box"
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -140,37 +146,10 @@ export default function Signup(props) {
             noValidate
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              type="text"
-              id="email"
-              ref={ register }
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              ref={ register }
-              autoComplete="current-password"
-            /> */}
-
-            <input name="email" ref={register} />
-            <input name="password" ref={register} />
-            <input name="firstname" ref={register} />
-            <input name="lastname" ref={register} />
+            <input name="firstname" placeholder="First Name" className={classes.input}ref={register} />
+            <input name="lastname" placeholder="Last Name" className={classes.input} ref={register} />
+            <input name="email" placeholder="Email" className={classes.input} ref={register} />
+            <input name="password" placeholder="Password" type="password" className={classes.input} ref={register} />
 
             <TextField
               id="standard-select-itinerary_type"
