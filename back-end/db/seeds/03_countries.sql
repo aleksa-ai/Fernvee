@@ -4,4 +4,11 @@ VALUES
 ('France'),
 ('Spain'),
 ('Ukraine'),
-('England');
+('England'),
+('USA'),
+('Russia'),
+('Greece'),
+('Belgium'),
+('Germany'),
+('Italy');
+
