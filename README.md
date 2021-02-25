@@ -21,10 +21,23 @@ Fernvee allows the user to fully rejoice about the travel experience, as one of 
  - Axios
  - Bcrypt
  - Classnames
+ - Cookie Parser
  - Date-fns
+ - Express
  - Material UI
+ - Node-postgres
+ - Pg-format
  - React
  - React Places Autocomplete
  - React Rouer
  - React Router Dom
   
+
+
+   "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "pg": "^8.5.1",
+    "pg-format": "^1.0.4",
+    "pg-native": "^3.0.0"
